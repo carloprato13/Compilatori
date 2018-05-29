@@ -117,6 +117,18 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitType(FoolParser.TypeContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code bracketedExp}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterBracketedExp(FoolParser.BracketedExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bracketedExp}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitBracketedExp(FoolParser.BracketedExpContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code intExp}
 	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
@@ -152,6 +164,18 @@ public interface FoolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMethodCall(FoolParser.MethodCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code fieldReference}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterFieldReference(FoolParser.FieldReferenceContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code fieldReference}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitFieldReference(FoolParser.FieldReferenceContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code classInstantiation}
 	 * labeled alternative in {@link FoolParser#exp}.

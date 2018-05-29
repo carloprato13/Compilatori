@@ -25,7 +25,7 @@ fun    : type ID LPAR ( elem+=vardec ( COMMA elem+=vardec)* )? RPAR (let)? exp ;
 
 dec   : varasm           #varAssignment
       | fun              #funDeclaration
-      | CLASS ID (EXTS ID)? LPAR ( elem+=vardec (COMMA elem+=vardec)* )? RPAR CLPAR (fun)* CRPAR #classDeclaration
+      | CLASS ID (EXTS ID)? LPAR ( elem+=vardec (COMMA elem+=vardec)* )? RPAR CLPAR (fun SEMIC)* CRPAR #classDeclaration
       ;
          
    
@@ -34,7 +34,9 @@ type   : INT
         | ID
       ;  
     
-exp     : left=term (PLUS right=exp)? #intExp
+exp     :
+   LPAR exp RPAR #bracketedExp
+  |  left=term (PLUS right=exp)? #intExp
 	| left=term (MINUS right=exp)? #intExp
 	| left=value (AND right=value)? #boolExp
 	| left=value (OR right=value)? #boolExp
@@ -45,6 +47,7 @@ exp     : left=term (PLUS right=exp)? #intExp
 	| left=value GTEQ right=value #boolExp
 	| left=value LTEQ right=value #boolExp
   | ID DOT ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #methodCall
+  | ID DOT ID #fieldReference
   | NEW ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #classInstantiation
   | NULL #nullValue
 	;

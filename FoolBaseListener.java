@@ -135,6 +135,18 @@ public class FoolBaseListener implements FoolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBracketedExp(FoolParser.BracketedExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBracketedExp(FoolParser.BracketedExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterIntExp(FoolParser.IntExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -166,6 +178,18 @@ public class FoolBaseListener implements FoolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMethodCall(FoolParser.MethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFieldReference(FoolParser.FieldReferenceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFieldReference(FoolParser.FieldReferenceContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
