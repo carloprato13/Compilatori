@@ -122,7 +122,7 @@ NULL : 'null';
 
 //Numbers
 fragment DIGIT : '0'..'9';    
-INTEGER       : ('-')?DIGIT+;
+INTEGER       : ('-')?DIGIT+ ;
 
 //IDs
 fragment CHAR  : 'a'..'z' |'A'..'Z' ;
