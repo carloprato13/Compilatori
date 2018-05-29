@@ -25,23 +25,28 @@ fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? exp ;
 
 dec   : varasm           #varAssignment
       | fun              #funDeclaration
+      | CLASS ID (EXTS ID)? LPAR ( vardec (COMMA vardec)* )? RPAR CLPAR (fun)* CRPAR #classDeclaration
       ;
          
    
 type   : INT  
         | BOOL 
+        | ID
       ;  
     
 exp     : left=term (PLUS right=exp)?
 	| left=term (MINUS right=exp)?
-	| left=value (AND right = value)?
-	| left=value (OR right = value)?
-        | NOT left=value 
-	| left=value (EQ right = value)?
-	| left=value (GT right = value)?
-	| left=value (LT right = value)?
-	| left=value (GTEQ right = value)?
-	| left=value (LTEQ right = value)?
+	| leftV=value (AND rightV=value)?
+	| leftV=value (OR rightV=value)?
+  | NOT leftV=value 
+	| leftV=value (EQ rightV=value)?
+	| leftV=value (GT rightV=value)?
+	| leftV=value (LT rightV=value)?
+	| leftV=value (GTEQ rightV=value)?
+	| leftV=value (LTEQ rightV=value)?
+  | ID DOT ID LPAR ( varasm (COMMA varasm)* )? RPAR  
+  | NEW ID LPAR ( varasm (COMMA varasm)* )? RPAR
+  | value
 	;
    
 term   : left=factor (TIMES right=term)?
@@ -72,6 +77,7 @@ value  : INTEGER                           #intVal
 SEMIC  : ';' ;
 COLON  : ':' ;
 COMMA  : ',' ;
+DOT : '.';
 EQ     : '==' ;
 ASM    : '=' ;
 LT     : '<' ;
@@ -101,8 +107,9 @@ VAR       : 'var' ;
 FUN       : 'fun' ;
 INT       : 'int' ;
 BOOL   : 'bool' ;
-
-
+CLASS : 'class' ;
+EXTS : 'extends' ;
+NEW : 'new';
 
 //Numbers
 fragment DIGIT : '0'..'9';    
@@ -116,9 +123,6 @@ ID              : CHAR (CHAR | DIGIT)* ;
 WS              : (' '|'\t'|'\n'|'\r')-> skip;
 LINECOMENTS    : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
-
-
-
 
  //VERY SIMPLISTIC ERROR CHECK FOR THE LEXING PROCESS, THE OUTPUT GOES DIRECTLY TO THE TERMINAL
  //THIS IS WRONG!!!!
