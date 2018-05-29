@@ -15,63 +15,62 @@ prog   : exp SEMIC                 #singleExp
        | let exp SEMIC             #letInExp
        ;
 
-let       : LET (dec SEMIC)+ IN ;
+let    : LET (dec SEMIC)+ IN ;
 
-vardec  : type ID ;
+vardec : type ID ;
 
-varasm     : vardec ASM exp ;
+varasm : vardec ASM exp ;
 
 fun    : type ID LPAR ( elem+=vardec ( COMMA elem+=vardec)* )? RPAR (let)? exp ;
 
-dec   : varasm           #varAssignment
-      | fun              #funDeclaration
-      | CLASS ID (EXTS ID)? LPAR ( elem+=vardec (COMMA elem+=vardec)* )? RPAR CLPAR (fun SEMIC)* CRPAR #classDeclaration
-      ;
+dec    : varasm           #varAssignment
+       | fun              #funDeclaration
+       | CLASS ID (EXTS ID)? LPAR ( elem+=vardec (COMMA elem+=vardec)* )? RPAR CLPAR (fun SEMIC)* CRPAR #classDeclaration
+       ;
          
    
 type   : INT  
-        | BOOL 
-        | ID
-      ;  
+       | BOOL 
+       | ID
+       ;  
     
-exp     :
-   LPAR exp RPAR #bracketedExp
-  |  left=term (PLUS right=exp)? #intExp
-	| left=term (MINUS right=exp)? #intExp
-	| left=value (AND right=value)? #boolExp
-	| left=value (OR right=value)? #boolExp
-  | NOT left=value #boolExp 
-	| left=value EQ right=value #boolExp
-	| left=value GT right=value #boolExp
-	| left=value LT right=value #boolExp
-	| left=value GTEQ right=value #boolExp
-	| left=value LTEQ right=value #boolExp
-  | ID DOT ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #methodCall
-  | ID DOT ID #fieldReference
-  | NEW ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #classInstantiation
-  | NULL #nullValue
-	;
+exp    : LPAR exp RPAR #bracketedExp
+  	   | left=term (PLUS right=exp)? #intExp
+	   | left=term (MINUS right=exp)? #intExp
+	   | left=value (AND right=value)? #boolExp
+	   | left=value (OR right=value)? #boolExp
+  	   | NOT left=value #boolExp 
+	   | left=value EQ right=value #boolExp
+	   | left=value GT right=value #boolExp
+	   | left=value LT right=value #boolExp
+	   | left=value GTEQ right=value #boolExp
+	   | left=value LTEQ right=value #boolExp
+	   | ID DOT ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #methodCall
+	   | ID DOT ID #fieldReference
+	   | NEW ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #classInstantiation
+	   | NULL #nullValue
+	   ;
    
 term   : left=factor (TIMES right=term)? #intTerm
-        | left=factor (FRACT right=term)? #intTerm
-      ;
+       | left=factor (FRACT right=term)? #intTerm
+       ;
 
-stms :  ( stm )+;
+stms   : ( stm )+;
 
-stm : 	varasm 
-	| IF exp THEN CLPAR stms CRPAR ELSE CLPAR stms CRPAR
-	;
+stm    : varasm 
+	   | IF exp THEN CLPAR stms CRPAR ELSE CLPAR stms CRPAR
+	   ;
 
 factor : left=value (EQ right=value)?
-      ;     
+       ;     
    
 value  : INTEGER                           #intVal
-      | ( TRUE | FALSE )                   #boolVal
-      | LPAR exp RPAR                      #baseExp
-          | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
-          | ID                                             #varExp
-          | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
-      ; 
+       | ( TRUE | FALSE )                   #boolVal
+       | LPAR exp RPAR                      #baseExp
+       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
+       | ID                                             #varExp
+       | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
+       ; 
 
    
 /*------------------------------------------------------------------
