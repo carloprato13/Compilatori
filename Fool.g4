@@ -19,7 +19,10 @@ let    : LET (dec SEMIC)+ IN ;
 
 vardec : type ID ;
 
-varasm : vardec ASM exp ;
+varasm : vardec ASM exp 
+       | ID ASM exp
+       | ID DOT ID ASM exp
+       ;
 
 fun    : type ID LPAR ( elem+=vardec ( COMMA elem+=vardec)* )? RPAR (let)? exp ;
 
@@ -37,18 +40,20 @@ type   : INT
 exp    : LPAR exp RPAR #bracketedExp
   	   | left=term (PLUS right=exp)? #intExp
 	   | left=term (MINUS right=exp)? #intExp
-	   | left=value (AND right=value)? #boolExp
-	   | left=value (OR right=value)? #boolExp
-  	   | NOT left=value #boolExp 
-	   | left=value EQ right=value #boolExp
-	   | left=value GT right=value #boolExp
-	   | left=value LT right=value #boolExp
-	   | left=value GTEQ right=value #boolExp
-	   | left=value LTEQ right=value #boolExp
-	   | ID DOT ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #methodCall
+	   | left=term (AND right=value)? #boolExp
+	   | left=term (OR right=value)? #boolExp
+  	   | NOT left=term #boolExp 
+	   | left=value EQ right=value #CompExp
+	   | left=value GT right=value #CompExp
+	   | left=value LT right=value #CompExp
+	   | left=value GTEQ right=value #CompExp
+	   | left=value LTEQ right=value #CompExp
+     | ID LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #functionCall
+	   | ID DOT ID LPAR ( elem+=exp (COMMA elem+=exp)* )? RPAR #methodCall
 	   | ID DOT ID #fieldReference
-	   | NEW ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #classInstantiation
+	   | NEW ID LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
 	   | NULL #nullValue
+     | stms #statement
 	   ;
    
 term   : left=factor (TIMES right=term)? #intTerm
@@ -59,6 +64,7 @@ stms   : ( stm )+;
 
 stm    : varasm 
 	   | IF exp THEN CLPAR stms CRPAR ELSE CLPAR stms CRPAR
+     | value
 	   ;
 
 factor : left=value (EQ right=value)?

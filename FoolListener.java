@@ -153,6 +153,30 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitBoolExp(FoolParser.BoolExpContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code CompExp}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompExp(FoolParser.CompExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CompExp}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompExp(FoolParser.CompExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code functionCall}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionCall(FoolParser.FunctionCallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code functionCall}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionCall(FoolParser.FunctionCallContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code methodCall}
 	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
@@ -200,6 +224,18 @@ public interface FoolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNullValue(FoolParser.NullValueContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code statement}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatement(FoolParser.StatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code statement}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatement(FoolParser.StatementContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code intTerm}
 	 * labeled alternative in {@link FoolParser#term}.
