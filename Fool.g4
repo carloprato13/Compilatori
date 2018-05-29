@@ -21,11 +21,11 @@ vardec  : type ID ;
 
 varasm     : vardec ASM exp ;
 
-fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? exp ;
+fun    : type ID LPAR ( elem+=vardec ( COMMA elem+=vardec)* )? RPAR (let)? exp ;
 
 dec   : varasm           #varAssignment
       | fun              #funDeclaration
-      | CLASS ID (EXTS ID)? LPAR ( vardec (COMMA vardec)* )? RPAR CLPAR (fun)* CRPAR #classDeclaration
+      | CLASS ID (EXTS ID)? LPAR ( elem+=vardec (COMMA elem+=vardec)* )? RPAR CLPAR (fun)* CRPAR #classDeclaration
       ;
          
    
@@ -34,23 +34,23 @@ type   : INT
         | ID
       ;  
     
-exp     : left=term (PLUS right=exp)?
-	| left=term (MINUS right=exp)?
-	| leftV=value (AND rightV=value)?
-	| leftV=value (OR rightV=value)?
-  | NOT leftV=value 
-	| leftV=value (EQ rightV=value)?
-	| leftV=value (GT rightV=value)?
-	| leftV=value (LT rightV=value)?
-	| leftV=value (GTEQ rightV=value)?
-	| leftV=value (LTEQ rightV=value)?
-  | ID DOT ID LPAR ( varasm (COMMA varasm)* )? RPAR  
-  | NEW ID LPAR ( varasm (COMMA varasm)* )? RPAR
-  | value
+exp     : left=term (PLUS right=exp)? #intExp
+	| left=term (MINUS right=exp)? #intExp
+	| left=value (AND right=value)? #boolExp
+	| left=value (OR right=value)? #boolExp
+  | NOT left=value #boolExp 
+	| left=value EQ right=value #boolExp
+	| left=value GT right=value #boolExp
+	| left=value LT right=value #boolExp
+	| left=value GTEQ right=value #boolExp
+	| left=value LTEQ right=value #boolExp
+  | ID DOT ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #methodCall
+  | NEW ID LPAR ( elem+=varasm (COMMA elem+=varasm)* )? RPAR #classInstantiation
+  | NULL #nullValue
 	;
    
-term   : left=factor (TIMES right=term)?
-        | left=factor (FRACT right=term)?
+term   : left=factor (TIMES right=term)? #intTerm
+        | left=factor (FRACT right=term)? #intTerm
       ;
 
 stms :  ( stm )+;
@@ -110,6 +110,7 @@ BOOL   : 'bool' ;
 CLASS : 'class' ;
 EXTS : 'extends' ;
 NEW : 'new';
+NULL : 'null';
 
 //Numbers
 fragment DIGIT : '0'..'9';    

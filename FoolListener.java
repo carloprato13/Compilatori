@@ -117,25 +117,77 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitType(FoolParser.TypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FoolParser#exp}.
+	 * Enter a parse tree produced by the {@code intExp}
+	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
 	 */
-	void enterExp(FoolParser.ExpContext ctx);
+	void enterIntExp(FoolParser.IntExpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FoolParser#exp}.
+	 * Exit a parse tree produced by the {@code intExp}
+	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
 	 */
-	void exitExp(FoolParser.ExpContext ctx);
+	void exitIntExp(FoolParser.IntExpContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FoolParser#term}.
+	 * Enter a parse tree produced by the {@code boolExp}
+	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
 	 */
-	void enterTerm(FoolParser.TermContext ctx);
+	void enterBoolExp(FoolParser.BoolExpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FoolParser#term}.
+	 * Exit a parse tree produced by the {@code boolExp}
+	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
 	 */
-	void exitTerm(FoolParser.TermContext ctx);
+	void exitBoolExp(FoolParser.BoolExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code methodCall}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodCall(FoolParser.MethodCallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code methodCall}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodCall(FoolParser.MethodCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code classInstantiation}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassInstantiation(FoolParser.ClassInstantiationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code classInstantiation}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassInstantiation(FoolParser.ClassInstantiationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code nullValue}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterNullValue(FoolParser.NullValueContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code nullValue}
+	 * labeled alternative in {@link FoolParser#exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitNullValue(FoolParser.NullValueContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code intTerm}
+	 * labeled alternative in {@link FoolParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntTerm(FoolParser.IntTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code intTerm}
+	 * labeled alternative in {@link FoolParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntTerm(FoolParser.IntTermContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FoolParser#stms}.
 	 * @param ctx the parse tree
