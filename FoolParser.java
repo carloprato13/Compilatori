@@ -260,6 +260,8 @@ public class FoolParser extends Parser {
 	}
 
 	public static class VardecContext extends ParserRuleContext {
+		public TypeContext t;
+		public Token name;
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -285,9 +287,9 @@ public class FoolParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(45);
-			type();
+			((VardecContext)_localctx).t = type();
 			setState(46);
-			match(ID);
+			((VardecContext)_localctx).name = match(ID);
 			}
 		}
 		catch (RecognitionException re) {

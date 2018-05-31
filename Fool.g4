@@ -17,7 +17,7 @@ prog   : exp SEMIC                 #singleExp
 
 let    : LET (dec SEMIC)+ IN ;
 
-vardec : type ID ;
+vardec : t=type name=ID ;
 
 varasm : vardec ASM exp 
        | ID ASM exp
