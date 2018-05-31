@@ -115,12 +115,9 @@ public class FoolParser extends Parser {
 		public TerminalNode SEMIC() { return getToken(FoolParser.SEMIC, 0); }
 		public LetInExpContext(ProgContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterLetInExp(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitLetInExp(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitLetInExp(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class SingleExpContext extends ProgContext {
@@ -130,12 +127,9 @@ public class FoolParser extends Parser {
 		public TerminalNode SEMIC() { return getToken(FoolParser.SEMIC, 0); }
 		public SingleExpContext(ProgContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterSingleExp(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitSingleExp(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitSingleExp(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -212,12 +206,9 @@ public class FoolParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_let; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterLet(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitLet(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitLet(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -273,12 +264,9 @@ public class FoolParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_vardec; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterVardec(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitVardec(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitVardec(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -331,12 +319,9 @@ public class FoolParser extends Parser {
 		}
 		public FieldAsmContext(VarasmContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterFieldAsm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitFieldAsm(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitFieldAsm(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class DecAsmContext extends VarasmContext {
@@ -351,12 +336,9 @@ public class FoolParser extends Parser {
 		}
 		public DecAsmContext(VarasmContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterDecAsm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitDecAsm(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitDecAsm(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class AsmContext extends VarasmContext {
@@ -369,12 +351,9 @@ public class FoolParser extends Parser {
 		}
 		public AsmContext(VarasmContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterAsm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitAsm(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitAsm(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -468,12 +447,9 @@ public class FoolParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_fun; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterFun(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitFun(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitFun(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -562,12 +538,9 @@ public class FoolParser extends Parser {
 		}
 		public VarAssignmentContext(DecContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterVarAssignment(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitVarAssignment(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitVarAssignment(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class FunDeclarationContext extends DecContext {
@@ -576,12 +549,9 @@ public class FoolParser extends Parser {
 		}
 		public FunDeclarationContext(DecContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterFunDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitFunDeclaration(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitFunDeclaration(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class ClassDeclarationContext extends DecContext {
@@ -621,12 +591,9 @@ public class FoolParser extends Parser {
 		}
 		public ClassDeclarationContext(DecContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterClassDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitClassDeclaration(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitClassDeclaration(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -751,12 +718,9 @@ public class FoolParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_type; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterType(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitType(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitType(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -824,12 +788,9 @@ public class FoolParser extends Parser {
 		}
 		public IfThenElseContext(ExpContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterIfThenElse(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitIfThenElse(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitIfThenElse(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class ClassInstantiationContext extends ExpContext {
@@ -853,12 +814,9 @@ public class FoolParser extends Parser {
 		}
 		public ClassInstantiationContext(ExpContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterClassInstantiation(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitClassInstantiation(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitClassInstantiation(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class StatementContext extends ExpContext {
@@ -867,12 +825,9 @@ public class FoolParser extends Parser {
 		}
 		public StatementContext(ExpContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterStatement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitStatement(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitStatement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class BoolExpContext extends ExpContext {
@@ -888,12 +843,9 @@ public class FoolParser extends Parser {
 		public TerminalNode OR() { return getToken(FoolParser.OR, 0); }
 		public BoolExpContext(ExpContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterBoolExp(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitBoolExp(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitBoolExp(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class IntExpContext extends ExpContext {
@@ -909,12 +861,9 @@ public class FoolParser extends Parser {
 		public TerminalNode MINUS() { return getToken(FoolParser.MINUS, 0); }
 		public IntExpContext(ExpContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterIntExp(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitIntExp(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitIntExp(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1111,12 +1060,9 @@ public class FoolParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_term; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterTerm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitTerm(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitTerm(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1191,12 +1137,9 @@ public class FoolParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_stms; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterStms(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitStms(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitStms(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1269,12 +1212,9 @@ public class FoolParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_stm; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterStm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitStm(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitStm(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1361,12 +1301,9 @@ public class FoolParser extends Parser {
 		public TerminalNode LTEQ() { return getToken(FoolParser.LTEQ, 0); }
 		public IntBoolFactorContext(FactorContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterIntBoolFactor(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitIntBoolFactor(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitIntBoolFactor(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class ValFactorContext extends FactorContext {
@@ -1376,12 +1313,9 @@ public class FoolParser extends Parser {
 		}
 		public ValFactorContext(FactorContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterValFactor(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitValFactor(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitValFactor(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class BoolFactorContext extends FactorContext {
@@ -1396,12 +1330,9 @@ public class FoolParser extends Parser {
 		}
 		public BoolFactorContext(FactorContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterBoolFactor(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitBoolFactor(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitBoolFactor(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1508,12 +1439,9 @@ public class FoolParser extends Parser {
 		public TerminalNode INTEGER() { return getToken(FoolParser.INTEGER, 0); }
 		public IntValContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterIntVal(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitIntVal(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitIntVal(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class FuncallContext extends ValueContext {
@@ -1535,24 +1463,18 @@ public class FoolParser extends Parser {
 		}
 		public FuncallContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterFuncall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitFuncall(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitFuncall(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class NullValContext extends ValueContext {
 		public TerminalNode NULL() { return getToken(FoolParser.NULL, 0); }
 		public NullValContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterNullVal(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitNullVal(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitNullVal(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class FieldValContext extends ValueContext {
@@ -1563,12 +1485,9 @@ public class FoolParser extends Parser {
 		public TerminalNode DOT() { return getToken(FoolParser.DOT, 0); }
 		public FieldValContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterFieldVal(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitFieldVal(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitFieldVal(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class BoolValContext extends ValueContext {
@@ -1580,12 +1499,9 @@ public class FoolParser extends Parser {
 		}
 		public BoolValContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterBoolVal(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitBoolVal(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitBoolVal(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class BaseValContext extends ValueContext {
@@ -1596,24 +1512,18 @@ public class FoolParser extends Parser {
 		public TerminalNode RPAR() { return getToken(FoolParser.RPAR, 0); }
 		public BaseValContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterBaseVal(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitBaseVal(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitBaseVal(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class VarValContext extends ValueContext {
 		public TerminalNode ID() { return getToken(FoolParser.ID, 0); }
 		public VarValContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterVarVal(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitVarVal(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitVarVal(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 	public static class MethodCallContext extends ValueContext {
@@ -1638,12 +1548,9 @@ public class FoolParser extends Parser {
 		}
 		public MethodCallContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).enterMethodCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof FoolListener ) ((FoolListener)listener).exitMethodCall(this);
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof FoolVisitor ) return ((FoolVisitor<? extends T>)visitor).visitMethodCall(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
