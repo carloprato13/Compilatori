@@ -1,1 +1,1 @@
-let class merda extends dio ( int x, int y ) {int dio ( int a, int b ) a + 2 ;}; merda uno = new merda( int z = 4,  int cacca = 3); in uno.x = uno.dio(2,3);
+1 + true ;

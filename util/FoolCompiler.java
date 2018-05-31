@@ -1,5 +1,5 @@
 
-import java.util.*;
+/*import java.util.*;
 import java.io.*;
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -178,4 +178,4 @@ public class FoolCompiler extends FoolBaseListener{
 		FoolCompiler extractor = new FoolCompiler();
 		walker.walk(extractor, tree);
 	}
-}
+}*/

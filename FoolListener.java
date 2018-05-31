@@ -51,15 +51,41 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitVardec(FoolParser.VardecContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FoolParser#varasm}.
+	 * Enter a parse tree produced by the {@code decAsm}
+	 * labeled alternative in {@link FoolParser#varasm}.
 	 * @param ctx the parse tree
 	 */
-	void enterVarasm(FoolParser.VarasmContext ctx);
+	void enterDecAsm(FoolParser.DecAsmContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FoolParser#varasm}.
+	 * Exit a parse tree produced by the {@code decAsm}
+	 * labeled alternative in {@link FoolParser#varasm}.
 	 * @param ctx the parse tree
 	 */
-	void exitVarasm(FoolParser.VarasmContext ctx);
+	void exitDecAsm(FoolParser.DecAsmContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Asm}
+	 * labeled alternative in {@link FoolParser#varasm}.
+	 * @param ctx the parse tree
+	 */
+	void enterAsm(FoolParser.AsmContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Asm}
+	 * labeled alternative in {@link FoolParser#varasm}.
+	 * @param ctx the parse tree
+	 */
+	void exitAsm(FoolParser.AsmContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code fieldAsm}
+	 * labeled alternative in {@link FoolParser#varasm}.
+	 * @param ctx the parse tree
+	 */
+	void enterFieldAsm(FoolParser.FieldAsmContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code fieldAsm}
+	 * labeled alternative in {@link FoolParser#varasm}.
+	 * @param ctx the parse tree
+	 */
+	void exitFieldAsm(FoolParser.FieldAsmContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FoolParser#fun}.
 	 * @param ctx the parse tree
@@ -117,18 +143,6 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitType(FoolParser.TypeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code bracketedExp}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void enterBracketedExp(FoolParser.BracketedExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code bracketedExp}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void exitBracketedExp(FoolParser.BracketedExpContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code intExp}
 	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
@@ -153,54 +167,6 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitBoolExp(FoolParser.BoolExpContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code CompExp}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void enterCompExp(FoolParser.CompExpContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code CompExp}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void exitCompExp(FoolParser.CompExpContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code functionCall}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionCall(FoolParser.FunctionCallContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code functionCall}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionCall(FoolParser.FunctionCallContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code methodCall}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void enterMethodCall(FoolParser.MethodCallContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code methodCall}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void exitMethodCall(FoolParser.MethodCallContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code fieldReference}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void enterFieldReference(FoolParser.FieldReferenceContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code fieldReference}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void exitFieldReference(FoolParser.FieldReferenceContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code classInstantiation}
 	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
@@ -212,18 +178,6 @@ public interface FoolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitClassInstantiation(FoolParser.ClassInstantiationContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code nullValue}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void enterNullValue(FoolParser.NullValueContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code nullValue}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void exitNullValue(FoolParser.NullValueContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code statement}
 	 * labeled alternative in {@link FoolParser#exp}.
@@ -237,17 +191,27 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitStatement(FoolParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code intTerm}
-	 * labeled alternative in {@link FoolParser#term}.
+	 * Enter a parse tree produced by the {@code ifThenElse}
+	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
 	 */
-	void enterIntTerm(FoolParser.IntTermContext ctx);
+	void enterIfThenElse(FoolParser.IfThenElseContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code intTerm}
-	 * labeled alternative in {@link FoolParser#term}.
+	 * Exit a parse tree produced by the {@code ifThenElse}
+	 * labeled alternative in {@link FoolParser#exp}.
 	 * @param ctx the parse tree
 	 */
-	void exitIntTerm(FoolParser.IntTermContext ctx);
+	void exitIfThenElse(FoolParser.IfThenElseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FoolParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterTerm(FoolParser.TermContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FoolParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitTerm(FoolParser.TermContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FoolParser#stms}.
 	 * @param ctx the parse tree
@@ -269,15 +233,41 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitStm(FoolParser.StmContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FoolParser#factor}.
+	 * Enter a parse tree produced by the {@code boolFactor}
+	 * labeled alternative in {@link FoolParser#factor}.
 	 * @param ctx the parse tree
 	 */
-	void enterFactor(FoolParser.FactorContext ctx);
+	void enterBoolFactor(FoolParser.BoolFactorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FoolParser#factor}.
+	 * Exit a parse tree produced by the {@code boolFactor}
+	 * labeled alternative in {@link FoolParser#factor}.
 	 * @param ctx the parse tree
 	 */
-	void exitFactor(FoolParser.FactorContext ctx);
+	void exitBoolFactor(FoolParser.BoolFactorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code intBoolFactor}
+	 * labeled alternative in {@link FoolParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntBoolFactor(FoolParser.IntBoolFactorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code intBoolFactor}
+	 * labeled alternative in {@link FoolParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntBoolFactor(FoolParser.IntBoolFactorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code valFactor}
+	 * labeled alternative in {@link FoolParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void enterValFactor(FoolParser.ValFactorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code valFactor}
+	 * labeled alternative in {@link FoolParser#factor}.
+	 * @param ctx the parse tree
+	 */
+	void exitValFactor(FoolParser.ValFactorContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code intVal}
 	 * labeled alternative in {@link FoolParser#value}.
@@ -303,51 +293,75 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitBoolVal(FoolParser.BoolValContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code baseExp}
+	 * Enter a parse tree produced by the {@code varVal}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void enterBaseExp(FoolParser.BaseExpContext ctx);
+	void enterVarVal(FoolParser.VarValContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code baseExp}
+	 * Exit a parse tree produced by the {@code varVal}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void exitBaseExp(FoolParser.BaseExpContext ctx);
+	void exitVarVal(FoolParser.VarValContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ifExp}
+	 * Enter a parse tree produced by the {@code funcall}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void enterIfExp(FoolParser.IfExpContext ctx);
+	void enterFuncall(FoolParser.FuncallContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code ifExp}
+	 * Exit a parse tree produced by the {@code funcall}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void exitIfExp(FoolParser.IfExpContext ctx);
+	void exitFuncall(FoolParser.FuncallContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code varExp}
+	 * Enter a parse tree produced by the {@code nullVal}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void enterVarExp(FoolParser.VarExpContext ctx);
+	void enterNullVal(FoolParser.NullValContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code varExp}
+	 * Exit a parse tree produced by the {@code nullVal}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void exitVarExp(FoolParser.VarExpContext ctx);
+	void exitNullVal(FoolParser.NullValContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code funExp}
+	 * Enter a parse tree produced by the {@code fieldVal}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunExp(FoolParser.FunExpContext ctx);
+	void enterFieldVal(FoolParser.FieldValContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code funExp}
+	 * Exit a parse tree produced by the {@code fieldVal}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunExp(FoolParser.FunExpContext ctx);
+	void exitFieldVal(FoolParser.FieldValContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code methodCall}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodCall(FoolParser.MethodCallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code methodCall}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodCall(FoolParser.MethodCallContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code baseVal}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterBaseVal(FoolParser.BaseValContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code baseVal}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitBaseVal(FoolParser.BaseValContext ctx);
 }

@@ -19,63 +19,60 @@ let    : LET (dec SEMIC)+ IN ;
 
 vardec : t=type name=ID ;
 
-varasm : vardec ASM exp 
-       | ID ASM exp
-       | ID DOT ID ASM exp
+varasm : t=vardec ASM e=exp     #decAsm 
+       | t=ID ASM e=exp       #Asm
+       | t=ID DOT f=ID ASM e=exp  #fieldAsm
        ;
 
 fun    : type ID LPAR ( elem+=vardec ( COMMA elem+=vardec)* )? RPAR (let)? exp ;
 
 dec    : varasm           #varAssignment
        | fun              #funDeclaration
-       | CLASS ID (EXTS ID)? LPAR ( elem+=vardec (COMMA elem+=vardec)* )? RPAR CLPAR (fun SEMIC)* CRPAR #classDeclaration
-       ;
-         
+       | CLASS type (EXTS type)? LPAR ( elem+=vardec (COMMA elem+=vardec)* )? RPAR CLPAR (fun SEMIC)* CRPAR #classDeclaration
+       ;         
    
 type   : INT  
        | BOOL 
        | ID
+       | VOID
        ;  
     
-exp    : LPAR exp RPAR #bracketedExp
-  	   | left=term (PLUS right=exp)? #intExp
-	   | left=term (MINUS right=exp)? #intExp
-	   | left=term (AND right=value)? #boolExp
-	   | left=term (OR right=value)? #boolExp
-  	   | NOT left=term #boolExp 
-	   | left=value EQ right=value #CompExp
-	   | left=value GT right=value #CompExp
-	   | left=value LT right=value #CompExp
-	   | left=value GTEQ right=value #CompExp
-	   | left=value LTEQ right=value #CompExp
-     | ID LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #functionCall
-	   | ID DOT ID LPAR ( elem+=exp (COMMA elem+=exp)* )? RPAR #methodCall
-	   | ID DOT ID #fieldReference
-	   | NEW ID LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
-	   | NULL #nullValue
-     | stms #statement
-	   ;
+exp    : left=term (PLUS right=exp)?  #intExp
+	     | left=term (MINUS right=exp)? #intExp
+	     | left=term (AND right=exp)? #boolExp
+	     | left=term (OR right=exp)?  #boolExp
+	     | NEW type LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
+	     | stms #statement
+       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifThenElse
+	     ;
    
-term   : left=factor (TIMES right=term)? #intTerm
-       | left=factor (FRACT right=term)? #intTerm
+term   : left=factor (TIMES right=term)?
+       | left=factor (FRACT right=term)?
        ;
 
 stms   : ( stm )+;
 
 stm    : varasm 
 	   | IF exp THEN CLPAR stms CRPAR ELSE CLPAR stms CRPAR
-     | value
 	   ;
 
-factor : left=value (EQ right=value)?
+factor : left=value EQ right=value #boolFactor
+       | left=value GT right=value #intBoolFactor
+       | left=value LT right=value #intBoolFactor
+       | left=value GTEQ right=value #intBoolFactor
+       | left=value LTEQ right=value #intBoolFactor
+       | left=value #valFactor
        ;     
    
-value  : INTEGER                           #intVal
-       | ( TRUE | FALSE )                   #boolVal
-       | LPAR exp RPAR                      #baseExp
-       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
-       | ID                                             #varExp
-       | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
+value  : INTEGER          #intVal
+       | ( TRUE | FALSE ) #boolVal
+       | ID               #varVal
+       | name=ID ( LPAR (elem+=exp (COMMA elem+=exp)* )? RPAR )? #funcall
+       | NULL #nullVal
+       | NOT value #boolVal 
+       | ID DOT ID #fieldVal
+       | ID DOT ID LPAR ( elem+=exp (COMMA elem+=exp)* )? RPAR #methodCall
+       | LPAR exp RPAR                      #baseVal
        ; 
 
    
@@ -119,6 +116,7 @@ CLASS : 'class' ;
 EXTS : 'extends' ;
 NEW : 'new';
 NULL : 'null';
+VOID : 'void';
 
 //Numbers
 fragment DIGIT : '0'..'9';    
@@ -136,4 +134,5 @@ BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
  //VERY SIMPLISTIC ERROR CHECK FOR THE LEXING PROCESS, THE OUTPUT GOES DIRECTLY TO THE TERMINAL
  //THIS IS WRONG!!!!
 ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN); 
+
 

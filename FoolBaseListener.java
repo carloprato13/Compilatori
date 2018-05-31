@@ -63,13 +63,37 @@ public class FoolBaseListener implements FoolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarasm(FoolParser.VarasmContext ctx) { }
+	@Override public void enterDecAsm(FoolParser.DecAsmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarasm(FoolParser.VarasmContext ctx) { }
+	@Override public void exitDecAsm(FoolParser.DecAsmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAsm(FoolParser.AsmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAsm(FoolParser.AsmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFieldAsm(FoolParser.FieldAsmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFieldAsm(FoolParser.FieldAsmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -135,18 +159,6 @@ public class FoolBaseListener implements FoolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBracketedExp(FoolParser.BracketedExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBracketedExp(FoolParser.BracketedExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterIntExp(FoolParser.IntExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -171,54 +183,6 @@ public class FoolBaseListener implements FoolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompExp(FoolParser.CompExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCompExp(FoolParser.CompExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFunctionCall(FoolParser.FunctionCallContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunctionCall(FoolParser.FunctionCallContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterMethodCall(FoolParser.MethodCallContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitMethodCall(FoolParser.MethodCallContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFieldReference(FoolParser.FieldReferenceContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFieldReference(FoolParser.FieldReferenceContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterClassInstantiation(FoolParser.ClassInstantiationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -226,18 +190,6 @@ public class FoolBaseListener implements FoolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitClassInstantiation(FoolParser.ClassInstantiationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNullValue(FoolParser.NullValueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNullValue(FoolParser.NullValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -255,13 +207,25 @@ public class FoolBaseListener implements FoolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIntTerm(FoolParser.IntTermContext ctx) { }
+	@Override public void enterIfThenElse(FoolParser.IfThenElseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIntTerm(FoolParser.IntTermContext ctx) { }
+	@Override public void exitIfThenElse(FoolParser.IfThenElseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTerm(FoolParser.TermContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTerm(FoolParser.TermContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -291,13 +255,37 @@ public class FoolBaseListener implements FoolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFactor(FoolParser.FactorContext ctx) { }
+	@Override public void enterBoolFactor(FoolParser.BoolFactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFactor(FoolParser.FactorContext ctx) { }
+	@Override public void exitBoolFactor(FoolParser.BoolFactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntBoolFactor(FoolParser.IntBoolFactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntBoolFactor(FoolParser.IntBoolFactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterValFactor(FoolParser.ValFactorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitValFactor(FoolParser.ValFactorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -327,49 +315,73 @@ public class FoolBaseListener implements FoolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBaseExp(FoolParser.BaseExpContext ctx) { }
+	@Override public void enterVarVal(FoolParser.VarValContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBaseExp(FoolParser.BaseExpContext ctx) { }
+	@Override public void exitVarVal(FoolParser.VarValContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfExp(FoolParser.IfExpContext ctx) { }
+	@Override public void enterFuncall(FoolParser.FuncallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIfExp(FoolParser.IfExpContext ctx) { }
+	@Override public void exitFuncall(FoolParser.FuncallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarExp(FoolParser.VarExpContext ctx) { }
+	@Override public void enterNullVal(FoolParser.NullValContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarExp(FoolParser.VarExpContext ctx) { }
+	@Override public void exitNullVal(FoolParser.NullValContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunExp(FoolParser.FunExpContext ctx) { }
+	@Override public void enterFieldVal(FoolParser.FieldValContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunExp(FoolParser.FunExpContext ctx) { }
+	@Override public void exitFieldVal(FoolParser.FieldValContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMethodCall(FoolParser.MethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMethodCall(FoolParser.MethodCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBaseVal(FoolParser.BaseValContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBaseVal(FoolParser.BaseValContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
