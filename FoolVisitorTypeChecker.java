@@ -77,6 +77,11 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		return new VarNode(ctx.vardec().ID().getText(), typeNode, expNode);
 	}
 	
+	public T visitAsm(FoolParser.AsmContext ctx) {
+		
+
+	 	return visitChildren(ctx); 
+	}
 //Vanno aggiunti gli altri due contesti inseriti in Varasm
 
 	@Override
