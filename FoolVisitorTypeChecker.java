@@ -76,12 +76,44 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		//build the varNode
 		return new VarNode(ctx.vardec().ID().getText(), typeNode, expNode);
 	}
-	
-	public T visitAsm(FoolParser.AsmContext ctx) {
-		
+	//Vedere se è corretto
+	public Node visitAsm(AsmContext ctx) {
 
-	 	return visitChildren(ctx); 
+		//declare the result node
+		VarNode result;
+		
+		//visit the type
+		Node typeNode = visit(ctx.ID().type());
+
+		//visit the exp
+		Node expNode = visit(ctx.exp());
+
+		//build the varNode
+		return new VarNode(ctx.ID().getText(), typeNode, expNode);
 	}
+	//Da modificare la parte iniziale 'id dot id'
+	public Node visitFieldAsm(FieldAsmContext ctx) {
+
+		//declare the result node
+		VarNode result;
+		
+		//Ci interessa che il secondo id possa essere chiamato a partire dal primo
+		//visit the type
+		Node typeNode = visit(ctx.ID().type());
+
+		//visit the type
+		Node typeNode = visit(ctx.ID().type());
+
+		//visit the exp
+		Node expNode = visit(ctx.exp());
+
+		//Va modificato
+		//build the varNode
+		return new VarNode(ctx.ID().getText(), typeNode, expNode);
+
+	}
+
+
 //Vanno aggiunti gli altri due contesti inseriti in Varasm
 
 	@Override
