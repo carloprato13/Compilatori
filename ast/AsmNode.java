@@ -7,18 +7,19 @@ import util.Environment;
 import util.SemanticError;
 import lib.FOOLlib;
 
-public class ClassNode implements Node {
+public class AsmNode implements Node {
 
   private String id;
   private Node type;
   private Node exp;
   
-  public ClassNode (String i, Node t, Node v) {
+  public AsmNode (String i, Node t, Node v) {
     id=i;
     type=t;
     exp=v;
   }
   
+  /*
   	@Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
   	//create result list
@@ -54,5 +55,5 @@ public class ClassNode implements Node {
   public String codeGeneration() {
 		return exp.codeGeneration();
   }  
-    
+    */
 }  

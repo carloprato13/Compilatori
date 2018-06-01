@@ -7,19 +7,19 @@ import util.Environment;
 import util.SemanticError;
 import lib.FOOLlib;
 
-public class VarNode implements Node {
+public class ClassTypeNode implements Node {
 
   private String id;
   private Node type;
   private Node exp;
   
-  public VarNode (String i, Node t, Node v) {
+  public ClassTypeNode (String i, Node t, Node v) {
     id=i;
     type=t;
     exp=v;
   }
   
-  	@Override
+  /*@Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
   	//create result list
   	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
@@ -54,5 +54,5 @@ public class VarNode implements Node {
   public String codeGeneration() {
 		return exp.codeGeneration();
   }  
-    
+    */
 }  

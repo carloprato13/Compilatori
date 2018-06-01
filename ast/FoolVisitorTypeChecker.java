@@ -26,7 +26,6 @@ import util.SemanticError;
 public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 	
 	
-	
 	@Override
 	public Node visitLetInExp(LetInExpContext ctx) {
 		
@@ -76,6 +75,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		//build the varNode
 		return new VarNode(ctx.vardec().ID().getText(), typeNode, expNode);
 	}
+
 	//Vedere se è corretto
 	public Node visitAsm(AsmContext ctx) {
 
@@ -83,38 +83,36 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		VarNode result;
 		
 		//visit the type
-		Node typeNode = visit(ctx.ID().type());
+		IdNode idNode = new IdNode(ctx.ID().getText());
 
 		//visit the exp
 		Node expNode = visit(ctx.exp());
 
 		//build the varNode
-		return new VarNode(ctx.ID().getText(), typeNode, expNode);
+		return new AsmNode(ctx.ID().getText(), null, expNode);
 	}
+
 	//Da modificare la parte iniziale 'id dot id'
-	public Node visitFieldAsm(FieldAsmContext ctx) {
+	/*public Node visitFieldAsm(FieldAsmContext ctx) {
 
 		//declare the result node
 		VarNode result;
 		
 		//Ci interessa che il secondo id possa essere chiamato a partire dal primo
 		//visit the type
-		Node typeNode = visit(ctx.ID().type());
+		Node typeNode = visit(ctx.ID()); //Prendo nome della variabile, ne costruisco il nodo ClassNode
 
 		//visit the type
-		Node typeNode = visit(ctx.ID().type());
+		Node typeNode = visit(ctx.ID(); //dal CLassNode estrarre VarNode del campo
 
 		//visit the exp
-		Node expNode = visit(ctx.exp());
+		Node expNode = visit(ctx.exp()); //Estrarre il tipo della espressione
 
 		//Va modificato
-		//build the varNode
+		//build the varNode //ritorno FieldNode 
 		return new VarNode(ctx.ID().getText(), typeNode, expNode);
 
-	}
-
-
-//Vanno aggiunti gli altri due contesti inseriti in Varasm
+	}*/
 
 	@Override
 	public Node visitFun(FunContext ctx) {
@@ -158,18 +156,15 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			return new BoolTypeNode();
 		else if (ctx.getText().equals("void"))
 			return new VoidTypeNode();
-		//Forse deve prendere il tipo dell'id, però da dove?
-		else if (ctx.getText().equals("id"))
-			return new //Vedere cosa inserire
+		else return new ClassTypeNode(ctx.getText());//Vedere comer implementare ClassTypeNode
 		//this will never happen thanks to the parser
 		return null;
 
 	}
-//E' quello che va modificato quasi completamente
+
+
 	@Override
-	public Node visitExp(ExpContext ctx) {
-		
-		//this could be enhanced
+	public Node visitIntExp(ExpContext ctx) {
 		
 		//check whether this is a simple or binary expression
 		//notice here the necessity of having named elements in the grammar
@@ -178,11 +173,34 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			return visit( ctx.left );
 		}else{
 			//it is a binary expression, you should visit left and right
-			return new PlusNode(visit(ctx.left), visit(ctx.right));
+			return new PlusNode(visit(ctx.left), visit(ctx.right)); //sarebbe furbo fare una classe OpNode da far estendere da PlusNode, TimesNode ecc..
 		}
 		
 	}
 	
+	@Override public T visitIfThenElse(FoolParser.IfThenElseContext ctx) { 
+			
+			//create the resulting node
+			IfNode res;
+			
+			//visit the conditional, then the then branch, and then the else branch
+			//notice once again the need of named terminals in the rule, this is because
+			//we need to point to the right expression among the 3 possible ones in the rule
+			
+			Node condExp = visit (ctx.cond);
+			
+			Node thenExp = visit (ctx.thenBranch);
+			
+			Node elseExp = visit (ctx.elseBranch);
+			
+			//build the @res properly and return it
+			res = new IfNode(condExp, thenExp, elseExp);
+			
+			return res;
+		}
+
+//SERVONO METODI PER BoolExp ClassInstatiation statement
+
 	@Override
 	public Node visitTerm(TermContext ctx) {
 		//check whether this is a simple or binary expression
@@ -192,11 +210,13 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			return visit( ctx.left );
 		}else{
 			//it is a binary expression, you should visit left and right
-			return new MultNode(visit(ctx.left), visit(ctx.right));
+			return new MultNode(visit(ctx.left), visit(ctx.right)); //Aggiungere il caso del FracNode
 		}
 	}
 	
-//Va aggiunto stms e stm
+@Override public T visitStms(FoolParser.StmsContext ctx) { return visitChildren(ctx); }
+	
+@Override public T visitStm(FoolParser.StmContext ctx) { return visitChildren(ctx); }
 
 //factor deve prevedere anche gli altri casi
 	@Override
@@ -208,7 +228,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			return visit( ctx.left );
 		}else{
 			//it is a binary expression, you should visit left and right
-			return new EqualNode(visit(ctx.left), visit(ctx.right));
+			return new EqualNode(visit(ctx.left), visit(ctx.right)); //Stessa cosa di PlusNode
 		}
 	}
 	
@@ -229,43 +249,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 	}
 	
 	@Override
-	public Node visitBaseExp(BaseExpContext ctx) {
-		
-		//this is actually nothing in the sense that for the ast the parenthesis are not relevant
-		//the thing is that the structure of the ast will ensure the operational order by giving
-		//a larger depth (closer to the leafs) to those expressions with higher importance
-		
-		//this is actually the default implementation for this method in the FoolBaseVisitor class
-		//therefore it can be safely removed here
-		
-		return visit (ctx.exp());
-
-	}
-	
-	@Override
-	public Node visitIfExp(IfExpContext ctx) {
-		
-		//create the resulting node
-		IfNode res;
-		
-		//visit the conditional, then the then branch, and then the else branch
-		//notice once again the need of named terminals in the rule, this is because
-		//we need to point to the right expression among the 3 possible ones in the rule
-		
-		Node condExp = visit (ctx.cond);
-		
-		Node thenExp = visit (ctx.thenBranch);
-		
-		Node elseExp = visit (ctx.elseBranch);
-		
-		//build the @res properly and return it
-		res = new IfNode(condExp, thenExp, elseExp);
-		
-		return res;
-	}
-	
-	@Override
-	public Node visitVarExp(VarExpContext ctx) {
+	public Node visitVarVal(VarValContext ctx) {
 		
 		//this corresponds to a variable access
 		return new IdNode(ctx.ID().getText());
@@ -273,7 +257,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 	}
 	
 	@Override
-	public Node visitFunExp(FunExpContext ctx) {
+	public Node visitFuncall(FuncallContext ctx) {
 		//this corresponds to a function invocation
 		
 		//declare the result
