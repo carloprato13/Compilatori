@@ -5,25 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 
 import parser.*;
-import parser.FOOLParser.BaseExpContext;
-import parser.FOOLParser.BoolValContext;
-import parser.FOOLParser.DecContext;
-import parser.FOOLParser.ExpContext;
-import parser.FOOLParser.FactorContext;
-import parser.FOOLParser.FunContext;
-import parser.FOOLParser.FunExpContext;
-import parser.FOOLParser.IfExpContext;
-import parser.FOOLParser.IntValContext;
-import parser.FOOLParser.LetInExpContext;
-import parser.FOOLParser.SingleExpContext;
-import parser.FOOLParser.TermContext;
-import parser.FOOLParser.TypeContext;
-import parser.FOOLParser.VarExpContext;
-import parser.FOOLParser.VarasmContext;
-import parser.FOOLParser.VardecContext;
+import parser.FoolParser.BaseExpContext;
+import parser.FoolParser.BoolValContext;
+import parser.FoolParser.DecContext;
+import parser.FoolParser.ExpContext;
+import parser.FoolParser.FactorContext;
+import parser.FoolParser.FunContext;
+import parser.FoolParser.FunExpContext;
+import parser.FoolParser.IfExpContext;
+import parser.FoolParser.IntValContext;
+import parser.FoolParser.LetInExpContext;
+import parser.FoolParser.SingleExpContext;
+import parser.FoolParser.TermContext;
+import parser.FoolParser.TypeContext;
+import parser.FoolParser.VarExpContext;
+import parser.FoolParser.VarasmContext;
+import parser.FoolParser.VardecContext;
 import util.SemanticError;
 
-public class FoolVisitorTypeChecker extends FOOLBaseVisitor<Node> {
+public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 	
 	
 	
@@ -62,7 +62,7 @@ public class FoolVisitorTypeChecker extends FOOLBaseVisitor<Node> {
 	
 	
 	@Override
-	public Node visitVarasm(VarasmContext ctx) {
+	public Node visitDecAsm(DecAsmContext ctx) {
 		
 		//declare the result node
 		VarNode result;
@@ -76,7 +76,46 @@ public class FoolVisitorTypeChecker extends FOOLBaseVisitor<Node> {
 		//build the varNode
 		return new VarNode(ctx.vardec().ID().getText(), typeNode, expNode);
 	}
-	
+	//Vedere se è corretto
+	public Node visitAsm(AsmContext ctx) {
+
+		//declare the result node
+		VarNode result;
+		
+		//visit the type
+		Node typeNode = visit(ctx.ID().type());
+
+		//visit the exp
+		Node expNode = visit(ctx.exp());
+
+		//build the varNode
+		return new VarNode(ctx.ID().getText(), typeNode, expNode);
+	}
+	//Da modificare la parte iniziale 'id dot id'
+	public Node visitFieldAsm(FieldAsmContext ctx) {
+
+		//declare the result node
+		VarNode result;
+		
+		//Ci interessa che il secondo id possa essere chiamato a partire dal primo
+		//visit the type
+		Node typeNode = visit(ctx.ID().type());
+
+		//visit the type
+		Node typeNode = visit(ctx.ID().type());
+
+		//visit the exp
+		Node expNode = visit(ctx.exp());
+
+		//Va modificato
+		//build the varNode
+		return new VarNode(ctx.ID().getText(), typeNode, expNode);
+
+	}
+
+
+//Vanno aggiunti gli altri due contesti inseriti in Varasm
+
 	@Override
 	public Node visitFun(FunContext ctx) {
 		
@@ -109,7 +148,8 @@ public class FoolVisitorTypeChecker extends FOOLBaseVisitor<Node> {
 		return res;		
 		
 	}
-	//Va dichiarato da qualche parte il VoidTypeNode
+
+//Va dichiarato da qualche parte il VoidTypeNode
 	@Override
 	public Node visitType(TypeContext ctx) {
 		if(ctx.getText().equals("int"))
@@ -118,13 +158,14 @@ public class FoolVisitorTypeChecker extends FOOLBaseVisitor<Node> {
 			return new BoolTypeNode();
 		else if (ctx.getText().equals("void"))
 			return new VoidTypeNode();
+		//Forse deve prendere il tipo dell'id, però da dove?
 		else if (ctx.getText().equals("id"))
 			return new //Vedere cosa inserire
 		//this will never happen thanks to the parser
 		return null;
-		
+
 	}
-	
+//E' quello che va modificato quasi completamente
 	@Override
 	public Node visitExp(ExpContext ctx) {
 		
@@ -155,7 +196,9 @@ public class FoolVisitorTypeChecker extends FOOLBaseVisitor<Node> {
 		}
 	}
 	
-	
+//Va aggiunto stms e stm
+
+//factor deve prevedere anche gli altri casi
 	@Override
 	public Node visitFactor(FactorContext ctx) {
 		//check whether this is a simple or binary expression
@@ -192,7 +235,7 @@ public class FoolVisitorTypeChecker extends FOOLBaseVisitor<Node> {
 		//the thing is that the structure of the ast will ensure the operational order by giving
 		//a larger depth (closer to the leafs) to those expressions with higher importance
 		
-		//this is actually the default implementation for this method in the FOOLBaseVisitor class
+		//this is actually the default implementation for this method in the FoolBaseVisitor class
 		//therefore it can be safely removed here
 		
 		return visit (ctx.exp());
@@ -254,5 +297,8 @@ public class FoolVisitorTypeChecker extends FOOLBaseVisitor<Node> {
 		
 		return res;
 	}
-	
+/*
+Vanno aggiunti del value il 'nullVal', 'fieldVal' e considerare nel 'boolVal'
+il 'not'oppure cambiargli nome e 'methodCall'
+*/	
 }
