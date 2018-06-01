@@ -109,17 +109,20 @@ public class FoolVisitorTypeChecker extends FOOLBaseVisitor<Node> {
 		return res;		
 		
 	}
-	
+	//Va dichiarato da qualche parte il VoidTypeNode
 	@Override
 	public Node visitType(TypeContext ctx) {
 		if(ctx.getText().equals("int"))
 			return new IntTypeNode();
 		else if(ctx.getText().equals("bool"))
 			return new BoolTypeNode();
-		
+		else if (ctx.getText().equals("void"))
+			return new VoidTypeNode();
+		else if (ctx.getText().equals("id"))
+			return new //Vedere cosa inserire
 		//this will never happen thanks to the parser
 		return null;
-
+		
 	}
 	
 	@Override
