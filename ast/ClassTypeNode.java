@@ -19,7 +19,13 @@ public class ClassTypeNode implements Node {
     exp=v;
   }
   
-  /*@Override
+  public ClassTypeNode (String i) {
+    id=i;
+    type=null;
+    exp=null;
+  }
+  
+  @Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
   	//create result list
   	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
@@ -54,5 +60,5 @@ public class ClassTypeNode implements Node {
   public String codeGeneration() {
 		return exp.codeGeneration();
   }  
-    */
+    
 }  

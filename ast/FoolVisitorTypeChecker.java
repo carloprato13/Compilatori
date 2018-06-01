@@ -5,20 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 
 import parser.*;
-import parser.FoolParser.BaseExpContext;
+import parser.FoolParser.*;
+import parser.FoolParser.BaseValContext;
 import parser.FoolParser.BoolValContext;
 import parser.FoolParser.DecContext;
 import parser.FoolParser.ExpContext;
 import parser.FoolParser.FactorContext;
 import parser.FoolParser.FunContext;
-import parser.FoolParser.FunExpContext;
-import parser.FoolParser.IfExpContext;
+import parser.FoolParser.FuncallContext;
+import parser.FoolParser.IfThenElseContext;
 import parser.FoolParser.IntValContext;
 import parser.FoolParser.LetInExpContext;
 import parser.FoolParser.SingleExpContext;
 import parser.FoolParser.TermContext;
 import parser.FoolParser.TypeContext;
-import parser.FoolParser.VarExpContext;
+import parser.FoolParser.VarValContext;
 import parser.FoolParser.VarasmContext;
 import parser.FoolParser.VardecContext;
 import util.SemanticError;
@@ -158,13 +159,12 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			return new VoidTypeNode();
 		else return new ClassTypeNode(ctx.getText());//Vedere comer implementare ClassTypeNode
 		//this will never happen thanks to the parser
-		return null;
-
+		//return null;
 	}
 
 
 	@Override
-	public Node visitIntExp(ExpContext ctx) {
+	public Node visitIntExp(IntExpContext ctx) {
 		
 		//check whether this is a simple or binary expression
 		//notice here the necessity of having named elements in the grammar
@@ -178,7 +178,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		
 	}
 	
-	@Override public T visitIfThenElse(FoolParser.IfThenElseContext ctx) { 
+	@Override public Node visitIfThenElse(FoolParser.IfThenElseContext ctx) { 
 			
 			//create the resulting node
 			IfNode res;
@@ -214,13 +214,40 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		}
 	}
 	
-@Override public T visitStms(FoolParser.StmsContext ctx) { return visitChildren(ctx); }
+@Override public Node visitStms(FoolParser.StmsContext ctx) { return visitChildren(ctx); }
 	
-@Override public T visitStm(FoolParser.StmContext ctx) { return visitChildren(ctx); }
+@Override public Node visitStm(FoolParser.StmContext ctx) { return visitChildren(ctx); }
 
-//factor deve prevedere anche gli altri casi
+
 	@Override
-	public Node visitFactor(FactorContext ctx) {
+	public Node visitValFactor(ValFactorContext ctx) {
+		//check whether this is a simple or binary expression
+		//notice here the necessity of having named elements in the grammar
+		/*if(ctx.right == null){
+			//it is a simple expression
+			return visit( ctx.left );
+		}else{
+			//it is a binary expression, you should visit left and right
+			//return new EqualNode(visit(ctx.left), visit(ctx.right)); //Stessa cosa di PlusNode
+		}*/
+                return null;
+	}
+        
+        @Override
+	public Node visitBoolFactor(BoolFactorContext ctx) {
+		//check whether this is a simple or binary expression
+		//notice here the necessity of having named elements in the grammar
+		if(ctx.right == null){
+			//it is a simple expression
+			return visit( ctx.left );
+		}else{
+			//it is a binary expression, you should visit left and right
+			return new EqualNode(visit(ctx.left), visit(ctx.right)); //Stessa cosa di PlusNode
+		}
+	}
+        
+        @Override
+	public Node visitIntBoolFactor(IntBoolFactorContext ctx) {
 		//check whether this is a simple or binary expression
 		//notice here the necessity of having named elements in the grammar
 		if(ctx.right == null){

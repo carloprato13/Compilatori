@@ -19,7 +19,6 @@ public class AsmNode implements Node {
     exp=v;
   }
   
-  /*
   	@Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
   	//create result list
@@ -55,5 +54,5 @@ public class AsmNode implements Node {
   public String codeGeneration() {
 		return exp.codeGeneration();
   }  
-    */
+    
 }  
