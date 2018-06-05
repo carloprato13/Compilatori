@@ -37,17 +37,17 @@ type   : INT
        | VOID
        ;  
     
-exp    : left=term (PLUS right=exp)?  #intExp
-	     | left=term (MINUS right=exp)? #intExp
-	     | left=term (AND right=exp)? #boolExp
-	     | left=term (OR right=exp)?  #boolExp
+exp    : left=term (op =PLUS right=exp)?  #intExp
+	     | left=term (op = MINUS right=exp)? #intExp
+	     | left=term (op = AND right=exp)? #boolExp
+	     | left=term (op = OR right=exp)?  #boolExp
 	     | NEW type LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
 	     | stms #statement
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifThenElse
 	     ;
    
-term   : left=factor (TIMES right=term)?
-       | left=factor (FRACT right=term)?
+term   : left=factor (op=TIMES right=term)?
+       | left=factor (op=FRACT right=term)?
        ;
 
 stms   : ( stm )+;
@@ -57,10 +57,10 @@ stm    : varasm
 	   ;
 
 factor : left=value EQ right=value #boolFactor
-       | left=value GT right=value #intBoolFactor
-       | left=value LT right=value #intBoolFactor
-       | left=value GTEQ right=value #intBoolFactor
-       | left=value LTEQ right=value #intBoolFactor
+       | left=value op=GT right=value #intBoolFactor
+       | left=value op=LT right=value #intBoolFactor
+       | left=value op=GTEQ right=value #intBoolFactor
+       | left=value op=LTEQ right=value #intBoolFactor
        | left=value #valFactor
        ;     
    
@@ -90,7 +90,7 @@ GT     : '>';
 LTEQ   : '<=' ;
 GTEQ   : '>=' ;
 PLUS   : '+' ;
-MINUS	: '-';
+MINUS  : '-';
 TIMES  : '*' ;
 FRACT  : '/' ;
 TRUE   : 'true' ;
@@ -99,24 +99,24 @@ LPAR   : '(' ;
 RPAR   : ')' ;
 CLPAR  : '{' ;
 CRPAR  : '}' ;
-IF        : 'if' ;
+IF     : 'if' ;
 THEN   : 'then' ;
 ELSE   : 'else' ;
 AND    : '&&' ;
 OR     : '||' ;
 NOT    : 'not' ;
-PRINT    : 'print' ; 
-LET       : 'let' ;
-IN    : 'in' ;
-VAR       : 'var' ;
-FUN       : 'fun' ;
-INT       : 'int' ;
+PRINT  : 'print' ; 
+LET    : 'let' ;
+IN     :'in' ;
+VAR    : 'var' ;
+FUN    : 'fun' ;
+INT    : 'int' ;
 BOOL   : 'bool' ;
-CLASS : 'class' ;
-EXTS : 'extends' ;
-NEW : 'new';
-NULL : 'null';
-VOID : 'void';
+CLASS  : 'class' ;
+EXTS   : 'extends' ;
+NEW    : 'new';
+NULL   : 'null';
+VOID   : 'void';
 
 //Numbers
 fragment DIGIT : '0'..'9';    

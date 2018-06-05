@@ -1,4 +1,3 @@
-// Generated from Fool.g4 by ANTLR 4.7.1
 package parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -878,6 +877,7 @@ public class FoolParser extends Parser {
 	}
 	public static class BoolExpContext extends ExpContext {
 		public TermContext left;
+		public Token op;
 		public ExpContext right;
 		public TermContext term() {
 			return getRuleContext(TermContext.class,0);
@@ -899,6 +899,7 @@ public class FoolParser extends Parser {
 	}
 	public static class IntExpContext extends ExpContext {
 		public TermContext left;
+		public Token op;
 		public ExpContext right;
 		public TermContext term() {
 			return getRuleContext(TermContext.class,0);
@@ -939,7 +940,7 @@ public class FoolParser extends Parser {
 				if (_la==PLUS) {
 					{
 					setState(117);
-					match(PLUS);
+					((IntExpContext)_localctx).op = match(PLUS);
 					setState(118);
 					((IntExpContext)_localctx).right = exp();
 					}
@@ -959,7 +960,7 @@ public class FoolParser extends Parser {
 				if (_la==MINUS) {
 					{
 					setState(122);
-					match(MINUS);
+					((IntExpContext)_localctx).op = match(MINUS);
 					setState(123);
 					((IntExpContext)_localctx).right = exp();
 					}
@@ -979,7 +980,7 @@ public class FoolParser extends Parser {
 				if (_la==AND) {
 					{
 					setState(127);
-					match(AND);
+					((BoolExpContext)_localctx).op = match(AND);
 					setState(128);
 					((BoolExpContext)_localctx).right = exp();
 					}
@@ -999,7 +1000,7 @@ public class FoolParser extends Parser {
 				if (_la==OR) {
 					{
 					setState(132);
-					match(OR);
+					((BoolExpContext)_localctx).op = match(OR);
 					setState(133);
 					((BoolExpContext)_localctx).right = exp();
 					}
@@ -1098,6 +1099,7 @@ public class FoolParser extends Parser {
 
 	public static class TermContext extends ParserRuleContext {
 		public FactorContext left;
+		public Token op;
 		public TermContext right;
 		public FactorContext factor() {
 			return getRuleContext(FactorContext.class,0);
@@ -1140,7 +1142,7 @@ public class FoolParser extends Parser {
 				if (_la==TIMES) {
 					{
 					setState(166);
-					match(TIMES);
+					((TermContext)_localctx).op = match(TIMES);
 					setState(167);
 					((TermContext)_localctx).right = term();
 					}
@@ -1159,7 +1161,7 @@ public class FoolParser extends Parser {
 				if (_la==FRACT) {
 					{
 					setState(171);
-					match(FRACT);
+					((TermContext)_localctx).op = match(FRACT);
 					setState(172);
 					((TermContext)_localctx).right = term();
 					}
@@ -1349,14 +1351,15 @@ public class FoolParser extends Parser {
 	}
 	public static class IntBoolFactorContext extends FactorContext {
 		public ValueContext left;
+		public Token op;
 		public ValueContext right;
-		public TerminalNode GT() { return getToken(FoolParser.GT, 0); }
 		public List<ValueContext> value() {
 			return getRuleContexts(ValueContext.class);
 		}
 		public ValueContext value(int i) {
 			return getRuleContext(ValueContext.class,i);
 		}
+		public TerminalNode GT() { return getToken(FoolParser.GT, 0); }
 		public TerminalNode LT() { return getToken(FoolParser.LT, 0); }
 		public TerminalNode GTEQ() { return getToken(FoolParser.GTEQ, 0); }
 		public TerminalNode LTEQ() { return getToken(FoolParser.LTEQ, 0); }
@@ -1432,7 +1435,7 @@ public class FoolParser extends Parser {
 				setState(200);
 				((IntBoolFactorContext)_localctx).left = value();
 				setState(201);
-				match(GT);
+				((IntBoolFactorContext)_localctx).op = match(GT);
 				setState(202);
 				((IntBoolFactorContext)_localctx).right = value();
 				}
@@ -1444,7 +1447,7 @@ public class FoolParser extends Parser {
 				setState(204);
 				((IntBoolFactorContext)_localctx).left = value();
 				setState(205);
-				match(LT);
+				((IntBoolFactorContext)_localctx).op = match(LT);
 				setState(206);
 				((IntBoolFactorContext)_localctx).right = value();
 				}
@@ -1456,7 +1459,7 @@ public class FoolParser extends Parser {
 				setState(208);
 				((IntBoolFactorContext)_localctx).left = value();
 				setState(209);
-				match(GTEQ);
+				((IntBoolFactorContext)_localctx).op = match(GTEQ);
 				setState(210);
 				((IntBoolFactorContext)_localctx).right = value();
 				}
@@ -1468,7 +1471,7 @@ public class FoolParser extends Parser {
 				setState(212);
 				((IntBoolFactorContext)_localctx).left = value();
 				setState(213);
-				match(LTEQ);
+				((IntBoolFactorContext)_localctx).op = match(LTEQ);
 				setState(214);
 				((IntBoolFactorContext)_localctx).right = value();
 				}

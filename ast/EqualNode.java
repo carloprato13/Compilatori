@@ -6,12 +6,13 @@ import util.Environment;
 import util.SemanticError;
 import lib.FOOLlib;
 
-public class EqualNode implements Node {
-
+public class EqualNode implements Node{
+    
   private Node left;
   private Node right;
   
   public EqualNode (Node l, Node r) {
+    super();
     left=l;
     right=r;
   }

@@ -59,8 +59,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		return visit(ctx.exp());
 		
 	}
-	
-	
+		
 	@Override
 	public Node visitDecAsm(DecAsmContext ctx) {
 		
@@ -90,7 +89,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		Node expNode = visit(ctx.exp());
 
 		//build the varNode
-		return new AsmNode(ctx.ID().getText(), null, expNode);
+		return new AsmNode(ctx.ID().getText(), idNode, expNode);
 	}
 
 	//Da modificare la parte iniziale 'id dot id'
@@ -172,8 +171,8 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			//it is a simple expression
 			return visit( ctx.left );
 		}else{
-			//it is a binary expression, you should visit left and right
-			return new PlusNode(visit(ctx.left), visit(ctx.right)); //sarebbe furbo fare una classe OpNode da far estendere da PlusNode, TimesNode ecc..
+                        //it is a binary expression, you should visit left and right
+			return new OpExpNode(visit(ctx.left), visit(ctx.right), ctx.op.getText()); //sarebbe furbo fare una classe OpNode da far estendere da PlusNode, TimesNode ecc..
 		}
 		
 	}
@@ -187,11 +186,11 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			//notice once again the need of named terminals in the rule, this is because
 			//we need to point to the right expression among the 3 possible ones in the rule
 			
-			Node condExp = visit (ctx.cond);
+			Node condExp = visit(ctx.cond);
 			
-			Node thenExp = visit (ctx.thenBranch);
+			Node thenExp = visit(ctx.thenBranch);
 			
-			Node elseExp = visit (ctx.elseBranch);
+			Node elseExp = visit(ctx.elseBranch);
 			
 			//build the @res properly and return it
 			res = new IfNode(condExp, thenExp, elseExp);
@@ -199,72 +198,59 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			return res;
 		}
 
-//SERVONO METODI PER BoolExp ClassInstatiation statement
+//SERVONO METODI PER ClassInstatiation statement
+        
+        public Node visitBoolExp(FoolParser.BoolExpContext ctx){
+            if(ctx.right == null){
+			//it is a simple expression
+			return visit( ctx.left );
+		}else{
+			//it is a binary expression, you should visit left and right
+			return new OpBExpNode(visit(ctx.left),  visit(ctx.right), ctx.op.getText()); 
+		}
+        }
 
 	@Override
 	public Node visitTerm(TermContext ctx) {
-		//check whether this is a simple or binary expression
-		//notice here the necessity of having named elements in the grammar
 		if(ctx.right == null){
 			//it is a simple expression
 			return visit( ctx.left );
 		}else{
 			//it is a binary expression, you should visit left and right
-			return new MultNode(visit(ctx.left), visit(ctx.right)); //Aggiungere il caso del FracNode
+			return new OpTermNode(visit(ctx.left),  visit(ctx.right), ctx.op.getText()); 
 		}
 	}
 	
-@Override public Node visitStms(FoolParser.StmsContext ctx) { return visitChildren(ctx); }
+@Override public Node visitStms(FoolParser.StmsContext ctx) { 
+    return visitChildren(ctx); 
+}
 	
-@Override public Node visitStm(FoolParser.StmContext ctx) { return visitChildren(ctx); }
+@Override public Node visitStm(FoolParser.StmContext ctx) { 
+    return visitChildren(ctx);
+}
 
 
 	@Override
 	public Node visitValFactor(ValFactorContext ctx) {
 		//check whether this is a simple or binary expression
 		//notice here the necessity of having named elements in the grammar
-		/*if(ctx.right == null){
-			//it is a simple expression
-			return visit( ctx.left );
-		}else{
-			//it is a binary expression, you should visit left and right
-			//return new EqualNode(visit(ctx.left), visit(ctx.right)); //Stessa cosa di PlusNode
-		}*/
-                return null;
+		return visit( ctx.left );       
 	}
         
         @Override
 	public Node visitBoolFactor(BoolFactorContext ctx) {
-		//check whether this is a simple or binary expression
-		//notice here the necessity of having named elements in the grammar
-		if(ctx.right == null){
-			//it is a simple expression
-			return visit( ctx.left );
-		}else{
-			//it is a binary expression, you should visit left and right
-			return new EqualNode(visit(ctx.left), visit(ctx.right)); //Stessa cosa di PlusNode
-		}
+		//it is a binary expression, you should visit left and right
+                return new EqualNode(visit(ctx.left), visit(ctx.right)); 
 	}
         
         @Override
 	public Node visitIntBoolFactor(IntBoolFactorContext ctx) {
-		//check whether this is a simple or binary expression
-		//notice here the necessity of having named elements in the grammar
-		if(ctx.right == null){
-			//it is a simple expression
-			return visit( ctx.left );
-		}else{
-			//it is a binary expression, you should visit left and right
-			return new EqualNode(visit(ctx.left), visit(ctx.right)); //Stessa cosa di PlusNode
-		}
+            return new ConfNode(visit(ctx.left), visit(ctx.right), ctx.op.getText()); 
 	}
 	
 	
 	@Override
 	public Node visitIntVal(IntValContext ctx) {
-		// notice that this method is not actually a rule but a named production #intVal
-		
-		//there is no need to perform a check here, the lexer ensures this text is an int
 		return new IntNode(Integer.parseInt(ctx.INTEGER().getText()));
 	}
 	
