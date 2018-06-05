@@ -1,4 +1,5 @@
 package parser;
+// Generated from Fool.g4 by ANTLR 4.7.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -243,13 +244,25 @@ public class FoolBaseListener implements FoolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStm(FoolParser.StmContext ctx) { }
+	@Override public void enterStmAsm(FoolParser.StmAsmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStm(FoolParser.StmContext ctx) { }
+	@Override public void exitStmAsm(FoolParser.StmAsmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBranchStm(FoolParser.BranchStmContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBranchStm(FoolParser.BranchStmContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

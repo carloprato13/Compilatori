@@ -47,18 +47,34 @@ public ArrayList<SemanticError> checkSemantics(Environment env) {
     Node l = left.typeCheck();
     Node r = right.typeCheck();
     if (! ( FOOLlib.isSubtype(l,r) || FOOLlib.isSubtype(r,l) ) ) {
-      System.out.println("Incompatible types in equal");
+      System.out.println("Incompatible types in Confrontation");
       System.exit(0);
     }
     return new BoolTypeNode();
   }  
   
   public String codeGeneration() {
+        String op2= "";
+          switch(op){
+              case ">=":
+                op2= "bge ";
+                break;
+               case ">":
+                op2="bgt ";
+                break;
+               case "<=":
+                op2="blt ";
+                break;
+               case "<":
+                op2="ble ";
+                break;
+                     
+          }
 	  String l1 = FOOLlib.freshLabel(); 
 	  String l2 = FOOLlib.freshLabel();
 	  return left.codeGeneration()+
 			   right.codeGeneration()+
-			   "beq "+ l1 +"\n"+
+			   op2+ l1 +"\n"+
 			   "push 0\n"+
 			   "b " + l2 + "\n" +
 			   l1 + ":\n"+

@@ -1,4 +1,5 @@
 package parser;
+// Generated from Fool.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -223,15 +224,29 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitStms(FoolParser.StmsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FoolParser#stm}.
+	 * Enter a parse tree produced by the {@code stmAsm}
+	 * labeled alternative in {@link FoolParser#stm}.
 	 * @param ctx the parse tree
 	 */
-	void enterStm(FoolParser.StmContext ctx);
+	void enterStmAsm(FoolParser.StmAsmContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FoolParser#stm}.
+	 * Exit a parse tree produced by the {@code stmAsm}
+	 * labeled alternative in {@link FoolParser#stm}.
 	 * @param ctx the parse tree
 	 */
-	void exitStm(FoolParser.StmContext ctx);
+	void exitStmAsm(FoolParser.StmAsmContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code BranchStm}
+	 * labeled alternative in {@link FoolParser#stm}.
+	 * @param ctx the parse tree
+	 */
+	void enterBranchStm(FoolParser.BranchStmContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code BranchStm}
+	 * labeled alternative in {@link FoolParser#stm}.
+	 * @param ctx the parse tree
+	 */
+	void exitBranchStm(FoolParser.BranchStmContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code boolFactor}
 	 * labeled alternative in {@link FoolParser#factor}.

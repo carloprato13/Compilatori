@@ -198,12 +198,26 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			return res;
 		}
 
-//SERVONO METODI PER ClassInstatiation statement
+//SERVONO METODI PER ClassInstatiation
+        
+        public Node visitstmAsm(FoolParser.StmContext ctx) { 
+            return visitChildren(ctx);
+        }
+        
+        public IfNodeStm visitBranchStm(FoolParser.BranchStmContext ctx) { 
+            Node bool = visit(ctx.e);
+            Node b1 = visit(ctx.b1);
+            Node b2 = visit(ctx.b2);
+            IfNodeStm res = new IfNodeStm(bool,b1,b2);
+            return res;
+        }
         
         public Node visitBoolExp(FoolParser.BoolExpContext ctx){
             if(ctx.right == null){
-			//it is a simple expression
-			return visit( ctx.left );
+			if(ctx.op.getText().equals("not"))
+                                return new OpBExpNode(visit(ctx.left), null, "not");
+                        else
+                            return visit( ctx.left );
 		}else{
 			//it is a binary expression, you should visit left and right
 			return new OpBExpNode(visit(ctx.left),  visit(ctx.right), ctx.op.getText()); 
@@ -223,10 +237,6 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 	
 @Override public Node visitStms(FoolParser.StmsContext ctx) { 
     return visitChildren(ctx); 
-}
-	
-@Override public Node visitStm(FoolParser.StmContext ctx) { 
-    return visitChildren(ctx);
 }
 
 
@@ -294,6 +304,16 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		
 		return res;
 	}
+       
+        
+        
+        public Node visitNullVal(NullValContext ctx) {
+            return new NullNode();
+        }
+        
+        public Node visitBaseVal(BaseValContext ctx) {
+            return visitChildren(ctx);
+        }
 /*
 Vanno aggiunti del value il 'nullVal', 'fieldVal' e considerare nel 'boolVal'
 il 'not'oppure cambiargli nome e 'methodCall'
