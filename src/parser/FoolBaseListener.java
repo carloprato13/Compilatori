@@ -1,5 +1,7 @@
-package parser;
 // Generated from Fool.g4 by ANTLR 4.7.1
+package parser;
+    import java.util.ArrayList;
+
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -35,6 +37,30 @@ public class FoolBaseListener implements FoolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitLetInExp(FoolParser.LetInExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterClassExp(FoolParser.ClassExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassExp(FoolParser.ClassExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterClassd(FoolParser.ClassdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassd(FoolParser.ClassdContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -136,18 +162,6 @@ public class FoolBaseListener implements FoolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClassDeclaration(FoolParser.ClassDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitClassDeclaration(FoolParser.ClassDeclarationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterType(FoolParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -179,18 +193,6 @@ public class FoolBaseListener implements FoolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBoolExp(FoolParser.BoolExpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterClassInstantiation(FoolParser.ClassInstantiationContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitClassInstantiation(FoolParser.ClassInstantiationContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -395,6 +397,18 @@ public class FoolBaseListener implements FoolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBaseVal(FoolParser.BaseValContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterClassInstantiation(FoolParser.ClassInstantiationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassInstantiation(FoolParser.ClassInstantiationContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

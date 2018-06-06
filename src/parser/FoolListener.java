@@ -1,5 +1,7 @@
-package parser;
 // Generated from Fool.g4 by ANTLR 4.7.1
+package parser;
+    import java.util.ArrayList;
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -31,6 +33,28 @@ public interface FoolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLetInExp(FoolParser.LetInExpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code classExp}
+	 * labeled alternative in {@link FoolParser#prog}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassExp(FoolParser.ClassExpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code classExp}
+	 * labeled alternative in {@link FoolParser#prog}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassExp(FoolParser.ClassExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FoolParser#classd}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassd(FoolParser.ClassdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FoolParser#classd}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassd(FoolParser.ClassdContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FoolParser#let}.
 	 * @param ctx the parse tree
@@ -122,18 +146,6 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitFunDeclaration(FoolParser.FunDeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code classDeclaration}
-	 * labeled alternative in {@link FoolParser#dec}.
-	 * @param ctx the parse tree
-	 */
-	void enterClassDeclaration(FoolParser.ClassDeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code classDeclaration}
-	 * labeled alternative in {@link FoolParser#dec}.
-	 * @param ctx the parse tree
-	 */
-	void exitClassDeclaration(FoolParser.ClassDeclarationContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link FoolParser#type}.
 	 * @param ctx the parse tree
 	 */
@@ -167,18 +179,6 @@ public interface FoolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBoolExp(FoolParser.BoolExpContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code classInstantiation}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void enterClassInstantiation(FoolParser.ClassInstantiationContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code classInstantiation}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 */
-	void exitClassInstantiation(FoolParser.ClassInstantiationContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code statement}
 	 * labeled alternative in {@link FoolParser#exp}.
@@ -379,4 +379,16 @@ public interface FoolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBaseVal(FoolParser.BaseValContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code classInstantiation}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassInstantiation(FoolParser.ClassInstantiationContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code classInstantiation}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassInstantiation(FoolParser.ClassInstantiationContext ctx);
 }

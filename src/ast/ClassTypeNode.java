@@ -23,7 +23,7 @@ public class ClassTypeNode implements Node {
     id=i;
     type=null;
     exp=null;
-  }
+  }  
   
   @Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
@@ -31,8 +31,8 @@ public class ClassTypeNode implements Node {
   	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
   	  
   	  //env.offset = -2;
-  	  HashMap<String,STentry> hm = env.symTable.get(env.nestingLevel);
-        STentry entry = new STentry(env.nestingLevel,type, env.offset--); //separo introducendo "entry"
+  	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
+        STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
         
         if ( hm.put(id,entry) != null )
           res.add(new SemanticError("Var id "+id+" already declared"));

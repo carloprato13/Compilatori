@@ -1,5 +1,7 @@
-package parser;
 // Generated from Fool.g4 by ANTLR 4.7.1
+package parser;
+import java.util.ArrayList;
+
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -73,6 +75,7 @@ public class FoolLexer extends Lexer {
 			}
 		}
 	}
+    public int lexicalErrors=0;
 
 	@Override
 	@Deprecated
@@ -87,10 +90,7 @@ public class FoolLexer extends Lexer {
 	}
 
 
-	   //there is a much better way to do this, check the ANTLR guide
-	   //I will leave it like this for now just becasue it is quick
-	   //but it doesn't work well
-	   public int lexicalErrors=0;
+	   public ArrayList<String> errors = new ArrayList<>();
 
 
 	public FoolLexer(CharStream input) {

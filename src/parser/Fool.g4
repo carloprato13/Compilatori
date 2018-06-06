@@ -1,10 +1,12 @@
 grammar Fool;
 
+
+@header {
+    import java.util.ArrayList;
+}
+
 @lexer::members {
-   //there is a much better way to do this, check the ANTLR guide
-   //I will leave it like this for now just becasue it is quick
-   //but it doesn't work well
-   public int lexicalErrors=0;
+   public ArrayList<String> errors = new ArrayList<>();
 }
 
 /*------------------------------------------------------------------
@@ -13,7 +15,10 @@ grammar Fool;
   
 prog   : exp SEMIC                 #singleExp
        | let exp SEMIC             #letInExp
+       | (classd)+ SEMIC (let)? exp SEMIC  #classExp       
        ;
+
+classd : CLASS ID (EXTS ID)? (LPAR ( vardec (COMMA vardec)* )? RPAR)? (CLPAR (fun SEMIC)* CRPAR)? ;
 
 let    : LET (dec SEMIC)+ IN ;
 
@@ -24,17 +29,16 @@ varasm : t=vardec ASM e=exp     #decAsm
        | t=ID DOT f=ID ASM e=exp  #fieldAsm
        ;
 
-fun    : type ID LPAR ( elem+=vardec ( COMMA elem+=vardec)* )? RPAR (let)? exp ;
+fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? exp ;
 
 dec    : varasm           #varAssignment
        | fun              #funDeclaration
-       | CLASS type (EXTS type)? LPAR ( elem+=vardec (COMMA elem+=vardec)* )? RPAR CLPAR (fun SEMIC)* CRPAR #classDeclaration
        ;         
    
 type   : INT  
        | BOOL 
-       | ID
        | VOID
+       | ID
        ;  
     
 exp    : left=term (op =PLUS right=exp)?  #intExp
@@ -42,10 +46,9 @@ exp    : left=term (op =PLUS right=exp)?  #intExp
        | left=term (op = AND right=exp)? #boolExp
        | left=term (op = OR right=exp)?  #boolExp
        | op=NOT exp #boolExp
-       | NEW type LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
        | stms #statement
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifThenElse
-	     ;
+;
    
 term   : left=factor (op=TIMES right=term)?
        | left=factor (op=FRACT right=term)?
@@ -73,7 +76,9 @@ value  : INTEGER          #intVal
        | ID DOT ID #fieldVal
        | ID DOT ID LPAR ( elem+=exp (COMMA elem+=exp)* )? RPAR #methodCall
        | LPAR exp RPAR                      #baseVal
-       ; 
+       | NEW ID LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
+       | PRINT ( exp )        #print       
+; 
 
    
 /*------------------------------------------------------------------

@@ -1,6 +1,7 @@
-
-package parser;
 // Generated from Fool.g4 by ANTLR 4.7.1
+package parser;
+    import java.util.ArrayList;
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -25,6 +26,19 @@ public interface FoolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitLetInExp(FoolParser.LetInExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code classExp}
+	 * labeled alternative in {@link FoolParser#prog}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClassExp(FoolParser.ClassExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FoolParser#classd}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClassd(FoolParser.ClassdContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FoolParser#let}.
 	 * @param ctx the parse tree
@@ -79,13 +93,6 @@ public interface FoolVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunDeclaration(FoolParser.FunDeclarationContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code classDeclaration}
-	 * labeled alternative in {@link FoolParser#dec}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitClassDeclaration(FoolParser.ClassDeclarationContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link FoolParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -105,13 +112,6 @@ public interface FoolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBoolExp(FoolParser.BoolExpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code classInstantiation}
-	 * labeled alternative in {@link FoolParser#exp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitClassInstantiation(FoolParser.ClassInstantiationContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code statement}
 	 * labeled alternative in {@link FoolParser#exp}.
@@ -139,11 +139,19 @@ public interface FoolVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStms(FoolParser.StmsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link FoolParser#stm}.
+	 * Visit a parse tree produced by the {@code stmAsm}
+	 * labeled alternative in {@link FoolParser#stm}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStm(FoolParser.StmContext ctx);
+	T visitStmAsm(FoolParser.StmAsmContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BranchStm}
+	 * labeled alternative in {@link FoolParser#stm}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBranchStm(FoolParser.BranchStmContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code boolFactor}
 	 * labeled alternative in {@link FoolParser#factor}.
@@ -221,4 +229,11 @@ public interface FoolVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBaseVal(FoolParser.BaseValContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code classInstantiation}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitClassInstantiation(FoolParser.ClassInstantiationContext ctx);
 }

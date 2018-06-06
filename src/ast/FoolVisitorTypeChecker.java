@@ -51,11 +51,58 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		return res;
 	}
 	
+        public Node visitClassExp(FoolParser.ClassExpContext ctx) {
+        ProgClassExpNode res;
+
+        //try {
+            ArrayList<ClassdNode> classDeclarations = new ArrayList<ClassdNode>();
+            for (FOOLParser.ClassdecContext dc : ctx.classdec()) {
+                ArrayList<ParameterNode> vars = new ArrayList<ParameterNode>();
+                for (int i = 0; i < dc.vardec().size(); i++) {
+                    VardecContext varctx = dc.vardec().get(i);
+                    vars.add(new ParameterNode(varctx, varctx.ID().getText(), visit(varctx.type()).type(), i + 1, true));
+                }
+                ArrayList<MethodNode> mets = new ArrayList<MethodNode>();
+                for (MetContext functx : dc.met()) {
+                    MethodNode method = (MethodNode) visit(functx);
+                    method.setClassID(dc.ID(0).getText());
+                    mets.add(method);
+                }
+
+                ClassNode classNode;
+                if (dc.ID(1) == null) {
+                    classNode = new ClassNode(dc, dc.ID(0).getText(), "", vars, mets);
+                } else {
+                    classNode = new ClassNode(dc, dc.ID(0).getText(), dc.ID().get(1).getText(), vars, mets);
+                }
+                classDeclarations.add(classNode);
+            }
+
+            if (ctx.let() != null) {
+                ArrayList<INode> letDeclarations = new ArrayList<INode>();
+                for (DecContext dc : ctx.let().dec()) {
+                    letDeclarations.add(visit(dc));
+                }
+
+                INode exp = visit(ctx.exp());
+
+                res = new ProgClassDecNode(ctx, classDeclarations, new LetNode(ctx.let(), letDeclarations), new InNode(ctx.let(), exp, true));
+            } else {
+                INode exp = visit(ctx.exp());
+
+                res = new ProgClassDecNode(ctx, classDeclarations, null, new InNode(ctx.let(), exp, false));
+            }
+       /*} catch (TypeException e) {
+            return new ErrorNode(e);
+        }*/
+        return res;
+    }        
+        
 	@Override
 	public Node visitSingleExp(SingleExpContext ctx) {
 		
 		//simply return the result of the visit to the inner exp
-		return visit(ctx.exp());
+		return new ProgNode(visit(ctx.exp()));
 		
 	}
 		
@@ -311,7 +358,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
         }
         
         public Node visitBaseVal(BaseValContext ctx) {
-            return visitChildren(ctx);
+            return visit(ctx.exp());
         }
 /*
 Vanno aggiunti del value il 'nullVal', 'fieldVal' e considerare nel 'boolVal'
