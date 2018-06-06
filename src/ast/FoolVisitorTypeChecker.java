@@ -26,7 +26,6 @@ import util.SemanticError;
 
 public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 	
-	
 	@Override
 	public Node visitLetInExp(LetInExpContext ctx) {
 		

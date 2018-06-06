@@ -38,12 +38,12 @@ type   : INT
        ;  
     
 exp    : left=term (op =PLUS right=exp)?  #intExp
-	     | left=term (op = MINUS right=exp)? #intExp
-	     | left=term (op = AND right=exp)? #boolExp
-	     | left=term (op = OR right=exp)?  #boolExp
-             | op=NOT exp #boolExp
-	     | NEW type LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
-	     | stms #statement
+       | left=term (op = MINUS right=exp)? #intExp
+       | left=term (op = AND right=exp)? #boolExp
+       | left=term (op = OR right=exp)?  #boolExp
+       | op=NOT exp #boolExp
+       | NEW type LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
+       | stms #statement
        | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifThenElse
 	     ;
    
@@ -54,8 +54,8 @@ term   : left=factor (op=TIMES right=term)?
 stms   : ( stm )+;
 
 stm    : varasm #stmAsm
-	   | IF e=exp THEN CLPAR b1=stms CRPAR ELSE CLPAR b2=stms CRPAR #BranchStm
-	   ;
+       | IF e=exp THEN CLPAR b1=stms CRPAR ELSE CLPAR b2=stms CRPAR #BranchStm
+       ;
 
 factor : left=value EQ right=value #boolFactor
        | left=value op=GT right=value #intBoolFactor
