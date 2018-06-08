@@ -24,29 +24,27 @@ public class ProgLetInNode implements Node {
   }
   
   @Override
-	public ArrayList<SemanticError> checkSemantics(Environment env) {
-	  env.setNestingLevel(env.getNestingLevel()+1);
-      HashMap<String,STentry> hm = new HashMap<String,STentry> ();
-      env.getSymbolTable().add(hm);
+    
+  public ArrayList<SemanticError> checkSemantics(Environment env) {
       
-      //declare resulting list
       ArrayList<SemanticError> res = new ArrayList<SemanticError>();
-      
-      //check semantics in the dec list
-      if(declist.size() > 0){
-    	  env.offset = -2;
-    	  //if there are children then check semantics for every child and save the results
-    	  for(Node n : declist)
-    		  res.addAll(n.checkSemantics(env));
-      }
-      
-      //check semantics in the exp body
-      res.addAll(exp.checkSemantics(env));
-      
-      //clean the scope, we are leaving a let scope
-      env.getSymbolTable().remove(env.getNestingLevel());
-      env.setNestingLevel(env.getNestingLevel()-1);
-      
+
+        env.pushHashMap();
+
+        //check semantics in the exp body
+        //check semantics in the dec list
+        if (declist.size() > 0) {
+            env.offset = -2;
+            //if there are children then check semantics for every child and save the results
+            for (Node n : declist)
+                res.addAll(n.checkSemantics(env));
+        }
+        
+        res.addAll(exp.checkSemantics(env));
+
+        //clean the scope, we are leaving a let scope
+        env.popHashMap();
+        
       //return the result
       return res;
 	}

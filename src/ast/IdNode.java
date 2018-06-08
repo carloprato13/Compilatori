@@ -16,7 +16,10 @@ public class IdNode implements Node {
   }
   
   public String toPrint(String s) {
-	return s+"Id:" + id + " at nestlev " + nestinglevel +"\n" + entry.toString(s+"  ") ;  
+        if(entry==null)
+            return s+"Id:" + id + " at nestlev " + nestinglevel +"\n" ;
+        else
+            return s+"Id:" + id + " at nestlev " + nestinglevel +"\n" + entry.toString(s+"  ") ;
   }
   
   @Override

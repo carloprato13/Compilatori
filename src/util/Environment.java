@@ -32,8 +32,6 @@ public class Environment {
         this.offset = offset;
     }
     
-    
-    
     public void setNestingLevel(int s){
      setL ((ArrayList)this.symbolTable.subList(0, s));
     }
