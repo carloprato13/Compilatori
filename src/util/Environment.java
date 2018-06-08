@@ -16,10 +16,32 @@ public class Environment {
 
     }
 
+    public ArrayList<HashMap<String, STentry>> getSymbolTable() {
+        return symbolTable;
+    }
+
     public int getNestingLevel() {
         return this.symbolTable.size() - 1;
     }
 
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+    
+    
+    
+    public void setNestingLevel(int s){
+     setL ((ArrayList)this.symbolTable.subList(0, s));
+    }
+    
+    public void setL (ArrayList<HashMap<String, STentry>> l){
+        this.symbolTable = l;
+    }
+    
     public Environment pushHashMap() {
         this.symbolTable.add(new HashMap<>());
         return this;
