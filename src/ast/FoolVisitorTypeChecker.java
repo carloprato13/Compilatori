@@ -1,8 +1,6 @@
 package ast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import parser.*;
 import parser.FoolParser.*;
@@ -10,19 +8,15 @@ import parser.FoolParser.BaseValContext;
 import parser.FoolParser.BoolValContext;
 import parser.FoolParser.DecContext;
 import parser.FoolParser.ExpContext;
-import parser.FoolParser.FactorContext;
 import parser.FoolParser.FunContext;
 import parser.FoolParser.FuncallContext;
-import parser.FoolParser.IfThenElseContext;
 import parser.FoolParser.IntValContext;
 import parser.FoolParser.LetInExpContext;
 import parser.FoolParser.SingleExpContext;
 import parser.FoolParser.TermContext;
 import parser.FoolParser.TypeContext;
 import parser.FoolParser.VarValContext;
-import parser.FoolParser.VarasmContext;
 import parser.FoolParser.VardecContext;
-import util.SemanticError;
 
 public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 	
@@ -33,7 +27,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		ProgLetInNode res;
 		
 		//list of declarations in @res
-		ArrayList<Node> declarations = new ArrayList<Node>();
+		ArrayList<Node> declarations = new ArrayList<>();
 		
 		//visit all nodes corresponding to declarations inside the let context and store them in @declarations
 		//notice that the ctx.let().dec() method returns a list, this is because of the use of * or + in the grammar
