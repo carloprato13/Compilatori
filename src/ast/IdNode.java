@@ -16,7 +16,7 @@ public class IdNode implements Node {
   }
   
   public String toPrint(String s) {
-	return s+"Id:" + id + " at nestlev " + nestinglevel +"\n" + entry.toPrint(s+"  ") ;  
+	return s+"Id:" + id + " at nestlev " + nestinglevel +"\n" + entry.toString(s+"  ") ;  
   }
   
   @Override
@@ -25,27 +25,27 @@ public class IdNode implements Node {
 	  //create result list
 	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
 	  
-	  int j=env.nestingLevel;
+	  int j=env.getNestingLevel();
 	  STentry tmp=null; 
 	  while (j>=0 && tmp==null)
-		  tmp=(env.symTable.get(j--)).get(id);
+		  tmp=(env.getSymbolTable().get(j--)).get(id);
       if (tmp==null)
           res.add(new SemanticError("Id "+id+" not declared"));
       
       else{
     	  entry = tmp;
-    	  nestinglevel = env.nestingLevel;
+    	  nestinglevel = env.getNestingLevel();
       }
 	  
 	  return res;
 	}
   
   public Node typeCheck () {
-	if (entry.getType() instanceof ArrowTypeNode) { //
+	if (entry.getNode() instanceof ArrowTypeNode) { //
 	  System.out.println("Wrong usage of function identifier");
       System.exit(0);
     }	 
-    return entry.getType();
+    return entry.getNode();
   }
   
   public String codeGeneration() {

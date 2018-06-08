@@ -25,8 +25,8 @@ public class AsmNode implements Node {
   	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
   	  
   	  //env.offset = -2;
-  	  HashMap<String,STentry> hm = env.symTable.get(env.nestingLevel);
-        STentry entry = new STentry(env.nestingLevel,type, env.offset--); //separo introducendo "entry"
+  	  HashMap<String,STentry> hm = env.getSymbolTable().get(env.getNestingLevel());
+        STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
         
         if ( hm.put(id,entry) != null )
           res.add(new SemanticError("Var id "+id+" already declared"));

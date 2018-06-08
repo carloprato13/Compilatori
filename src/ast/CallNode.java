@@ -30,7 +30,7 @@ public String toPrint(String s) {  //
 	for (Node par:parlist)
 	  parlstr+=par.toPrint(s+"  ");		
 	return s+"Call:" + id + " at nestlev " + nestinglevel +"\n" 
-           +entry.toPrint(s+"  ")
+           +entry.toString(s+"  ")
            +parlstr;        
   }
 
@@ -39,16 +39,16 @@ public String toPrint(String s) {  //
 		//create the result
 		ArrayList<SemanticError> res = new ArrayList<SemanticError>();
 		
-		 int j=env.nestingLevel;
+		 int j=env.getNestingLevel();
 		 STentry tmp=null; 
 		 while (j>=0 && tmp==null)
-		     tmp=(env.symTable.get(j--)).get(id);
+		     tmp=(env.getSymbolTable().get(j--)).get(id);
 		 if (tmp==null)
 			 res.add(new SemanticError("Id "+id+" not declared"));
 		 
 		 else{
 			 this.entry = tmp;
-			 this.nestinglevel = env.nestingLevel;
+			 this.nestinglevel = env.getNestingLevel();
 			 
 			 for(Node arg : parlist)
 				 res.addAll(arg.checkSemantics(env));
@@ -58,7 +58,7 @@ public String toPrint(String s) {  //
   
   public Node typeCheck () {  //                           
 	 ArrowTypeNode t=null;
-     if (entry.getType() instanceof ArrowTypeNode) t=(ArrowTypeNode) entry.getType(); //controllo che sia un tipo freccia
+     if (entry.getNode() instanceof ArrowTypeNode) t=(ArrowTypeNode) entry.getNode(); //controllo che sia un tipo freccia
      else {
        System.out.println("Invocation of a non-function "+id);
        System.exit(0);

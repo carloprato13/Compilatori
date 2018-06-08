@@ -56,39 +56,39 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 
         //try {
             ArrayList<ClassdNode> classDeclarations = new ArrayList<ClassdNode>();
-            for (FOOLParser.ClassdecContext dc : ctx.classdec()) {
+            for (FoolParser.ClassdecContext dc : ctx.classdec()) {
                 ArrayList<ParameterNode> vars = new ArrayList<ParameterNode>();
                 for (int i = 0; i < dc.vardec().size(); i++) {
                     VardecContext varctx = dc.vardec().get(i);
                     vars.add(new ParameterNode(varctx, varctx.ID().getText(), visit(varctx.type()).type(), i + 1, true));
                 }
-                ArrayList<MethodNode> mets = new ArrayList<MethodNode>();
+                ArrayList<FunNode> mets = new ArrayList<FunNode>();
                 for (MetContext functx : dc.met()) {
-                    MethodNode method = (MethodNode) visit(functx);
+                    FunNode method = (FunNode) visit(functx);
                     method.setClassID(dc.ID(0).getText());
                     mets.add(method);
                 }
 
-                ClassNode classNode;
+                ClassdNode classNode;
                 if (dc.ID(1) == null) {
-                    classNode = new ClassNode(dc, dc.ID(0).getText(), "", vars, mets);
+                    classNode = new ClassdNode(dc, dc.ID(0).getText(), "", vars, mets);
                 } else {
-                    classNode = new ClassNode(dc, dc.ID(0).getText(), dc.ID().get(1).getText(), vars, mets);
+                    classNode = new ClassdNode(dc, dc.ID(0).getText(), dc.ID().get(1).getText(), vars, mets);
                 }
                 classDeclarations.add(classNode);
             }
 
             if (ctx.let() != null) {
-                ArrayList<INode> letDeclarations = new ArrayList<INode>();
+                ArrayList<Node> letDeclarations = new ArrayList<Node>();
                 for (DecContext dc : ctx.let().dec()) {
                     letDeclarations.add(visit(dc));
                 }
 
-                INode exp = visit(ctx.exp());
+                Node exp = visit(ctx.exp());
 
                 res = new ProgClassDecNode(ctx, classDeclarations, new LetNode(ctx.let(), letDeclarations), new InNode(ctx.let(), exp, true));
             } else {
-                INode exp = visit(ctx.exp());
+                Node exp = visit(ctx.exp());
 
                 res = new ProgClassDecNode(ctx, classDeclarations, null, new InNode(ctx.let(), exp, false));
             }

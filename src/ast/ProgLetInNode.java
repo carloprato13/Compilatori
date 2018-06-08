@@ -25,9 +25,9 @@ public class ProgLetInNode implements Node {
   
   @Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
-	  env.nestingLevel++;
+	  env.setNestingLevel(env.getNestingLevel()+1);
       HashMap<String,STentry> hm = new HashMap<String,STentry> ();
-      env.symTable.add(hm);
+      env.getSymbolTable().add(hm);
       
       //declare resulting list
       ArrayList<SemanticError> res = new ArrayList<SemanticError>();
@@ -44,7 +44,8 @@ public class ProgLetInNode implements Node {
       res.addAll(exp.checkSemantics(env));
       
       //clean the scope, we are leaving a let scope
-      env.symTable.remove(env.nestingLevel--);
+      env.getSymbolTable().remove(env.getNestingLevel());
+      env.setNestingLevel(env.getNestingLevel()-1);
       
       //return the result
       return res;

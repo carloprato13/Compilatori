@@ -31,16 +31,16 @@ public class FunNode implements Node {
 	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
 	  
 	  //env.offset = -2;
-	  HashMap<String,STentry> hm = env.symTable.get(env.nestingLevel);
-      STentry entry = new STentry(env.nestingLevel,env.offset--); //separo introducendo "entry"
-      
+	  HashMap<String,STentry> hm = env.getSymbolTable().get(env.getNestingLevel());
+      STentry entry = new STentry(env.getNestingLevel(),null, env.getOffset()); //da cambiare il null
+      env.setOffset (env.getOffset()-1);
       if ( hm.put(id,entry) != null )
         res.add(new SemanticError("Fun id "+id+" already declared"));
       else{
     	  //creare una nuova hashmap per la symTable
-	      env.nestingLevel++;
+	      env.setNestingLevel (env.getNestingLevel() + 1);
 	      HashMap<String,STentry> hmn = new HashMap<String,STentry> ();
-	      env.symTable.add(hmn);
+	      env.getSymbolTable().add(hmn);
 	      
 	      ArrayList<Node> parTypes = new ArrayList<Node>();
 	      int paroffset=1;
@@ -49,13 +49,13 @@ public class FunNode implements Node {
 	      for(Node a : parlist){
 	    	  ParNode arg = (ParNode) a;
 	    	  parTypes.add(arg.getType());
-	    	  if ( hmn.put(arg.getId(),new STentry(env.nestingLevel,arg.getType(),paroffset++)) != null  )
+	    	  if ( hmn.put(arg.getId(),new STentry(env.getNestingLevel(),arg.getType(),paroffset++)) != null  )
 	    		  System.out.println("Parameter id "+arg.getId()+" already declared");
               
 	      }
 	      
 	      //set func type
-	      entry.addType( new ArrowTypeNode(parTypes, type) );
+	    //  entry.addNode( new ArrowTypeNode(parTypes, type) );
 	      
 	    //check semantics in the dec list
 	      if(declist.size() > 0){
@@ -69,8 +69,8 @@ public class FunNode implements Node {
 	      res.addAll(body.checkSemantics(env));
 	      
 	      //close scope
-	      env.symTable.remove(env.nestingLevel--);
-	      
+	      env.getSymbolTable().remove(env.getNestingLevel());
+	      env.setNestingLevel(env.getNestingLevel() -1);
       }
       
       return res;
