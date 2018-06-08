@@ -13,6 +13,7 @@ public class FunNode implements Node {
   private ArrayList<Node> parlist = new ArrayList<Node>(); 
   private ArrayList<Node> declist; 
   private Node body;
+  private String classID;
   
   public FunNode (String i, Node t) {
     id=i;
@@ -139,5 +140,15 @@ public class FunNode implements Node {
 	    
 		return "push "+ funl +"\n";
   }
+
+    public String getClassID() {
+        return classID;
+    }
+
+    public void setClassID(String classID) {
+        this.classID = classID;
+    }
+  
+ 
   
 }  

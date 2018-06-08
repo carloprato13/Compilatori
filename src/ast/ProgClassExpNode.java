@@ -18,9 +18,9 @@ import java.util.ListIterator;
 public class ProgClassExpNode implements Node {
 
     private ArrayList<ClassdNode> classDeclarations;
-    private ProgLetInNode p;
+    private Node p;
 
-    public ProgClassExpNode(ParserRuleContext ctx, ArrayList<ClassdNode> classDeclaration, ProgLetInNode ps) {
+    public ProgClassExpNode(ParserRuleContext ctx, ArrayList<ClassdNode> classDeclaration, Node ps) {
         this.classDeclarations = classDeclaration;
         this.p=ps;
     }

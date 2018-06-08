@@ -10,51 +10,57 @@ import util.SemanticError;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 /**
  *
  * @author carlo
  */
-public class ClassdNode implements Node{
-    
+public class ClassdNode implements Node {
+
     private String classID;
     private String superClassID;
     private ArrayList<VarNode> attrDecList;
-    private ArrayList<FunNode> metDecList;
+    private ArrayList<FunNode> funDecList;
 
     private HashMap<String, Node> fields = new HashMap<>();
-    private HashMap<String, FunNode> methods = new HashMap<>();
+    private HashMap<String, FunNode> functions = new HashMap<>();
 
     private ClassTypeNode type;
+
+    public ClassdNode(String classID, String superClassID, ArrayList<VarNode> attrDecList, ArrayList<FunNode> funDecList) {
+        this.classID = classID;
+        this.superClassID = superClassID;
+        this.attrDecList = attrDecList;
+        this.funDecList = funDecList;
+    }
 
     @Override
     public String toPrint(String indent) {
         return indent + classID;
     }
-    
-     public ArrayList<VarNode> getVardeclist() {
+
+    public ArrayList<VarNode> getVardeclist() {
         return this.attrDecList;
     }
 
-    public ArrayList<FunNode> getMetDecList() {
-        return metDecList;
+    public ArrayList<FunNode> getFunDecList() {
+        return funDecList;
     }
-    
+
     public String getClassID() {
         return classID;
     }
-    
+
     public String getSuperClassID() {
         return superClassID;
     }
 
     @Override
     public Node typeCheck() {
-        for (VarNode vardec : attrDecList){
+        for (VarNode vardec : attrDecList) {
             vardec.typeCheck();
         }
 
-        for (FunNode fundec : metDecList) {
+        for (FunNode fundec : funDecList) {
             fundec.typeCheck();
         }
 
@@ -70,6 +76,5 @@ public class ClassdNode implements Node{
     public ArrayList<SemanticError> checkSemantics(Environment env) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-   
+
 }
