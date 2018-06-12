@@ -105,16 +105,16 @@ public class ClassdNode implements Node {
     }
 
     @Override
-    public ArrayList<SemanticError> checkSemantics(Environment env) {return null;}
-    /*    
+    public ArrayList<SemanticError> checkSemantics(Environment env) {
+     
         ArrayList<SemanticError> res = new ArrayList<>();
 
         // Usati per creare la entry della classe nella symbol table
         ArrayList<VarNode> fieldsList = new ArrayList<>();
         ArrayList<FunNode> methodsList = new ArrayList<>();
 
-        for (VarNode var : this.attrDecList) {
-            fieldsList.add(new VarNode(var.getID(), var.getType()));
+        for(VarNode var : this.attrDecList) {
+            fieldsList.add(new VarNode(var.getId(), var.getType(), null));
             fields.put(var.getId(), var.getType());
         }
 
@@ -122,12 +122,12 @@ public class ClassdNode implements Node {
             ArrayList<Node> paramsType = new ArrayList<>();
             for (Node params : fun.getParams()) { // Controllo i parametri
                 VarNode param= (VarNode)params;
-                if (param.getType() instanceof InstanceType) { // Se si tratta di oggetti
-                    InstanceType paramType = (InstanceType) param.getType();
-                    String declaredClass = paramType.getClassType().getClassID();
+                if (param.getType() instanceof InstanceTypeNode) { // Se si tratta di oggetti
+                    InstanceTypeNode paramType = (InstanceTypeNode) param.getType();
+                    String declaredClass = paramType.getClassType().getId();
                     try {
                         ClassTypeNode paramClassType = (ClassTypeNode) env.getLatestEntryOf(declaredClass).getNode();
-                        paramsType.add(new InstanceType(paramClassType));
+                        paramsType.add(new InstanceTypeNode(paramClassType));
                     } catch (UndeclaredVarException e) {
                         res.add(new SemanticError("Class '" + declaredClass + "' does not exist"));
                     }
@@ -137,13 +137,13 @@ public class ClassdNode implements Node {
             }
 
             methodsList.add(new FunNode(fun.getId(), new ArrowTypeNode(paramsType, fun.getDeclaredReturnType())));
-            methods.put(fun.getId(), new ArrowTypeNode(paramsType, fun.getDeclaredReturnType()));
+            functions.put(fun.getId(), new ArrowTypeNode(paramsType, fun.getDeclaredReturnType()));
         }
 
 
         ClassTypeNode superclassType = null;
         try {
-            superclassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getType();
+            superclassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
         } catch (UndeclaredVarException e) {
             superclassType = null;
         }
@@ -158,8 +158,8 @@ public class ClassdNode implements Node {
 
         env.pushHashMap(); // Aggiungo i parametri ad una nuova Symbol Table
         for (VarNode var : attrDecList) {
-            if (var.getType() instanceof InstanceType) {
-                ClassTypeNode paramClass = ((InstanceType) var.getType()).getClassType();
+            if (var.getType() instanceof InstanceTypeNode) {
+                ClassTypeNode paramClass = ((InstanceTypeNode) var.getType()).getClassType();
                 //Controllo che i parametri non siano sottotipo della classe in cui sono
                 if (paramClass.isSubTypeOf(this.type))
                     res.add(new SemanticError("can't use a subclass in superclass' constructor"));
@@ -168,7 +168,7 @@ public class ClassdNode implements Node {
         }
 
         env.pushHashMap(); // Aggiungo i metodi ad una nuova Symbol Table
-        for (FunNode fun : metDecList) {
+        for (FunNode fun : funDecList) {
             res.addAll(fun.checkSemantics(env));
         }
         env.popHashMap().popHashMap();
@@ -176,23 +176,23 @@ public class ClassdNode implements Node {
         // Se estende una classe
         if (!superClassID.isEmpty()) {
             try {
-                if (!(env.getTypeOf(superClassID) instanceof ClassTypeNode))
+                if (!(env.getNodeOf(superClassID) instanceof ClassTypeNode))
                     res.add(new SemanticError("ID of super class " + superClassID + " is not related to a class type"));
             } catch (UndeclaredVarException exp) {
                 res.add(new SemanticError("Super class " + superClassID + " not defined"));
             }
 
             try {
-                ClassType superClassType = (ClassType) env.getLatestEntryOf(superClassID).getType();
+                ClassTypeNode superClassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getType();
 
                 // Se ho almeno tanti attributi quanti ne ha la classe padre
                 if (attrDecList.size() >= superClassType.getFields().size()) {
                     for (int i = 0; i < superClassType.getFields().size(); i++) { // per ogni attributo del padre
                         VarNode localField = attrDecList.get(i);
                         VarNode superField = superClassType.getFields().get(i);
-                        if (!superField.getID().equals(localField.getID()) // se non hanno lo stesso nome
+                        if (!superField.getId().equals(localField.getId()) // se non hanno lo stesso nome
                             || !localField.getType().isSubTypeOf(superField.getType()) ) {  // o non hanno lo stesso tipo
-                            res.add(new SemanticError("Field '" + localField.getID() + "' of class '"+ classID+"' overrided from super class with different type"));
+                            res.add(new SemanticError("Field '" + localField.getId() + "' of class '"+ classID+"' overrided from super class with different type"));
                         }
                     }
                 } else {
@@ -203,13 +203,13 @@ public class ClassdNode implements Node {
             }
 
             try {
-                STEntry superClassEntry = env.getLatestEntryOf(superClassID);
-                ClassTypeNode superClassType = (ClassTypeNode) superClassEntry.getType();
+                STentry superClassEntry = env.getLatestEntryOf(superClassID);
+                ClassTypeNode superClassType = (ClassTypeNode) superClassEntry.getNode();
 
                 HashMap<String, ArrowTypeNode> superClassMethods = superClassType.getMethodsMap();
-                for (String localMethod : methods.keySet()) {
+                for (String localMethod : functions.keySet()) {
                     if (superClassMethods.containsKey(localMethod)) {
-                        if (!methods.get(localMethod).isSubTypeOf(superClassMethods.get(localMethod))) {
+                        if (!functions.get(localMethod).isSubTypeOf(superClassMethods.get(localMethod))) {
                             res.add(new SemanticError("Method '" + localMethod + "' of class '" + classID + "' overrided with incompatible type"));
                         }
                     }
@@ -221,6 +221,6 @@ public class ClassdNode implements Node {
         }
 
         return res;
-    }*/
+    }
 
 }

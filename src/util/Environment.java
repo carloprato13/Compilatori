@@ -120,5 +120,6 @@ public class Environment {
     public Node getNodeOf(String id) /*throws UndeclaredVarException*/ {
         return this.getLatestEntryOf(id).getNode();
     }
+    
 
 }
