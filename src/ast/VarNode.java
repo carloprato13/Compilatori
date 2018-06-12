@@ -18,6 +18,14 @@ public class VarNode implements Node {
     type=t;
     exp=v;
   }
+
+    public String getId() {
+        return id;
+    }
+
+    public Node getType() {
+        return type;
+    }
   
   	@Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
@@ -25,7 +33,7 @@ public class VarNode implements Node {
   	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
   	  
   	  //env.offset = -2;
-  	  HashMap<String,STentry> hm = env.getSymbolTable().get(env.getNestingLevel());
+  	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
         STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
         
         if ( hm.put(id,entry) != null )
@@ -44,10 +52,12 @@ public class VarNode implements Node {
   
   //valore di ritorno non utilizzato
   public Node typeCheck () {
-    if (! (FOOLlib.isSubtype(exp.typeCheck(),type)) ){      //isSubtype in realtà è un'uguaglianza
-      System.out.println("incompatible value for variable "+id);
-      System.exit(0);
-    }     
+    if(exp != null){
+        if (! (FOOLlib.isSubtype(exp.typeCheck(),type)) ){      //isSubtype in realtà è un'uguaglianza
+        System.out.println("incompatible value for variable "+id);
+        System.exit(0);
+        }
+    }
     return null;
   }
   

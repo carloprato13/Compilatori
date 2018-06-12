@@ -1,5 +1,6 @@
-// Generated from Fool.g4 by ANTLR 4.7.1
 package parser;
+// Generated from Fool.g4 by ANTLR 4.7.1
+
     import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
@@ -188,6 +189,13 @@ public interface FoolVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBoolVal(FoolParser.BoolValContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code baseVal}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBaseVal(FoolParser.BaseValContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code varVal}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
@@ -223,17 +231,17 @@ public interface FoolVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMethodCall(FoolParser.MethodCallContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code baseVal}
-	 * labeled alternative in {@link FoolParser#value}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBaseVal(FoolParser.BaseValContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code classInstantiation}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitClassInstantiation(FoolParser.ClassInstantiationContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code print}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrint(FoolParser.PrintContext ctx);
 }

@@ -16,10 +16,6 @@ public class Environment {
 
     }
 
-    public ArrayList<HashMap<String, STentry>> getSymbolTable() {
-        return symbolTable;
-    }
-
     public int getNestingLevel() {
         return this.symbolTable.size() - 1;
     }
@@ -30,14 +26,6 @@ public class Environment {
 
     public void setOffset(int offset) {
         this.offset = offset;
-    }
-    
-    public void setNestingLevel(int s){
-     setL ((ArrayList)this.symbolTable.subList(0, s));
-    }
-    
-    public void setL (ArrayList<HashMap<String, STentry>> l){
-        this.symbolTable = l;
     }
     
     public Environment pushHashMap() {
@@ -60,9 +48,10 @@ public class Environment {
         STentry oldEntry = this.symbolTable
                 .get(this.symbolTable.size() - 1)
                 .put(id, newEntry);
-        /*if (Node instanceof ClassNode) {
+        /*if (Node instanceof ClassTypeNode) {
             latestClassEntry = newEntry;
-        }
+        }*/
+        /*
         if (oldEntry != null) {
             throw new RedeclaredVarException(id);
         }*/
@@ -76,7 +65,7 @@ public class Environment {
                 .put(id, newEntry);
         /*if (Node instanceof ClassNode) {
             latestClassEntry = newEntry;
-        }
+        }/*
         if (oldEntry != null) {
             throw new RedeclaredVarException(id);
         }*/

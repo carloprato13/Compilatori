@@ -28,7 +28,7 @@ public class Test {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         
         //SIMPLISTIC BUT WRONG CHECK OF THE LEXER ERRORS
-        if(lexer.lexicalErrors > 0){
+        if(lexer.getLexicalErrors() > 0){
         	System.out.println("The program was not in the right format. Exiting the compilation process now");
         }else{
         

@@ -1,5 +1,5 @@
 // Generated from Fool.g4 by ANTLR 4.7.1
-package parser;
+
     import java.util.ArrayList;
 
 
@@ -409,6 +409,18 @@ public class FoolBaseListener implements FoolListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitClassInstantiation(FoolParser.ClassInstantiationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrint(FoolParser.PrintContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrint(FoolParser.PrintContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

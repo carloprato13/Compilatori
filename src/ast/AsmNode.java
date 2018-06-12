@@ -25,7 +25,7 @@ public class AsmNode implements Node {
   	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
   	  
   	  //env.offset = -2;
-  	  HashMap<String,STentry> hm = env.getSymbolTable().get(env.getNestingLevel());
+  	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
         STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
         
         if ( hm.put(id,entry) != null )

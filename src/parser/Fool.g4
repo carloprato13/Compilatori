@@ -68,14 +68,14 @@ factor : left=value EQ right=value #boolFactor
        | left=value #valFactor
        ;     
    
-value  : INTEGER          #intVal
+value  : (MINUS)? INTEGER          #intVal
        | ( TRUE | FALSE ) #boolVal
+       | LPAR exp RPAR                      #baseVal
        | ID               #varVal
        | name=ID ( LPAR (elem+=exp (COMMA elem+=exp)* )? RPAR )? #funcall
        | NULL #nullVal 
        | ID DOT ID #fieldVal
        | ID DOT ID LPAR ( elem+=exp (COMMA elem+=exp)* )? RPAR #methodCall
-       | LPAR exp RPAR                      #baseVal
        | NEW ID LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
        | PRINT ( exp )        #print       
 ; 
@@ -125,7 +125,7 @@ VOID   : 'void';
 
 //Numbers
 fragment DIGIT : '0'..'9';    
-INTEGER       : ('-')?DIGIT+ ;
+INTEGER       : DIGIT+ ;
 
 //IDs
 fragment CHAR  : 'a'..'z' |'A'..'Z' ;

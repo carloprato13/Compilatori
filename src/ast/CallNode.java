@@ -42,7 +42,7 @@ public String toPrint(String s) {  //
 		 int j=env.getNestingLevel();
 		 STentry tmp=null; 
 		 while (j>=0 && tmp==null)
-		     tmp=(env.getSymbolTable().get(j--)).get(id);
+		     tmp=(env.getHashMap(j--)).get(id);
 		 if (tmp==null)
 			 res.add(new SemanticError("Id "+id+" not declared"));
 		 
@@ -58,8 +58,9 @@ public String toPrint(String s) {  //
   
   public Node typeCheck () {  //                           
 	 ArrowTypeNode t=null;
-     if (entry.getNode() instanceof ArrowTypeNode) t=(ArrowTypeNode) entry.getNode(); //controllo che sia un tipo freccia
+         if (entry.getNode() instanceof ArrowTypeNode) t=(ArrowTypeNode) entry.getNode(); //controllo che sia un tipo freccia
      else {
+       System.out.println(entry.toString("PORCAMADONNA"));
        System.out.println("Invocation of a non-function "+id);
        System.exit(0);
      }

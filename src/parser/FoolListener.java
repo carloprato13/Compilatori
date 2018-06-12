@@ -1,5 +1,6 @@
-// Generated from Fool.g4 by ANTLR 4.7.1
 package parser;
+// Generated from Fool.g4 by ANTLR 4.7.1
+
     import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
@@ -308,6 +309,18 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitBoolVal(FoolParser.BoolValContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code baseVal}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterBaseVal(FoolParser.BaseValContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code baseVal}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitBaseVal(FoolParser.BaseValContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code varVal}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
@@ -368,18 +381,6 @@ public interface FoolListener extends ParseTreeListener {
 	 */
 	void exitMethodCall(FoolParser.MethodCallContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code baseVal}
-	 * labeled alternative in {@link FoolParser#value}.
-	 * @param ctx the parse tree
-	 */
-	void enterBaseVal(FoolParser.BaseValContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code baseVal}
-	 * labeled alternative in {@link FoolParser#value}.
-	 * @param ctx the parse tree
-	 */
-	void exitBaseVal(FoolParser.BaseValContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code classInstantiation}
 	 * labeled alternative in {@link FoolParser#value}.
 	 * @param ctx the parse tree
@@ -391,4 +392,16 @@ public interface FoolListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitClassInstantiation(FoolParser.ClassInstantiationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code print}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrint(FoolParser.PrintContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code print}
+	 * labeled alternative in {@link FoolParser#value}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrint(FoolParser.PrintContext ctx);
 }

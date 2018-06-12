@@ -20,7 +20,11 @@ public class STentry {
         this.offset = offset;
         this.isAttribute = isAttribute;
     }
-
+    
+    public void addNode(Node m){
+        node=m;
+    }
+    
     public Node getNode() {
         return node;
     }
@@ -41,7 +45,7 @@ public class STentry {
     public boolean isAttribute() { return isAttribute; }
 
     public String toString(String s) { //
-        return "STentry: nestlev " + Integer.toString(nestingLevel) + "\n" +
+        return s+"STentry: nestlev " + Integer.toString(nestingLevel) + "\n" +
                 "STentry: Node " + node + "\n" +
                 "STentry: offset " + Integer.toString(offset) + "\n";
     }
