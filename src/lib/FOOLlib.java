@@ -1,6 +1,9 @@
 package lib;
 
 import ast.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FOOLlib {
   
@@ -9,6 +12,8 @@ public class FOOLlib {
   private static int funLabCount=0; 
 
   private static String funCode=""; 
+  
+  private static HashMap<String, ArrayList<DispatchTableEntry>> dispatchTables = new HashMap<String, ArrayList<DispatchTableEntry>>();
 
   //valuta se il tipo "a" � <= al tipo "b", dove "a" e "b" sono tipi di base: int o bool
   public static boolean isSubtype (Node a, Node b) {
@@ -32,5 +37,46 @@ public class FOOLlib {
     return funCode;
   } 
 
+public static String freshDispatchTableLabel(String classID) {
+        return "class" + classID;
+    }
+ public static void addDispatchTable(String classID, ArrayList<DispatchTableEntry> dt) {
+        dispatchTables.put(classID, dt);
+    }
+// Viene ritornata una copia della dispatch table (così non si modifica, per riferimento, la dt del padre)
+    public static ArrayList<DispatchTableEntry> getDispatchTable(String classID) {
+        ArrayList<DispatchTableEntry> copy = new ArrayList<DispatchTableEntry>();
+        ArrayList<DispatchTableEntry> original = dispatchTables.get(classID);
+        for (DispatchTableEntry originalDtEntry : original) {
+            DispatchTableEntry copiedDtEntry = new DispatchTableEntry(originalDtEntry.getMethodID(), originalDtEntry.getMethodLabel());
+            copy.add(copiedDtEntry);
+        }
+        return copy;
+    }
+
+    public static String getDispatchTablePointer(String classID) {
+        return "push " + freshDispatchTableLabel(classID);
+    }
+
+    public static String generateDispatchTablesCode() {
+        StringBuilder dtCodes = new StringBuilder();
+        // For every class
+        for (Map.Entry<String, ArrayList<DispatchTableEntry>> dt : dispatchTables.entrySet()) {
+            // Creates a DT label
+            dtCodes.append(freshDispatchTableLabel(dt.getKey())).append(":\n");
+            // For every entry in the DT
+            for (DispatchTableEntry entry : dispatchTables.get(dt.getKey())) {
+                dtCodes.append(entry.getMethodLabel());
+            }
+        }
+        return dtCodes.toString();
+    }
+
+    public static void reset() {
+        labCount = 0;
+        funLabCount = 0;
+        funCode = "";
+        dispatchTables = new HashMap<>();
+    }
 
 }

@@ -9,7 +9,7 @@ import util.Environment;
 import util.SemanticError;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import lib.*;
 /**
  *
  * @author carlo
@@ -69,37 +69,39 @@ public class ClassdNode implements Node {
 
     @Override
     public String codeGeneration() {
-          /*StringBuilder declCode = new StringBuilder();
-        if (declarations != null)
-            for (INode dec : declarations)
-                declCode.append(dec.codeGeneration());
+        // Creo una nuova dispatch table
+        ArrayList<DispatchTableEntry> dispatchTable;
+        if(superClassID.equals(""))
+            dispatchTable= new ArrayList<DispatchTableEntry>();
+        else
+            dispatchTable= FOOLlib.getDispatchTable(superClassID);
 
-        StringBuilder popDecl = new StringBuilder();
-        if (declarations != null)
-            for (INode dec : declarations)
-                popDecl.append("pop\n");
+        HashMap<String, String> fatherMethods = new HashMap<>();
+        for (DispatchTableEntry d : dispatchTable) fatherMethods.put(d.getMethodID(), d.getMethodLabel());
+        HashMap<String, String> childMethods = new HashMap<>();
+        for (FunNode m : funDecList) childMethods.put(m.getId(), m.codeGeneration());
 
-        StringBuilder popParl = new StringBuilder();
-        for (INode dec : params)
-            popParl.append("pop\n");
+        for (int i = 0; i < dispatchTable.size(); i++) {
+            DispatchTableEntry curr = dispatchTable.get(i);
+            String currMethodID = curr.getMethodID();
+            String redefinedMethodCode = childMethods.get(currMethodID);
+            if (redefinedMethodCode != null) {
+                dispatchTable.set(i, new DispatchTableEntry(currMethodID, redefinedMethodCode));
+            }
+        }
+        
+        
+        for (FunNode m : funDecList) {
+            String currMethodID = m.getId();
+            if (fatherMethods.get(currMethodID) == null) {
+                dispatchTable.add(new DispatchTableEntry(currMethodID, childMethods.get(currMethodID)));
+            }
+        }
 
-        String funl = CodegenUtils.freshFunLabel();
-        CodegenUtils.insertFunctionsCode(funl + ":\n" +
-                "cfp\n" + //setta $fp a $sp
-                "lra\n" + //inserimento return address
-                declCode + //inserimento dichiarazioni locali
-                body.codeGeneration() +
-                "srv\n" + //pop del return value
-                popDecl +
-                "sra\n" + // pop del return address
-                "pop\n" + // pop di AL
-                popParl +
-                "sfp\n" +  // setto $fp a valore del CL
-                "lrv\n" + // risultato della funzione sullo stack
-                "lra\n" + "js\n" // salta a $ra
-        );
+        //Aggiungo sempre la DT anche se è vuota, perchè può capitare di implementare una classe che non ha metodi!
+        FOOLlib.addDispatchTable(classID, dispatchTable);
 
-        return "push " + funl + "\n";*/ return null;
+        return "";
     }
 
     @Override
