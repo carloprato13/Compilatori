@@ -125,36 +125,23 @@ public class ClassdNode implements Node {
                 if (param.getType() instanceof InstanceTypeNode) { // Se si tratta di oggetti
                     InstanceTypeNode paramType = (InstanceTypeNode) param.getType();
                     String declaredClass = paramType.getClassType().getId();
-                    try {
-                        ClassTypeNode paramClassType = (ClassTypeNode) env.getLatestEntryOf(declaredClass).getNode();
-                        paramsType.add(new InstanceTypeNode(paramClassType));
-                    } catch (UndeclaredVarException e) {
-                        res.add(new SemanticError("Class '" + declaredClass + "' does not exist"));
-                    }
+                    ClassTypeNode paramClassType = (ClassTypeNode) env.getLatestEntryOf(declaredClass).getNode();
+                    paramsType.add(new InstanceTypeNode(paramClassType));
                 } else { // Se si tratta di valori base
                     paramsType.add(param.getType());
                 }
             }
 
-            methodsList.add(new FunNode(fun.getId(), new ArrowTypeNode(paramsType, fun.getDeclaredReturnType())));
-            functions.put(fun.getId(), new ArrowTypeNode(paramsType, fun.getDeclaredReturnType()));
+            methodsList.add(new FunNode(fun.getId(), new ArrowTypeNode(paramsType, fun.getType())));
+            functions.put(fun.getId(), new ArrowTypeNode(paramsType, fun.getType()));
         }
 
 
         ClassTypeNode superclassType = null;
-        try {
-            superclassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
-        } catch (UndeclaredVarException e) {
-            superclassType = null;
-        }
+        superclassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
 
-        // Creo una entry per la classe nella Symbol Table
-        try {
-            this.type = new ClassTypeNode(classID, superclassType, fieldsList, methodsList);
-            env.setEntryType(classID, this.type, 0);
-        } catch ( UndeclaredClassException e) {
-            res.add(new SemanticError(e.getMessage()));
-        }
+        this.type = new ClassTypeNode(classID, superclassType, fieldsList, methodsList);
+        env.setEntryType(classID, this.type, 0);
 
         env.pushHashMap(); // Aggiungo i parametri ad una nuova Symbol Table
         for (VarNode var : attrDecList) {
@@ -182,41 +169,29 @@ public class ClassdNode implements Node {
                 res.add(new SemanticError("Super class " + superClassID + " not defined"));
             }
 
-            try {
-                ClassTypeNode superClassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getType();
-
-                // Se ho almeno tanti attributi quanti ne ha la classe padre
-                if (attrDecList.size() >= superClassType.getFields().size()) {
-                    for (int i = 0; i < superClassType.getFields().size(); i++) { // per ogni attributo del padre
-                        VarNode localField = attrDecList.get(i);
-                        VarNode superField = superClassType.getFields().get(i);
-                        if (!superField.getId().equals(localField.getId()) // se non hanno lo stesso nome
+            ClassTypeNode superClassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getType();
+            if (attrDecList.size() >= superClassType.getFields().size()) {
+                for (int i = 0; i < superClassType.getFields().size(); i++) { // per ogni attributo del padre
+                    VarNode localField = attrDecList.get(i);
+                    VarNode superField = superClassType.getFields().get(i);
+                    if (!superField.getId().equals(localField.getId()) // se non hanno lo stesso nome
                             || !localField.getType().isSubTypeOf(superField.getType()) ) {  // o non hanno lo stesso tipo
-                            res.add(new SemanticError("Field '" + localField.getId() + "' of class '"+ classID+"' overrided from super class with different type"));
-                        }
+                        res.add(new SemanticError("Field '" + localField.getId() + "' of class '"+ classID+"' overrided from super class with different type"));
                     }
-                } else {
-                    res.add(new SemanticError("Subclass has not the superclass parameters."));
                 }
-            } catch (UndeclaredVarException e) {
-                res.add(new SemanticError("Super class " + superClassID + " not defined " + e.getMessage()));
+            } else {
+                res.add(new SemanticError("Subclass has not the superclass parameters."));
             }
 
-            try {
-                STentry superClassEntry = env.getLatestEntryOf(superClassID);
-                ClassTypeNode superClassType = (ClassTypeNode) superClassEntry.getNode();
-
-                HashMap<String, ArrowTypeNode> superClassMethods = superClassType.getMethodsMap();
-                for (String localMethod : functions.keySet()) {
-                    if (superClassMethods.containsKey(localMethod)) {
-                        if (!functions.get(localMethod).isSubTypeOf(superClassMethods.get(localMethod))) {
-                            res.add(new SemanticError("Method '" + localMethod + "' of class '" + classID + "' overrided with incompatible type"));
-                        }
+            STentry superClassEntry = env.getLatestEntryOf(superClassID);
+            ClassTypeNode superClassType = (ClassTypeNode) superClassEntry.getNode();
+            HashMap<String, ArrowTypeNode> superClassMethods = superClassType.getMethodsMap();
+            for (String localMethod : functions.keySet()) {
+                if (superClassMethods.containsKey(localMethod)) {
+                    if (!functions.get(localMethod).isSubTypeOf(superClassMethods.get(localMethod))) {
+                        res.add(new SemanticError("Method '" + localMethod + "' of class '" + classID + "' overrided with incompatible type"));
                     }
                 }
-
-            } catch (UndeclaredVarException e) {
-                res.add(new SemanticError("Super class " + superClassID + " not defined " + e.getMessage()));
             }
         }
 

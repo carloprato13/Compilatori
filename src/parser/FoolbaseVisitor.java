@@ -1,5 +1,6 @@
-// Generated from Fool.g4 by ANTLR 4.7.1
 package parser;
+// Generated from Fool.g4 by ANTLR 4.7.1
+
     import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
@@ -201,6 +202,13 @@ public class FoolbaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitBaseVal(FoolParser.BaseValContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitVarVal(FoolParser.VarValContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -236,12 +244,12 @@ public class FoolbaseVisitor<T> extends AbstractParseTreeVisitor<T> implements F
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitBaseVal(FoolParser.BaseValContext ctx) { return visitChildren(ctx); }
+	@Override public T visitClassInstantiation(FoolParser.ClassInstantiationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitClassInstantiation(FoolParser.ClassInstantiationContext ctx) { return visitChildren(ctx); }
+	@Override public T visitPrint(FoolParser.PrintContext ctx) { return visitChildren(ctx); }
 }

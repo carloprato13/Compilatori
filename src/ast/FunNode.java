@@ -157,6 +157,10 @@ public class FunNode implements Node {
     public void setClassID(String classID) {
         this.classID = classID;
     }
+
+    public Node getType() {
+        return type;
+    }
   
  
   

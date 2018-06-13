@@ -99,7 +99,7 @@ public class ClassTypeNode implements Node {
                 methodsMap.put(m, superMethodsMap.get(m));
         }
         for (FunNode m : methods) {
-            methodsMap.put(m.getId(), m.getType());
+            methodsMap.put(m.getId(), (ArrowTypeNode) m.getType());
         }
         return methodsMap;
     }
@@ -132,7 +132,7 @@ public class ClassTypeNode implements Node {
         }
     }
 
-    public Type getTypeOfMethod(String id) {
+    public Node getTypeOfMethod(String id) {
         FunNode method = this.methods
                 .stream()
                 .filter(m -> m.getId().equals(id))
@@ -142,7 +142,7 @@ public class ClassTypeNode implements Node {
         } else if (superType != null) {
             return superType.getTypeOfMethod(id);
         } else {
-            return new VoidType();
+            return new VoidTypeNode();
         }
     }
 
