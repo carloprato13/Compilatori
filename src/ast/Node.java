@@ -18,4 +18,6 @@ public interface Node {
   
   ArrayList<SemanticError> checkSemantics(Environment env);
   
+  public boolean isSubTypeOf(Node m);
+  
 }  

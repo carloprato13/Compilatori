@@ -82,5 +82,12 @@ public ArrayList<SemanticError> checkSemantics(Environment env) {
 			   l2 + ":\n";
 		       
   }
-    
+ 
+  public boolean isSubTypeOf(Node m){
+      if(m instanceof BoolTypeNode)
+          return true;
+      else
+          return false;
+  }
+  
 }

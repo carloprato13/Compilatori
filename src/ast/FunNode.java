@@ -20,6 +20,12 @@ public class FunNode implements Node {
     type=t;
   }
   
+  public FunNode (String i, Node t, ArrayList<Node> params){
+    id=i;
+    type=t;
+    parlist=params;
+  }
+  
   public void addDecBody (ArrayList<Node> d, Node b) {
     declist=d;
     body=b;
@@ -162,6 +168,8 @@ public class FunNode implements Node {
         return type;
     }
   
- 
+    public boolean isSubTypeOf(Node m){
+        return type.isSubTypeOf(m);
+    }
   
 }  

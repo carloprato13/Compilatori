@@ -149,29 +149,29 @@ public class ClassTypeNode implements Node {
     /*
     public String getID() {
         return TypeID.CLASSDEC;
-    }
+    }*/
 
-    
-    public boolean isSubTypeOf(Type t2) {
+    public boolean isSubTypeOf(Node t2) {
         // Procedo solo se l'altro tipo e' una classe
-        if (t2 instanceof ClassType) {
-            ClassType ct2 = (ClassType) t2;
+        if (t2 instanceof ClassTypeNode) {
+            ClassTypeNode ct2 = (ClassTypeNode) t2;
             // Se e' della stessa classe
-            if (this.getClassID().equals(ct2.getClassID())) {
+            if (this.classId.equals(ct2.classId)) {
                 return true;
             }
             // Procedo solo se la mia classe ha un supertipo
             if (superType != null) {
-                return this.getSuperclassID().equals(ct2.getClassID()) || superType.isSubTypeOf(t2);
+                return this.superType.equals(ct2) || superType.isSubTypeOf(t2);
             }
         }
         return false;
-    }*/
+    }
 
     @Override
     public String toString() {
         return "class " + classId;
     }
 
+    
   
 }  

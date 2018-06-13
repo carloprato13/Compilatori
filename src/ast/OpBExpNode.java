@@ -59,4 +59,8 @@ public class OpBExpNode implements Node {
 			   "add\n";
   }
     
+  public boolean isSubTypeOf(Node m){
+          return left.isSubTypeOf(m) && right.isSubTypeOf(m);
+    }
+  
 }

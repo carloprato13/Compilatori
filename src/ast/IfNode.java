@@ -70,4 +70,11 @@ public class IfNode implements Node {
 	         l2 + ":\n"; 
   }
   
+  public boolean isSubTypeOf(Node m){
+      if(th.isSubTypeOf(m) && el.isSubTypeOf(m))
+          return true;
+      else
+          return false;
+  }
+  
 }  

@@ -54,5 +54,9 @@ public class AsmNode implements Node {
   public String codeGeneration() {
 		return exp.codeGeneration();
   }  
+  
+  public boolean isSubTypeOf(Node m){
+      return type.isSubTypeOf(m);
+  }
     
 }  

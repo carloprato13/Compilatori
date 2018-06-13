@@ -31,5 +31,9 @@ public class BoolNode implements Node {
   public String codeGeneration() {
 		return "push "+(val?1:0)+"\n";
 	  }
-         
+  
+  public boolean isSubTypeOf(Node m){
+      return true;
+  }
+  
 }  

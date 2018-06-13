@@ -32,4 +32,8 @@ public class ProgNode implements Node {
 		return exp.codeGeneration()+"halt\n";
   }  
   
+    public boolean isSubTypeOf(Node m){
+        return exp.isSubTypeOf(m);
+    } 
+  
 }  

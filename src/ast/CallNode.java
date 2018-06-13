@@ -60,7 +60,6 @@ public String toPrint(String s) {  //
 	 ArrowTypeNode t=null;
          if (entry.getNode() instanceof ArrowTypeNode) t=(ArrowTypeNode) entry.getNode(); //controllo che sia un tipo freccia
      else {
-       System.out.println(entry.toString("PORCAMADONNA"));
        System.out.println("Invocation of a non-function "+id);
        System.exit(0);
      }
@@ -97,5 +96,8 @@ public String toPrint(String s) {  //
 		       "js\n";
   }
 
+  public boolean isSubTypeOf(Node m){
+      return true;
+  }
     
 }  

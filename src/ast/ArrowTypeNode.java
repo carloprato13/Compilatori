@@ -44,5 +44,29 @@ public class ArrowTypeNode implements Node {
   public String codeGeneration() {
 		return "";
   }
+  
+  public boolean isSubTypeOf(Node t){
+  if (t instanceof ArrowTypeNode) {
+            ArrowTypeNode ArrowTypeNode = (ArrowTypeNode) t;
+            boolean check = true;
+
+            //Se hanno lo stesso numero di parametri
+            if (this.parlist.size() == ArrowTypeNode.getParList().size()) {
+                //Controllo che tutti i parametri abbiano lo stesso tipo(supertype, come da cosegna)
+                for (int i = 0; i < this.parlist.size(); i++) {
+                    check &= ArrowTypeNode.getParList().get(i).isSubTypeOf(this.parlist.get(i));
+                }
+
+                //Controllo che anche il valore di ritorno della funzione
+                check &= this.ret.isSubTypeOf(ArrowTypeNode.ret);
+            } else {
+                check = false;
+            }
+            return check;
+        } else {
+            return false;
+        }
+  
+  }
 
 }  

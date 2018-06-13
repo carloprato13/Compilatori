@@ -31,4 +31,8 @@ public class PrintNode implements Node {
 		return val.codeGeneration()+"print\n";
   }
     
+    public boolean isSubTypeOf(Node m){
+        return val.isSubTypeOf(m);
+    } 
+  
 }  

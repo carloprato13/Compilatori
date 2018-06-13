@@ -133,7 +133,7 @@ public class ClassdNode implements Node {
             }
 
             methodsList.add(new FunNode(fun.getId(), new ArrowTypeNode(paramsType, fun.getType())));
-            functions.put(fun.getId(), new ArrowTypeNode(paramsType, fun.getType()));
+            functions.put(fun.getId(), new FunNode(fun.getId(), fun.getType(), paramsType));
         }
 
 
@@ -141,7 +141,7 @@ public class ClassdNode implements Node {
         superclassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
 
         this.type = new ClassTypeNode(classID, superclassType, fieldsList, methodsList);
-        env.setEntryType(classID, this.type, 0);
+        env.setEntryNode(classID, this.type, 0);
 
         env.pushHashMap(); // Aggiungo i parametri ad una nuova Symbol Table
         for (VarNode var : attrDecList) {
@@ -162,14 +162,14 @@ public class ClassdNode implements Node {
 
         // Se estende una classe
         if (!superClassID.isEmpty()) {
-            try {
+            //try {
                 if (!(env.getNodeOf(superClassID) instanceof ClassTypeNode))
                     res.add(new SemanticError("ID of super class " + superClassID + " is not related to a class type"));
-            } catch (UndeclaredVarException exp) {
-                res.add(new SemanticError("Super class " + superClassID + " not defined"));
-            }
+            //} catch (UndeclaredVarException exp) {
+            //    res.add(new SemanticError("Super class " + superClassID + " not defined"));
+            //}
 
-            ClassTypeNode superClassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getType();
+            ClassTypeNode superClassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
             if (attrDecList.size() >= superClassType.getFields().size()) {
                 for (int i = 0; i < superClassType.getFields().size(); i++) { // per ogni attributo del padre
                     VarNode localField = attrDecList.get(i);
@@ -184,7 +184,7 @@ public class ClassdNode implements Node {
             }
 
             STentry superClassEntry = env.getLatestEntryOf(superClassID);
-            ClassTypeNode superClassType = (ClassTypeNode) superClassEntry.getNode();
+            superClassType = (ClassTypeNode) superClassEntry.getNode();
             HashMap<String, ArrowTypeNode> superClassMethods = superClassType.getMethodsMap();
             for (String localMethod : functions.keySet()) {
                 if (superClassMethods.containsKey(localMethod)) {
@@ -197,5 +197,9 @@ public class ClassdNode implements Node {
 
         return res;
     }
-
+    
+    public boolean isSubTypeOf(Node m){
+        return type.isSubTypeOf(m);
+    }
+    
 }

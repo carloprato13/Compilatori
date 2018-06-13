@@ -30,4 +30,11 @@ public class VoidTypeNode implements Node {
 	  return new ArrayList<SemanticError>();
 	}
   
+  public boolean isSubTypeOf(Node m){
+        if(m instanceof VoidTypeNode)
+            return true;
+        else
+            return false;
+  }      
+        
 }  

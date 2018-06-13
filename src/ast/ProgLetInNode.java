@@ -64,7 +64,10 @@ public class ProgLetInNode implements Node {
 			  exp.codeGeneration()+"halt\n"+
 			  FOOLlib.getCode();
   } 
-  
+ 
+    public boolean isSubTypeOf(Node m){
+        return exp.isSubTypeOf(m);
+    } 
   
     
 }  

@@ -51,4 +51,11 @@ public class OpTermNode implements Node {
 			   "mult\n";
   }
 
+    public boolean isSubTypeOf(Node m){
+        if(m instanceof IntTypeNode)
+            return true;
+        else
+            return false;
+    } 
+  
 }  

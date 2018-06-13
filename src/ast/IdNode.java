@@ -61,4 +61,7 @@ public class IdNode implements Node {
                "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
 
   }
+  
+  public boolean isSubTypeOf(Node m){return true;}
+  
 }  

@@ -33,25 +33,26 @@ public class ProgClassExpNode implements Node {
 
         // preliminary class inserting in symbol table for order independent references
 
-        /*for (ClassdNode classNode : classDeclarations) {
+        for (ClassdNode classNode : classDeclarations) {
             //try {
-                ArrayList<Field> fields = new ArrayList<Field>();
+                ArrayList<VarNode> fields = new ArrayList<VarNode>();
                 for (VarNode field : classNode.getVardeclist()) {
-                    fields.add(new Field(field.getID(), field.getType()));
+                    fields.add(new VarNode(field.getId(), field.getType(), null));
                 }
-                ArrayList<Method> methods = new ArrayList<Method>();
-                for (MethodNode method : classNode.getMetDecList()) {
-                    ArrayList<Type> paramsType = new ArrayList<>();
-                    for (VarNode parameter : method.getParams()) {
-                        paramsType.add(parameter.getType());
+                ArrayList<FunNode> methods = new ArrayList<FunNode>();
+                for (FunNode method : classNode.getFunDecList()) {
+                    ArrayList<Node> paramsType = new ArrayList<>();
+                    for (Node parameter : method.getParams()) {
+                        VarNode param= (VarNode)parameter;
+                        paramsType.add(param.getType());
                     }
-                    methods.add(new Method(method.getId(), new ArrowTypeNode(paramsType, method.getDeclaredReturnType())));
+                    methods.add(new FunNode(method.getId(), new ArrowTypeNode(paramsType, method.getType())));
                 }
                 ClassTypeNode classType = new ClassTypeNode(classNode.getClassID(), new ClassTypeNode(classNode.getSuperClassID()), fields, methods);
                 env.addEntry(classNode.getClassID(), classType, 0);
             /*} catch (RedeclaredVarException e) {
                 res.add(new SemanticError("Class '" + classNode.getClassID() + "' declared multiple times"));
-            }
+            }*/
         }
 
         for (ClassdNode classNode : classDeclarations) {
@@ -62,8 +63,7 @@ public class ProgClassExpNode implements Node {
 
         env.popHashMap();
 
-        return res; DA TERMINARE CON FIELD E METHOD*/
-        return null;
+        return res;
     }
 
     
@@ -123,5 +123,9 @@ public class ProgClassExpNode implements Node {
     public String toPrint(String s) {
         return s+"class declarations";
     }
-
+    
+      public boolean isSubTypeOf(Node m){
+        return p.isSubTypeOf(m);
+    } 
+    
 }

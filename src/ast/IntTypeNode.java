@@ -30,4 +30,11 @@ public class IntTypeNode implements Node {
 	  return new ArrayList<SemanticError>();
 	}
   
+  public boolean isSubTypeOf(Node m){
+        if(m instanceof IntTypeNode)
+            return true;
+        else
+            return false;
+    }      
+        
 }  

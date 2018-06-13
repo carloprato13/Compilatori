@@ -30,5 +30,9 @@ public class IntNode implements Node {
   public String codeGeneration() {
 	return "push "+val+"\n";
   }
+  
+  public boolean isSubTypeOf(Node m){
+        return true;
+    }
 
 }  

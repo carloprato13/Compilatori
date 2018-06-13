@@ -76,4 +76,12 @@ public class IfNodeStm implements Node {
 			 th.codeGeneration()+
 	         l2 + ":\n"; 
   }
+  
+  //teoricamente tipando void dovrebbe restituire sempre true...
+  public boolean isSubTypeOf(Node m){
+    if(th.isSubTypeOf(m) && el.isSubTypeOf(m))
+        return true;
+    else
+        return false;
+    }
 }

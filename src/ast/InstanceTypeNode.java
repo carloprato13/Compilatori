@@ -74,4 +74,13 @@ public class InstanceTypeNode implements Node {
     public ArrayList<SemanticError> checkSemantics(Environment env) {
         return null;
     }
+    
+    public boolean isSubTypeOf(Node type){
+        if (type instanceof InstanceTypeNode) {
+            InstanceTypeNode it2 = (InstanceTypeNode) type;
+            return classT.isSubTypeOf(it2.getClassType());
+        } else {
+            return false;
+        }
+    }
 }

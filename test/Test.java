@@ -40,7 +40,8 @@ public class Test {
 
 	        Environment env = new Environment();
 	        ArrayList<SemanticError> err = ast.checkSemantics(env);
-	        
+	        if(err==null)
+                    System.out.println("err è null, porcodio");
 	        if(err.size()>0){
 	        	System.out.println("You had: " +err.size()+" errors:");
 	        	for(SemanticError e : err)

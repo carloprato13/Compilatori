@@ -29,7 +29,7 @@ public class NullNode implements Node {
 
     @Override
     public String codeGeneration() {
-         return "ciao";//To change body of generated methods, choose Tools | Templates.
+         return "null";
     }
 
     @Override
@@ -38,6 +38,8 @@ public class NullNode implements Node {
 	  return null;
     }
     
-    
+      public boolean isSubTypeOf(Node m){
+        return true;
+        } 
     
 }

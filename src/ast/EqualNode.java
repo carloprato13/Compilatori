@@ -59,4 +59,6 @@ public class EqualNode implements Node{
 		       
   }
   
+  public boolean isSubTypeOf(Node m){return true;}
+  
 }  

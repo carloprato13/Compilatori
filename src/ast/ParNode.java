@@ -43,5 +43,9 @@ public class ParNode implements Node {
   public String codeGeneration() {
 		return "";
   }
-    
+  
+    public boolean isSubTypeOf(Node m){
+        return type.isSubTypeOf(m);
+    } 
+  
 }  
