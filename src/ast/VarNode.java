@@ -50,16 +50,15 @@ public class VarNode implements Node {
 	  	   +type.toPrint(s+"  ")  
            +exp.toPrint(s+"  "); 
   }
-  
-  //valore di ritorno non utilizzato
+
   public Node typeCheck () {
     if(exp != null){
-        if (! (FOOLlib.isSubtype(exp.typeCheck(),type)) ){      //isSubtype in realtà è un'uguaglianza
+        if (! (exp.typeCheck().isSubTypeOf(type)) ){      
         System.out.println("incompatible value for variable "+id);
         System.exit(0);
         }
     }
-    return null;
+    return type.typeCheck();
   }
   
   public String codeGeneration() {

@@ -34,50 +34,47 @@ public class FunNode implements Node {
   @Override
           
         public ArrayList<SemanticError> checkSemantics(Environment env) {
-
-        //create result list
         ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+        ArrayList<Node> parTypes = new ArrayList<>();
+
+        for (Node param : parlist) {
+            ParNode params=(ParNode) param;
+            parTypes.add(params.getType());
+        }
 
         //env.offset = -2;
-        HashMap<String, STentry> hm = env.getHashMap(env.getNestingLevel());
-        STentry entry = new STentry(env.getNestingLevel(), null, env.getOffset()); 
-        env.setOffset(env.getOffset() - 1);
-        if (hm.put(id, entry) != null) {
-            res.add(new SemanticError("Fun id " + id + " already declared"));
-        } else {
-            //creare una nuova hashmap per la symTable
-            env.pushHashMap();
 
-            ArrayList<Node> parTypes = new ArrayList<Node>();
-            int paroffset = 1;
-
-            //check args
-            for (Node a : parlist) {
-                ParNode arg = (ParNode) a;
-                parTypes.add(arg.getType());
-                if (env.addEntry(arg.getId(), arg.getType(), paroffset++) != null) {
-                    System.out.println("Parameter id " + arg.getId() + " already declared");
-                }
-
+        //try {
+            // Se restituisco un oggetto, aggiorno le informazione sul ClassType
+            if ( this.type instanceof InstanceTypeNode ) {
+                InstanceTypeNode returnType = (InstanceTypeNode) this.type;
+                res.addAll(returnType.updateClassType(env));
             }
+            env.addEntry(this.id, new ArrowTypeNode(parTypes, type), env.offset--);
+        //} catch (RedeclaredVarException e) {
+        //    res.add(new SemanticError("function " + id + " already declared"));
+        //}
+        env.pushHashMap();
 
-            //set func type
-            entry.addNode( new ArrowTypeNode(parTypes, type) );
-            //check semantics in the dec list
-            if (declist.size() > 0) {
-                env.offset = -2;
-                //if there are children then check semantics for every child and save the results
-                for (Node n : declist) {
-                    res.addAll(n.checkSemantics(env));
-                }
-            }
-
-            //check body
-            res.addAll(body.checkSemantics(env));
-
-            //close scope
-            env.popHashMap();
+        //check args
+        for (Node param : parlist) {
+            res.addAll(param.checkSemantics(env));
         }
+
+        //check semantics in the dec list
+        if (declist.size() > 0) {
+            env.offset = -2;
+            //if there are children then check semantics for every child and save the results
+            for (Node n : declist)
+                res.addAll(n.checkSemantics(env));
+        }
+
+        //check body
+        res.addAll(body.checkSemantics(env));
+
+        //close scope
+        env.popHashMap();
+
 
         return res;
 	}

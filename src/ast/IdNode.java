@@ -32,10 +32,9 @@ public class IdNode implements Node {
 	  STentry tmp=null; 
 	  while (j>=0 && tmp==null)
 		  tmp=(env.getHashMap(j--)).get(id);
-      if (tmp==null)
+      if (tmp==null){
           res.add(new SemanticError("Id "+id+" not declared"));
-      
-      else{
+      }else{
     	  entry = tmp;
     	  nestinglevel = env.getNestingLevel();
       }
