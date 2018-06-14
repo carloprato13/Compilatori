@@ -332,15 +332,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		for(ExpContext exp : ctx.exp())
 			args.add(visit(exp));
 		
-		//especial check for stdlib func
-		//this is WRONG, THIS SHOULD BE DONE IN A DIFFERENT WAY
-		//JUST IMAGINE THERE ARE 800 stdlib functions...
-		if(ctx.ID().getText().equals("print"))
-			res = new PrintNode(args.get(0));
-		
-		else
-			//instantiate the invocation
-			res = new CallNode(ctx.ID().getText(), args);
+		res = new CallNode(ctx.ID().getText(), args);
 		
 		return res;
 	}
@@ -356,10 +348,28 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
         }
         
         public Node visitPrint(PrintContext ctx){
-            return new PrintNode(visit(ctx.exp()));
+            Node n=visit(ctx.exp());
+            return new PrintNode(n);
         }
+        
+        @Override public Node visitMethodCall(FoolParser.MethodCallContext ctx) { 
+        
+            ArrayList<Node> args = new ArrayList<>();
+            for (ExpContext exp : ctx.funcall().exp()) {
+                args.add(visit(exp));
+            }
+
+            String methodId = ctx.name.ID().getText();
+            //String objectId = ctx.THIS() != null ?
+            //        ctx.THIS().getText()
+            //        :
+                    ctx.ID().getText();
+            return new MethodCallNode(ctx, objectId, methodId, new ArgumentsNode(ctx, args));
+        
+        }
+        
+        
 /*
-Vanno aggiunti del value il 'nullVal', 'fieldVal' e considerare nel 'boolVal'
-il 'not'oppure cambiargli nome e 'methodCall'
+Vanno aggiunti del value il  'fieldVal' e considerare nel 'boolVal' il 'not'oppure cambiargli nome 
 */	
 }
