@@ -39,7 +39,8 @@ public class VarNode implements Node {
         if ( hm.put(id,entry) != null )
           res.add(new SemanticError("Var id "+id+" already declared"));
         
-        res.addAll(exp.checkSemantics(env));
+        if(exp != null)
+            res.addAll(exp.checkSemantics(env));
         
         return res;
 	}
