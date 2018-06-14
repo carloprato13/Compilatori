@@ -354,6 +354,10 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
         public Node visitBaseVal(BaseValContext ctx) {
             return visit(ctx.exp());
         }
+        
+        public Node visitPrint(PrintContext ctx){
+            return new PrintNode(visit(ctx.exp()));
+        }
 /*
 Vanno aggiunti del value il 'nullVal', 'fieldVal' e considerare nel 'boolVal'
 il 'not'oppure cambiargli nome e 'methodCall'
