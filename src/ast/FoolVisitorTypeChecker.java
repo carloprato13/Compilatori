@@ -355,16 +355,16 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
         @Override public Node visitMethodCall(FoolParser.MethodCallContext ctx) { 
         
             ArrayList<Node> args = new ArrayList<>();
-            for (ExpContext exp : ctx.funcall().exp()) {
+            for (ExpContext exp : ctx.exp()) {
                 args.add(visit(exp));
             }
 
-            String methodId = ctx.name.ID().getText();
-            //String objectId = ctx.THIS() != null ?
+            String methodId = ctx.ID(1).getText();
+            //String objectId = ctx.THIS() != null ? PER GESTIRE IL THIS
             //        ctx.THIS().getText()
             //        :
-                    ctx.ID().getText();
-            return new MethodCallNode(ctx, objectId, methodId, new VarDecNode(ctx, args));
+            String objectId = ctx.ID(0).getText();
+            return new MethodCallNode(objectId, methodId, args);
         
         }
         

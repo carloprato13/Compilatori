@@ -13,7 +13,6 @@ import parser.FoolParser.*;
  */
 public class MethodCallNode extends CallNode {
     
-    
     private int objectOffset;
     private int objectNestingLevel;
     private int methodOffset;
@@ -27,6 +26,13 @@ public class MethodCallNode extends CallNode {
         super(callId, entry, args, nestingLevel);
         this.objectID = objectID;
         this.methodID = methodID;
+    }
+    
+    public MethodCallNode(String obj, String met, ArrayList<Node> args){
+        super(met, args);
+        this.objectID = obj;
+        this.methodID = met;
+        
     }
 
     @Override
