@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ast;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.Environment;
 import util.SemanticError;
 import parser.FoolParser.*;
@@ -26,8 +23,8 @@ public class MethodCallNode extends CallNode {
     private String methodID;
     private Node methodType;
 
-    public MethodCallNode( MethodCallContext ctx, String objectID, String methodID, ArgumentsNode args) {
-        super(ctx.funcall(), methodID, args);
+    public MethodCallNode( String callId,STentry entry, String objectID, String methodID, ArrayList<Node> args, int nestingLevel) {
+        super(callId, entry, args, nestingLevel);
         this.objectID = objectID;
         this.methodID = methodID;
     }
@@ -37,60 +34,50 @@ public class MethodCallNode extends CallNode {
         ArrayList<SemanticError> res = new ArrayList<>();
 
         this.nestinglevel = env.getNestingLevel();
-        try {
-            ClassTypeNode classType = null;
-            // Calcolo gli offset per recuperare l'oggetto
-            if (objectID.equals("this")) {
-                Node objectType = env.getLatestClassEntry().getNode();
-                // Se il metodo e' chiamato su this, l'offset rispetto a $fp e' sempre 0
-                this.objectOffset = 0;
-                if (objectType instanceof ClassTypeNode) {
-                    classType = (ClassTypeNode) objectType;
-                    // L'oggetto e' sempre al livello dei parametri di metodo, ovvero 3
-                    this.objectNestingLevel = 3;
-                } else {
-                    res.add(new SemanticError("Can't call this outside a class"));
-                }
+        ClassTypeNode classType = null;
+        if (objectID.equals("this")) {
+            Node objectType = env.getLatestClassEntry().getNode();
+            // Se il metodo e' chiamato su this, l'offset rispetto a $fp e' sempre 0
+            this.objectOffset = 0;
+            if (objectType instanceof ClassTypeNode) {
+                classType = (ClassTypeNode) objectType;
+                // L'oggetto e' sempre al livello dei parametri di metodo, ovvero 3
+                this.objectNestingLevel = 3;
             } else {
-                STentry objectSEntry = env.getLatestEntryOf(objectID);
-                Node objectType = objectSEntry.getNode();
-                this.objectOffset = objectSEntry.getOffset();
-                this.objectNestingLevel = objectSEntry.getNestinglevel();
-                env.getLatestEntryOf("this");
-                this.nestinglevel--;
-                // Controllo che il metodo sia stato chiamato su un oggetto
-                if (objectType instanceof InstanceTypeNode) {
-                    classType = ((InstanceTypeNode) objectType).getClassType();
-                } else {
-                    res.add(new SemanticError("Method " + methodID + " called on a non-object type"));
-                    return res;
-                }
+                res.add(new SemanticError("Can't call this outside a class"));
             }
-
-            // Se il metodo viene chiamato su this, vuol dire che stiamo facendo la semantic analysis
-            // della classe, quindi prendo l'ultima entry aggiunta alla symbol table
-            STentry classEntry = objectID.equals("this")
-                    ? env.getLatestClassEntry()
-                    : env.getLatestEntryOf(classType.getId());
-
-            ClassTypeNode objectClass = (ClassTypeNode) classEntry.getNode();
+        } else {
+            STentry objectSEntry = env.getLatestEntryOf(objectID);
+            Node objectType = objectSEntry.getNode();
+            this.objectOffset = objectSEntry.getOffset();
+            this.objectNestingLevel = objectSEntry.getNestinglevel();
+            env.getLatestEntryOf("this");
+            this.nestinglevel--;
+            // Controllo che il metodo sia stato chiamato su un oggetto
+            if (objectType instanceof InstanceTypeNode) {
+                classType = ((InstanceTypeNode) objectType).getClassType();
+            } else {
+                res.add(new SemanticError("Method " + methodID + " called on a non-object type"));
+                return res;
+            }
+        }
+        STentry classEntry = objectID.equals("this")
+                ? env.getLatestClassEntry()
+                : env.getLatestEntryOf(classType.getId());
+        ClassTypeNode objectClass = (ClassTypeNode) classEntry.getNode();
+        try {
             this.methodOffset = objectClass.getOffsetOfMethod(methodID);
-            this.methodType = objectClass.getTypeOfMethod(methodID);
-            // Controllo che il metodo esista all'interno della classe
-            if (this.methodType == null) {
-                res.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
-            }
-
-            FunNode t = (FunNode) this.methodType;
-            ArrayList<Node> p = t.getParams();
-            if (!(p.size() == args.size())) {
-                res.add(new SemanticError("Wrong number of parameters in the invocation of " + id));
-            }
-
-            res.addAll(args.checkSemantics(env));
-
-        } catch (UndeclaredVarException | UndeclaredMethodException e) {
-            res.add(new SemanticError(e.getMessage()));
+        } catch (UndeclaredMethodException ex) {
+            Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.methodType = objectClass.getTypeOfMethod(methodID);
+        if (this.methodType == null) {
+            res.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
+        }
+        FunNode t = (FunNode) this.methodType;
+        ArrayList<Node> p = t.getParams();
+        if (!(p.size() == getParlist().size())) {
+            res.add(new SemanticError("Wrong number of parameters in the invocation of " + methodID));
         }
 
         return res;
@@ -101,9 +88,13 @@ public class MethodCallNode extends CallNode {
         FunNode t = (FunNode) this.methodType;
         ArrayList<Node> p = t.getParams();
 
-        for (int i = 0; i < args.size(); i++)
-            if (!args.get(i).type().isSubTypeOf(p.get(i)))
-                throw new TypeException("Wrong type for " + (i + 1) + "-th parameter in the invocation of " + id, ctx);
+        for (int i = 0; i < getParlist().size(); i++)
+            if (!getParlist().get(i).typeCheck().isSubTypeOf(p.get(i)))
+                try {
+                    throw new Exception("Wrong type for " + (i + 1) + "-th parameter in the invocation of " + methodID);
+        } catch (Exception ex) {
+            Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return t.getType();
     }
@@ -111,8 +102,8 @@ public class MethodCallNode extends CallNode {
     @Override
     public String codeGeneration() {
         StringBuilder parCode = new StringBuilder();
-        for (int i = args.size() - 1; i >= 0; i--)
-            parCode.append(args.get(i).codeGeneration());
+        for (int i = getParlist().size() - 1; i >= 0; i--)
+            parCode.append(getParlist().get(i).codeGeneration());
 
         StringBuilder getAR = new StringBuilder();
 

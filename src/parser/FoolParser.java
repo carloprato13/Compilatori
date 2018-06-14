@@ -1620,7 +1620,7 @@ public class FoolParser extends Parser {
 	}
 	public static class MethodCallContext extends ValueContext {
 		public ExpContext exp;
-		public List<ExpContext> elem = new ArrayList<ExpContext>();
+		public List<ExpContext> elem = new ArrayList<>();
 		public List<TerminalNode> ID() { return getTokens(FoolParser.ID); }
 		public TerminalNode ID(int i) {
 			return getToken(FoolParser.ID, i);

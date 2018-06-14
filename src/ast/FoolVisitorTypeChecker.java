@@ -364,7 +364,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
             //        ctx.THIS().getText()
             //        :
                     ctx.ID().getText();
-            return new MethodCallNode(ctx, objectId, methodId, new ArgumentsNode(ctx, args));
+            return new MethodCallNode(ctx, objectId, methodId, new VarDecNode(ctx, args));
         
         }
         

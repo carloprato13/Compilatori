@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ast;
 
 import java.util.ArrayList;
@@ -79,6 +74,7 @@ public class IfNodeStm implements Node {
   
   //teoricamente tipando void dovrebbe restituire sempre true...
   public boolean isSubTypeOf(Node m){
+    if (cond instanceof BoolNode == false) return false;
     if(th.isSubTypeOf(m) && el.isSubTypeOf(m))
         return true;
     else
