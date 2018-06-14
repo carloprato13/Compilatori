@@ -74,7 +74,7 @@ public class IfNodeStm implements Node {
   
   //teoricamente tipando void dovrebbe restituire sempre true...
   public boolean isSubTypeOf(Node m){
-    if (cond instanceof BoolNode == false) return false;
+    if (cond instanceof BoolTypeNode == false) return false;
     if(th.isSubTypeOf(m) && el.isSubTypeOf(m))
         return true;
     else
