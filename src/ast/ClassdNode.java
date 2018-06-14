@@ -71,7 +71,7 @@ public class ClassdNode implements Node {
     public String codeGeneration() {
         // Creo una nuova dispatch table
         ArrayList<DispatchTableEntry> dispatchTable;
-        if(superClassID.equals(""))
+        if(superClassID==null)
             dispatchTable= new ArrayList<DispatchTableEntry>();
         else
             dispatchTable= FOOLlib.getDispatchTable(superClassID);
@@ -131,15 +131,16 @@ public class ClassdNode implements Node {
                     paramsType.add(param.getType());
                 }
             }
-
+//
             methodsList.add(new FunNode(fun.getId(), new ArrowTypeNode(paramsType, fun.getType())));
             functions.put(fun.getId(), new FunNode(fun.getId(), fun.getType(), paramsType));
         }
 
 
         ClassTypeNode superclassType = null;
-        superclassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
-
+        if (superClassID != null)
+            superclassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
+//forse viene chiamata troppe volte
         this.type = new ClassTypeNode(classID, superclassType, fieldsList, methodsList);
         env.setEntryNode(classID, this.type, 0);
 
@@ -161,7 +162,7 @@ public class ClassdNode implements Node {
         env.popHashMap().popHashMap();
 
         // Se estende una classe
-        if (!superClassID.isEmpty()) {
+        if (superClassID!= null) {
             //try {
                 if (!(env.getNodeOf(superClassID) instanceof ClassTypeNode))
                     res.add(new SemanticError("ID of super class " + superClassID + " is not related to a class type"));
