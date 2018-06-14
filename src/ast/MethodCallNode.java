@@ -60,8 +60,8 @@ public class MethodCallNode extends CallNode {
             env.getLatestEntryOf("this");
             this.nestinglevel--;
             // Controllo che il metodo sia stato chiamato su un oggetto
-            if (objectType instanceof InstanceTypeNode) {
-                classType = ((InstanceTypeNode) objectType).getClassType();
+            if (objectType instanceof ClassTypeNode) {
+                classType = (ClassTypeNode) objectType;//((ClassTypeNode) objectType).getClassType();
             } else {
                 res.add(new SemanticError("Method " + methodID + " called on a non-object type"));
                 return res;
@@ -76,12 +76,13 @@ public class MethodCallNode extends CallNode {
         } catch (UndeclaredMethodException ex) {
             Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         this.methodType = objectClass.getTypeOfMethod(methodID);
         if (this.methodType == null) {
             res.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
         }
-        FunNode t = (FunNode) this.methodType;
-        ArrayList<Node> p = t.getParams();
+        ArrowTypeNode t = (ArrowTypeNode) this.methodType;
+        ArrayList<Node> p = t.getParList();
         if (!(p.size() == getParlist().size())) {
             res.add(new SemanticError("Wrong number of parameters in the invocation of " + methodID));
         }
@@ -91,8 +92,8 @@ public class MethodCallNode extends CallNode {
 
     @Override
     public Node typeCheck() {
-        FunNode t = (FunNode) this.methodType;
-        ArrayList<Node> p = t.getParams();
+        ArrowTypeNode t = (ArrowTypeNode) this.methodType;
+        ArrayList<Node> p = t.getParList();
 
         for (int i = 0; i < getParlist().size(); i++)
             if (!getParlist().get(i).typeCheck().isSubTypeOf(p.get(i)))
@@ -102,7 +103,7 @@ public class MethodCallNode extends CallNode {
             Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return t.getType();
+        return t.getRet();
     }
 
     @Override

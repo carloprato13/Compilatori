@@ -72,7 +72,7 @@ public class InstanceTypeNode implements Node {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
-        return null;
+        return new ArrayList<SemanticError>();
     }
     
     public boolean isSubTypeOf(Node type){

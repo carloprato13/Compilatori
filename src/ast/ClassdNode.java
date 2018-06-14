@@ -140,7 +140,7 @@ public class ClassdNode implements Node {
         ClassTypeNode superclassType = null;
         if (superClassID != null)
             superclassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
-//forse viene chiamata troppe volte
+
         this.type = new ClassTypeNode(classID, superclassType, fieldsList, methodsList);
         env.setEntryNode(classID, this.type, 0);
 

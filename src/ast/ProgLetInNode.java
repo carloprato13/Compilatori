@@ -39,7 +39,7 @@ public class ProgLetInNode implements Node {
             for (Node n : declist)
                 res.addAll(n.checkSemantics(env));
         }
-        if(exp!=null)           //SBAGLIATISSIMO, EXP NON PUÒ ESSERE NULL
+        
             res.addAll(exp.checkSemantics(env));
 
         //clean the scope, we are leaving a let scope
@@ -52,10 +52,8 @@ public class ProgLetInNode implements Node {
   public Node typeCheck () {
     for (Node dec:declist)
       dec.typeCheck();
-    if(exp!=null)
+   
         return exp.typeCheck();
-    else    //SBAGLIATISSIMO, EXP NON PUÒ ESSERE NULL
-        return new BoolTypeNode();
   }
   
   public String codeGeneration() {

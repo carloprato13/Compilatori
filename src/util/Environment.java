@@ -48,9 +48,9 @@ public class Environment {
         STentry oldEntry = this.symbolTable
                 .get(this.symbolTable.size() - 1)
                 .put(id, newEntry);
-        /*if (Node instanceof ClassTypeNode) {
+        if (Node instanceof ClassTypeNode) {
             latestClassEntry = newEntry;
-        }*/
+        }
         /*
         if (oldEntry != null) {
             throw new RedeclaredVarException(id);
@@ -63,7 +63,7 @@ public class Environment {
         STentry oldEntry = this.symbolTable
                 .get(this.symbolTable.size() - 1)
                 .put(id, newEntry);
-        /*if (Node instanceof ClassNode) {
+        if (Node instanceof ClassTypeNode) {
             latestClassEntry = newEntry;
         }/*
         if (oldEntry != null) {
@@ -75,9 +75,9 @@ public class Environment {
     public Environment setEntryNode(String id, Node newNode, int offset) /*throws UndeclaredClassException*/ {
         STentry newEntry = new STentry(getNestingLevel(), newNode, offset);
         STentry oldEntry = this.symbolTable.get(this.symbolTable.size() - 1).replace(id, newEntry);
-        /*if (newNode instanceof ClassNode) {
+        if (newNode instanceof ClassTypeNode) {
             latestClassEntry = newEntry;
-        }
+        }/*
         if (oldEntry == null) {
             throw   new UndeclaredClassException(id);
         }*/
