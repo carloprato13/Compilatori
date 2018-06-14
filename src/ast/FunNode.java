@@ -101,16 +101,15 @@ public class FunNode implements Node {
            +body.toPrint(s+"  ") ; 
   }
   
-  //valore di ritorno non utilizzato
   public Node typeCheck () {
 	if (declist!=null) 
 	  for (Node dec:declist)
 		dec.typeCheck();
-    if ( !(FOOLlib.isSubtype(body.typeCheck(),type)) ){
+    if ( !(body.typeCheck().isSubTypeOf(type)) ){
       System.out.println("Wrong return type for function "+id);
       System.exit(0);
     }  
-    return null;
+    return new ArrowTypeNode(parlist, type);
   }
   
   public String codeGeneration() {

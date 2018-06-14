@@ -1,7 +1,7 @@
- class Numero {
-        int uno() 1;
+class Numero(int x) {
+        int getX() x;
     };
     let
-        Numero num = new Numero();
+        Numero num = new Numero(2);
     in
-        print(num.uno());
+        print(num.getX());

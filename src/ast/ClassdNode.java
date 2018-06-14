@@ -121,7 +121,7 @@ public class ClassdNode implements Node {
         for (FunNode fun : funDecList) { // Per ogni metodo
             ArrayList<Node> paramsType = new ArrayList<>();
             for (Node params : fun.getParams()) { // Controllo i parametri
-                VarNode param= (VarNode)params;
+                ParNode param= (ParNode)params;
                 if (param.getType() instanceof InstanceTypeNode) { // Se si tratta di oggetti
                     InstanceTypeNode paramType = (InstanceTypeNode) param.getType();
                     String declaredClass = paramType.getClassType().getId();

@@ -20,8 +20,8 @@ import ast.Node;
 public class Test {
     public static void main(String[] args) throws Exception {
         
-        String fileName = "/home/francesco/Documenti/JavaApplication1/test/prova.fool";
-        //String fileName = "/home/carlo/NetBeansProjects/Compilatori/test/prova.fool";
+        //String fileName = "/home/francesco/Documenti/JavaApplication1/test/prova.fool";
+        String fileName = "/home/carlo/NetBeansProjects/Compilatori/test/prova.fool";
       
         FileInputStream is = new FileInputStream(fileName);
         ANTLRInputStream input = new ANTLRInputStream(is);
