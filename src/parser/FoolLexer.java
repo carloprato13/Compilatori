@@ -14,9 +14,7 @@ import org.antlr.v4.runtime.misc.*;
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class FoolLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.7.1", RuntimeMetaData.VERSION); }
-	private int lexicalErrors=0;
 
-	public int getLexicalErrors(){return lexicalErrors;}
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -58,7 +56,9 @@ public class FoolLexer extends Lexer {
 		"INTEGER", "ID", "WS", "LINECOMENTS", "BLOCKCOMENTS", "ERR"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
+	private int lexicalErrors=0;
 
+  	public int getLexicalErrors(){return lexicalErrors;}
 	/**
 	 * @deprecated Use {@link #VOCABULARY} instead.
 	 */
