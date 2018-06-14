@@ -77,7 +77,7 @@ value  : (MINUS)? INTEGER          #intVal
        | ID DOT ID #fieldVal
        | ID DOT ID LPAR ( elem+=exp (COMMA elem+=exp)* )? RPAR #methodCall
        | NEW ID LPAR ( elem+=stm (COMMA elem+=stm)* )? RPAR #classInstantiation
-       | PRINT ( exp )        #print       
+       | PRINT LPAR exp RPAR        #print       
 ; 
 
    

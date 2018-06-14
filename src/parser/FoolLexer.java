@@ -1,6 +1,5 @@
-package parser;
 // Generated from Fool.g4 by ANTLR 4.7.1
-
+package parser;
     import java.util.ArrayList;
 
 import org.antlr.v4.runtime.Lexer;
@@ -15,7 +14,9 @@ import org.antlr.v4.runtime.misc.*;
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class FoolLexer extends Lexer {
 	static { RuntimeMetaData.checkVersion("4.7.1", RuntimeMetaData.VERSION); }
+	private int lexicalErrors=0;
 
+	public int getLexicalErrors(){return lexicalErrors;}
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
@@ -76,10 +77,6 @@ public class FoolLexer extends Lexer {
 			}
 		}
 	}
-
-	private int lexicalErrors=0;
-
-	public int getLexicalErrors(){return lexicalErrors;}
 
 	@Override
 	@Deprecated

@@ -1,6 +1,5 @@
-package parser;
 // Generated from Fool.g4 by ANTLR 4.7.1
-
+package parser;
     import java.util.ArrayList;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
