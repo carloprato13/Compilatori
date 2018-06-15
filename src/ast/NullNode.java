@@ -34,7 +34,7 @@ public class NullNode implements Node {
     }
     
       public boolean isSubTypeOf(Node m){
-        return false;
+        return m instanceof NullNode;
         } 
     
 }
