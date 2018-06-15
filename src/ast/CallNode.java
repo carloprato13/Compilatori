@@ -107,8 +107,9 @@ public class CallNode implements Node {
                 "js\n";
     }
 
+    @Override
     public boolean isSubTypeOf(Node m) {
-        return true; //SIAMO SICURI?
+        return entry.getNode().isSubTypeOf(m);
     }
 
     public ArrayList<Node> getParlist() {

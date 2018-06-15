@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ast;
 
 import java.util.ArrayList;
@@ -39,7 +34,7 @@ public class NullNode implements Node {
     }
     
       public boolean isSubTypeOf(Node m){
-        return true;
+        return false;
         } 
     
 }

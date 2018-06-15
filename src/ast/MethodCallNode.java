@@ -139,7 +139,7 @@ public class MethodCallNode extends CallNode {
 
     @Override
     public boolean isSubTypeOf(Node m) {
-        return true;
+        return methodType.isSubTypeOf (m);
     }
 
     @Override
