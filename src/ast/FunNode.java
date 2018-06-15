@@ -149,8 +149,6 @@ public class FunNode implements Node {
     public String getId() {
         return id;
     }
-  
-  
 
     public String getClassID() {
         return classID;

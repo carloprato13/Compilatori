@@ -42,17 +42,17 @@ public class AsmNode implements Node {
            +exp.toPrint(s+"  "); 
   }
   
-  //valore di ritorno non utilizzato
+  
   public Node typeCheck () {
-    if (! (FOOLlib.isSubtype(exp.typeCheck(),type)) ){      //isSubtype in realtà è un'uguaglianza
+    if (! (exp.typeCheck().isSubTypeOf(type)) ){      
       System.out.println("incompatible value for variable "+id);
       System.exit(0);
     }     
-    return null;
+    return type;
   }
   
   public String codeGeneration() {
-		return exp.codeGeneration();
+        return exp.codeGeneration();
   }  
   
   public boolean isSubTypeOf(Node m){

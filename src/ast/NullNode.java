@@ -18,13 +18,13 @@ public class NullNode implements Node {
     @Override
     public String toPrint(String indent) {
          //To change body of generated methods, choose Tools | Templates.
-         return "ciao";
+         return "NullNode";
     }
 
     @Override
     public Node typeCheck() {
          //To change body of generated methods, choose Tools | Templates.
-         return null;
+         return this;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class NullNode implements Node {
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
           
-	  return null;
+	  return new ArrayList<SemanticError>();
     }
     
       public boolean isSubTypeOf(Node m){

@@ -40,16 +40,6 @@ public class InstanceTypeNode implements Node {
         return res;
     }
 
-    /*@Override
-    public boolean isSubTypeOf(Type type) {
-        if (type instanceof InstanceType) {
-            InstanceType it2 = (InstanceType) type;
-            return classT.isSubTypeOf(it2.getClassType());
-        } else {
-            return false;
-        }
-    }*/
-
     @Override
     public String toString() {
         return "instance: " + classT.getId();

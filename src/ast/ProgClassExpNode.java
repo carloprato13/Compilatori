@@ -121,7 +121,10 @@ public class ProgClassExpNode implements Node {
     }
 
     public String toPrint(String s) {
-        return s+"class declarations";
+        String ss="";
+        for(Node n : classDeclarations)
+            ss= n.toPrint(ss);
+        return s+"class declaration of: \n"+ss;
     }
     
       public boolean isSubTypeOf(Node m){

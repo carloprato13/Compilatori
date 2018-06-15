@@ -35,41 +35,22 @@ public class ClassTypeNode implements Node {
   
   @Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
-           /*
-//create result list
-  	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
-  	  
-  	  //env.offset = -2;
-  	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
-        STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
         
-        if ( hm.put(id,entry) != null )
-          res.add(new SemanticError("Var id "+id+" already declared"));
-        
-        res.addAll(exp.checkSemantics(env));
-        
-        return res;*/
-           return null;
+        return new ArrayList<SemanticError>();
 	}
   
   public String toPrint(String s) {
-	/*return s+"Var:" + id +"\n"
-	  	   +type.toPrint(s+"  ")  
-           +exp.toPrint(s+"  "); */
-        return "";
+	
+        return s+" ClassType: "+classId;
   }
   
-  //valore di ritorno non utilizzato
+  
   public Node typeCheck () {
-    /*if (! (FOOLlib.isSubtype(exp.typeCheck(),type)) ){      //isSubtype in realtà è un'uguaglianza
-      System.out.println("incompatible value for variable "+id);
-      System.exit(0);
-    }     */
     return this;
   }
   
   public String codeGeneration() {
-		return "";//return exp.codeGeneration();
+		return "";
   }  
     
   public ArrayList<VarNode> getFields() {
@@ -145,11 +126,6 @@ public class ClassTypeNode implements Node {
             return new VoidTypeNode();
         }
     }
-
-    /*
-    public String getID() {
-        return TypeID.CLASSDEC;
-    }*/
 
     public boolean isSubTypeOf(Node t2) {
         // Procedo solo se l'altro tipo e' una classe

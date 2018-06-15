@@ -34,9 +34,8 @@ public class ParNode implements Node {
 			 +type.toPrint(s+"  ") ; 
   }
   
-  //non utilizzato
   public Node typeCheck () {
-     return null;
+     return this.type;
   }
   
   //non utilizzato

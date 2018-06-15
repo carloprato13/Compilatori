@@ -108,7 +108,7 @@ public class CallNode implements Node {
     }
 
     public boolean isSubTypeOf(Node m) {
-        return true;
+        return true; //SIAMO SICURI?
     }
 
     public ArrayList<Node> getParlist() {
