@@ -1,5 +1,6 @@
 package ast;
 
+import exception.UndeclaredMethodException;
 import java.util.ArrayList;
 import java.util.HashMap;
 

@@ -30,9 +30,11 @@ public class BoolTypeNode implements Node {
 		return "";
   }
 
-  @Override
   public boolean isSubTypeOf(Node m){
-      return m instanceof BoolTypeNode;
+      if(m instanceof BoolTypeNode )
+          return true;
+      else
+          return false;
   }
     
 }  

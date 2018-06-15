@@ -9,6 +9,7 @@ package ast;
  *
  * @author carlo
  */
+import exception.*;
 import util.*;
 
 import java.util.ArrayList;
@@ -28,15 +29,15 @@ public class InstanceTypeNode implements Node {
     // This is used to update the classType filling superType when needed
     public ArrayList<SemanticError> updateClassType(Environment env) {
         ArrayList<SemanticError> res = new ArrayList<SemanticError>();
-        //try {
-            //try {
+        try {
+            try {
                 this.classT = (ClassTypeNode) env.getNodeOf(classT.getId());
-            //} catch (UndeclaredVarException e) {
-              //  throw new UndeclaredClassException(classT.getClassID());
-            //}
-        //} catch (UndeclaredClassException e) {
-            //res.add(new SemanticError(e.getMessage()));
-        //}
+            } catch (UndeclaredVarException e) {
+              throw new UndeclaredClassException(classT.getId());
+            }
+        } catch (UndeclaredClassException e) {
+            res.add(new SemanticError(e.getMessage()));
+        }
         return res;
     }
 
@@ -51,7 +52,7 @@ public class InstanceTypeNode implements Node {
     }
 
     @Override
-    public Node typeCheck() {
+    public Node typeCheck()  throws TypeException {
        return classT;
     }
 

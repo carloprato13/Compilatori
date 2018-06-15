@@ -38,7 +38,7 @@ public class ParNode implements Node {
      return this.type;
   }
   
-  //non utilizzato
+  
   public String codeGeneration() {
 		return "";
   }

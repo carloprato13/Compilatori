@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 
 import util.Environment;
@@ -41,7 +42,7 @@ public class IfNode implements Node {
 	}
   
   
-  public Node typeCheck() {
+  public Node typeCheck() throws TypeException{
     if (!(FOOLlib.isSubtype(cond.typeCheck(),new BoolTypeNode()))) {
       System.out.println("non boolean condition in if");
       System.exit(0);

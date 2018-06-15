@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -51,7 +52,7 @@ public class VarNode implements Node {
            +exp.toPrint(s+"  "); 
   }
 
-  public Node typeCheck () {
+  public Node typeCheck () throws TypeException {
     if(exp != null){
         if (! (exp.typeCheck().isSubTypeOf(type)) ){      
         System.out.println("incompatible value for variable "+id);

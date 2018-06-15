@@ -33,7 +33,7 @@ public class BoolNode implements Node {
 	  }
   
   public boolean isSubTypeOf(Node m){
-      return m instanceof BoolNode;
+      return m instanceof BoolTypeNode;
   }
   
 }  

@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 import lib.FOOLlib;
 import util.Environment;
@@ -43,7 +44,7 @@ public class IfNodeStm implements Node {
 	}
   
   
-  public Node typeCheck() {
+  public Node typeCheck() throws TypeException {
     if (!(FOOLlib.isSubtype(cond.typeCheck(),new BoolTypeNode()))) {
       System.out.println("non boolean condition in if");
       System.exit(0);
@@ -73,9 +74,11 @@ public class IfNodeStm implements Node {
   }
   
   //teoricamente tipando void dovrebbe restituire sempre true...
-  @Override
   public boolean isSubTypeOf(Node m){
     if (cond instanceof BoolTypeNode == false) return false;
-      return th.isSubTypeOf(m) && el.isSubTypeOf(m);
+    if(th.isSubTypeOf(m) && el.isSubTypeOf(m))
+        return true;
+    else
+        return false;
     }
 }

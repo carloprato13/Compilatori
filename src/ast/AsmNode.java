@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -43,7 +44,7 @@ public class AsmNode implements Node {
   }
   
   
-  public Node typeCheck () {
+  public Node typeCheck () throws TypeException{
     if (! (exp.typeCheck().isSubTypeOf(type)) ){      
       System.out.println("incompatible value for variable "+id);
       System.exit(0);

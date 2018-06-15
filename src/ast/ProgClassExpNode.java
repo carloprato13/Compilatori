@@ -1,15 +1,9 @@
 package ast;
 
-//import exception.RedeclaredVarException;
+import exception.*;
 import util.SemanticError;
 import org.antlr.v4.runtime.ParserRuleContext;
 import util.Environment;
-//import type.ClassType;
-//import type.FunType;
-//import type.Type;
-//import exception.TypeException;
-//import util.Field;
-//import util.Method;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +28,7 @@ public class ProgClassExpNode implements Node {
         // preliminary class inserting in symbol table for order independent references
 
         for (ClassdNode classNode : classDeclarations) {
-            //try {
+            try {
                 ArrayList<VarNode> fields = new ArrayList<VarNode>();
                 for (VarNode field : classNode.getVardeclist()) {
                     fields.add(new VarNode(field.getId(), field.getType(), null));
@@ -50,9 +44,9 @@ public class ProgClassExpNode implements Node {
                 }
                 ClassTypeNode classType = new ClassTypeNode(classNode.getClassID(), new ClassTypeNode(classNode.getSuperClassID()), fields, methods);
                 env.addEntry(classNode.getClassID(), classType, 0);
-            /*} catch (RedeclaredVarException e) {
+            } catch (RedeclaredVarException e) {
                 res.add(new SemanticError("Class '" + classNode.getClassID() + "' declared multiple times"));
-            }*/
+            }
         }
 
         for (ClassdNode classNode : classDeclarations) {
@@ -67,7 +61,7 @@ public class ProgClassExpNode implements Node {
     }
 
     
-    public Node typeCheck() /*throws TypeException*/ {
+    public Node typeCheck() throws TypeException {
         for (ClassdNode classdec : classDeclarations) {
             classdec.typeCheck();
         }

@@ -5,6 +5,7 @@
  */
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 import lib.FOOLlib;
 import util.Environment;
@@ -43,7 +44,7 @@ public ArrayList<SemanticError> checkSemantics(Environment env) {
 	  return res;
 	}
   
-  public Node typeCheck() {
+  public Node typeCheck()throws TypeException {
     Node l = left.typeCheck();
     Node r = right.typeCheck();
     if (! ( l.isSubTypeOf(r) || r.isSubTypeOf(l) ) ) {

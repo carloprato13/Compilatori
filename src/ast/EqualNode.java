@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 
 import util.Environment;
@@ -35,7 +36,7 @@ public class EqualNode implements Node{
 	  return res;
 	}
   
-  public Node typeCheck() {
+  public Node typeCheck() throws TypeException {
     Node l = left.typeCheck();
     Node r = right.typeCheck();
     if (! ( FOOLlib.isSubtype(l,r) || FOOLlib.isSubtype(r,l) ) ) {

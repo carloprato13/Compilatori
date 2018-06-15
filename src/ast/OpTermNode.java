@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 
 import util.Environment;
@@ -52,7 +53,7 @@ public class OpTermNode implements Node {
         }
     }
 
-    public Node typeCheck() {
+    public Node typeCheck() throws TypeException {
         if (!(FOOLlib.isSubtype(left.typeCheck(), new IntTypeNode())
                 && FOOLlib.isSubtype(right.typeCheck(), new IntTypeNode()))) {
             System.out.println("Non integers in numerical operations");

@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 
 import util.Environment;
@@ -17,7 +18,7 @@ public class PrintNode implements Node {
     return s+"Print\n" + val.toPrint(s+"  ") ;
   }
   
-  public Node typeCheck() {
+  public Node typeCheck() throws TypeException {
     return val.typeCheck();
   }  
   

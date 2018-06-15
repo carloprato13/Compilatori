@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 
 import util.Environment;
@@ -58,7 +59,7 @@ public class CallNode implements Node {
         return res;
     }
 
-    public Node typeCheck() {  //                           
+    public Node typeCheck() throws TypeException {  //                           
         ArrowTypeNode t = null;
         if (entry.getNode() instanceof ArrowTypeNode) {
             t = (ArrowTypeNode) entry.getNode(); //controllo che sia un tipo freccia
@@ -107,9 +108,8 @@ public class CallNode implements Node {
                 "js\n";
     }
 
-    @Override
     public boolean isSubTypeOf(Node m) {
-        return entry.getNode().isSubTypeOf(m);
+       return entry.getNode().isSubTypeOf(m);
     }
 
     public ArrayList<Node> getParlist() {

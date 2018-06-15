@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 
 import util.Environment;
@@ -15,7 +16,7 @@ public class VoidTypeNode implements Node {
   }
   
   //non utilizzato
-  public Node typeCheck() {
+  public Node typeCheck() throws TypeException{
     return this;
   }
 

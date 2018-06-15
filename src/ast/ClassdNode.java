@@ -5,6 +5,8 @@
  */
 package ast;
 
+
+import exception.*;
 import util.Environment;
 import util.SemanticError;
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class ClassdNode implements Node {
     }
 
     @Override
-    public Node typeCheck() {
+    public Node typeCheck() throws TypeException {
         for (VarNode vardec : attrDecList) {
             vardec.typeCheck();
         }
@@ -122,27 +124,40 @@ public class ClassdNode implements Node {
             ArrayList<Node> paramsType = new ArrayList<>();
             for (Node params : fun.getParams()) { // Controllo i parametri
                 ParNode param= (ParNode)params;
+                try{
                 if (param.getType() instanceof InstanceTypeNode) { // Se si tratta di oggetti
                     InstanceTypeNode paramType = (InstanceTypeNode) param.getType();
                     String declaredClass = paramType.getClassType().getId();
+                   
                     ClassTypeNode paramClassType = (ClassTypeNode) env.getLatestEntryOf(declaredClass).getNode();
+                    
+                   
+                    
                     paramsType.add(new InstanceTypeNode(paramClassType));
                 } else { // Se si tratta di valori base
                     paramsType.add(param.getType());
                 }
+                }catch(UndeclaredVarException e){
+                        res.add(new SemanticError("variable " + superClassID + " not defined riga 145"));
+                    }
             }
-//
             methodsList.add(new FunNode(fun.getId(), new ArrowTypeNode(paramsType, fun.getType())));
             functions.put(fun.getId(), new FunNode(fun.getId(), fun.getType(), paramsType));
         }
 
-
+        try{
         ClassTypeNode superclassType = null;
         if (superClassID != null)
             superclassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
-
+        
         this.type = new ClassTypeNode(classID, superclassType, fieldsList, methodsList);
         env.setEntryNode(classID, this.type, 0);
+        
+        }catch(UndeclaredClassException e){
+            res.add(new SemanticError("class " + superClassID + " not defined"));
+        }catch(UndeclaredVarException e){
+            res.add(new SemanticError("variable " + superClassID + " not defined riga 145"));
+        }
 
         env.pushHashMap(); // Aggiungo i parametri ad una nuova Symbol Table
         for (VarNode var : attrDecList) {
@@ -163,13 +178,13 @@ public class ClassdNode implements Node {
 
         // Se estende una classe
         if (superClassID!= null) {
-            //try {
+            try {
                 if (!(env.getNodeOf(superClassID) instanceof ClassTypeNode))
                     res.add(new SemanticError("ID of super class " + superClassID + " is not related to a class type"));
-            //} catch (UndeclaredVarException exp) {
-            //    res.add(new SemanticError("Super class " + superClassID + " not defined"));
-            //}
-
+            } catch (UndeclaredVarException exp) {
+                res.add(new SemanticError("Super class " + superClassID + " not defined"));
+            }
+            try {
             ClassTypeNode superClassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
             if (attrDecList.size() >= superClassType.getFields().size()) {
                 for (int i = 0; i < superClassType.getFields().size(); i++) { // per ogni attributo del padre
@@ -194,6 +209,10 @@ public class ClassdNode implements Node {
                     }
                 }
             }
+             } catch (UndeclaredVarException exp) {
+                 res.add(new SemanticError("Super class " + superClassID + " not defined"));
+             }
+            
         }
 
         return res;

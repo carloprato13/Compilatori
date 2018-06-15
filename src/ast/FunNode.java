@@ -1,4 +1,6 @@
 package ast;
+import exception.RedeclaredVarException;
+import exception.TypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -44,16 +46,16 @@ public class FunNode implements Node {
 
         //env.offset = -2;
 
-        //try {
+        try {
             // Se restituisco un oggetto, aggiorno le informazione sul ClassType
             if ( this.type instanceof InstanceTypeNode ) {
                 InstanceTypeNode returnType = (InstanceTypeNode) this.type;
                 res.addAll(returnType.updateClassType(env));
             }
             env.addEntry(this.id, new ArrowTypeNode(parTypes, type), env.offset--);
-        //} catch (RedeclaredVarException e) {
-        //    res.add(new SemanticError("function " + id + " already declared"));
-        //}
+        } catch (RedeclaredVarException e) {
+            res.add(new SemanticError("function " + id + " already declared"));
+        }
         env.pushHashMap();
 
         //check args
@@ -98,7 +100,7 @@ public class FunNode implements Node {
            +body.toPrint(s+"  ") ; 
   }
   
-  public Node typeCheck () {
+  public Node typeCheck ()  throws TypeException{
 	if (declist!=null) 
 	  for (Node dec:declist)
 		dec.typeCheck();

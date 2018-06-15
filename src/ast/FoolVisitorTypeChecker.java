@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 
 import parser.*;
@@ -46,9 +47,9 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 	}
 	
         public Node visitClassExp(FoolParser.ClassExpContext ctx) {
-        ProgClassExpNode res;
+        ProgClassExpNode res=null;
 
-        //try {
+        try {
             ArrayList<ClassdNode> classDeclarations = new ArrayList<ClassdNode>();
             for (FoolParser.ClassdContext dc : ctx.classd()) {
                 ArrayList<VarNode> vars = new ArrayList<VarNode>();
@@ -85,11 +86,15 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
                 Node exp = visit(ctx.exp());
 
                 res = new ProgClassExpNode(ctx, classDeclarations, new ProgNode( visit(ctx.exp())));
+                
             }
-       /*} catch (TypeException e) {
-            return new ErrorNode(e);
-        }*/
-        return res;
+       } catch (TypeException e) {
+           System.out.println("Errore in visitClassExp");
+            System.out.println(e.getMessage());
+            System.exit(0);
+        }finally{
+           return res;
+        }
     }        
         
 	@Override

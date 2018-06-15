@@ -21,11 +21,11 @@ public class ArrowTypeNode implements Node {
 	return s+"ArrowType\n" + parlstr + ret.toPrint(s+"  ->") ; 
   }
   
-  public Node getRet () { //
+  public Node getRet () { 
     return ret;
   }
   
-  public ArrayList<Node> getParList () { //
+  public ArrayList<Node> getParList () { 
     return parlist;
   }
 
@@ -36,7 +36,7 @@ public class ArrowTypeNode implements Node {
 	}
   
   //non utilizzato
-  public Node typeCheck () {
+  public Node typeCheck (){
     return this;
   }
 

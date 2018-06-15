@@ -61,6 +61,8 @@ public class IdNode implements Node {
 
   }
   
-  public boolean isSubTypeOf(Node m){return entry.getNode().isSubTypeOf(m);} //QUA SECONDO ME DOVREMMO CONTROLLARE IL TIPO PRENDENDOLO DALLA STentry
+  public boolean isSubTypeOf(Node m){
+    return entry.getNode().isSubTypeOf(m);
+  }
   
 }  

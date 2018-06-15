@@ -1,5 +1,6 @@
 package ast;
 
+import exception.TypeException;
 import java.util.ArrayList;
 
 import util.Environment;
@@ -24,7 +25,7 @@ public class ProgNode implements Node {
 		return exp.checkSemantics(env);
 	}
   
-  public Node typeCheck() {
+  public Node typeCheck() throws TypeException {
     return exp.typeCheck();
   }  
   

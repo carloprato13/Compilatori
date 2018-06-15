@@ -3,6 +3,7 @@ package util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import ast.*;
+import exception.*;
 
 import java.util.ListIterator;
 
@@ -43,7 +44,7 @@ public class Environment {
     }
     
 
-    public Environment addEntry(String id, Node Node, int offset) /*throws RedeclaredVarException*/ {
+    public Environment addEntry(String id, Node Node, int offset) throws RedeclaredVarException {
         STentry newEntry = new STentry(getNestingLevel(), Node, offset);
         STentry oldEntry = this.symbolTable
                 .get(this.symbolTable.size() - 1)
@@ -51,40 +52,40 @@ public class Environment {
         if (Node instanceof ClassTypeNode) {
             latestClassEntry = newEntry;
         }
-        /*
+        
         if (oldEntry != null) {
             throw new RedeclaredVarException(id);
-        }*/
+        }
         return this;
     }
 
-    public Environment addEntry(String id, Node Node, int offset, boolean isInsideClass) /*throws RedeclaredVarException*/ {
+    public Environment addEntry(String id, Node Node, int offset, boolean isInsideClass) throws RedeclaredVarException {
         STentry newEntry = new STentry(getNestingLevel(), Node, offset, isInsideClass);
         STentry oldEntry = this.symbolTable
                 .get(this.symbolTable.size() - 1)
                 .put(id, newEntry);
         if (Node instanceof ClassTypeNode) {
             latestClassEntry = newEntry;
-        }/*
+        }
         if (oldEntry != null) {
             throw new RedeclaredVarException(id);
-        }*/
+        }
         return this;
     }
 
-    public Environment setEntryNode(String id, Node newNode, int offset) /*throws UndeclaredClassException*/ {
+    public Environment setEntryNode(String id, Node newNode, int offset) throws UndeclaredClassException {
         STentry newEntry = new STentry(getNestingLevel(), newNode, offset);
         STentry oldEntry = this.symbolTable.get(this.symbolTable.size() - 1).replace(id, newEntry);
         if (newNode instanceof ClassTypeNode) {
             latestClassEntry = newEntry;
-        }/*
+        }
         if (oldEntry == null) {
             throw   new UndeclaredClassException(id);
-        }*/
+        }
         return this;
     }
 
-    public STentry getLatestEntryOf(String id) /*throws UndeclaredVarException*/ {
+    public STentry getLatestEntryOf(String id) throws UndeclaredVarException {
         ListIterator<HashMap<String, STentry>> li = symbolTable.listIterator(symbolTable.size());
         while (li.hasPrevious()) {
             HashMap<String, STentry> current = li.previous();
@@ -92,11 +93,10 @@ public class Environment {
                 return current.get(id);
             }
         }
-        //throw new UndeclaredVarException(id);
-        return null;
+        throw new UndeclaredVarException(id);
     }
 
-    public STentry getLatestEntryOfNotFun(String id) /*throws UndeclaredVarException*/ {
+    public STentry getLatestEntryOfNotFun(String id) throws UndeclaredVarException {
         ListIterator<HashMap<String, STentry>> li = symbolTable.listIterator(symbolTable.size());
         while (li.hasPrevious()) {
             HashMap<String, STentry> current = li.previous();
@@ -104,20 +104,18 @@ public class Environment {
                 return current.get(id);
             }
         }
-        //throw new UndeclaredVarException(id);
-        return null;
+        throw new UndeclaredVarException(id);
     }
 
-    public STentry getLatestClassEntry() /*throws UndeclaredVarException*/ {
+    public STentry getLatestClassEntry() throws UndeclaredVarException {
         if (latestClassEntry == null) {
-            //throw new UndeclaredVarException("symbol table not initialized");
+            throw new UndeclaredVarException("symbol table not initialized");
         } else {
             return latestClassEntry;
         }
-        return null;
     }
 
-    public Node getNodeOf(String id) /*throws UndeclaredVarException*/ {
+    public Node getNodeOf(String id) throws UndeclaredVarException {
         return this.getLatestEntryOf(id).getNode();
     }   
 

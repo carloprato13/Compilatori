@@ -1,5 +1,6 @@
 package ast;
 
+import exception.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,6 +43,7 @@ public class MethodCallNode extends CallNode {
         this.nestinglevel = env.getNestingLevel();
         ClassTypeNode classType = null;
         if (objectID.equals("this")) {
+            try{
             Node objectType = env.getLatestClassEntry().getNode();
             // Se il metodo e' chiamato su this, l'offset rispetto a $fp e' sempre 0
             this.objectOffset = 0;
@@ -52,13 +54,18 @@ public class MethodCallNode extends CallNode {
             } else {
                 res.add(new SemanticError("Can't call this outside a class"));
             }
+            }catch(UndeclaredVarException e){
+                res.add(new SemanticError("variable not declared riga 58 methodcall"));
+            }
         } else {
+            try{
             STentry objectSEntry = env.getLatestEntryOf(objectID);
             Node objectType = objectSEntry.getNode();
             this.objectOffset = objectSEntry.getOffset();
             this.objectNestingLevel = objectSEntry.getNestinglevel();
             env.getLatestEntryOf("this");
             this.nestinglevel--;
+            
             // Controllo che il metodo sia stato chiamato su un oggetto
             if (objectType instanceof ClassTypeNode) {
                 classType = (ClassTypeNode) objectType;//((ClassTypeNode) objectType).getClassType();
@@ -66,18 +73,23 @@ public class MethodCallNode extends CallNode {
                 res.add(new SemanticError("Method " + methodID + " called on a non-object type"));
                 return res;
             }
+            }catch(UndeclaredVarException e){
+                res.add(new SemanticError("variable not declared riga 68 methodcall"));
+            }
         }
+        try {
         STentry classEntry = objectID.equals("this")
                 ? env.getLatestClassEntry()
                 : env.getLatestEntryOf(classType.getId());
         ClassTypeNode objectClass = (ClassTypeNode) classEntry.getNode();
-        try {
+        this.methodType = objectClass.getTypeOfMethod(methodID);
             this.methodOffset = objectClass.getOffsetOfMethod(methodID);
         } catch (UndeclaredMethodException ex) {
             Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.methodType = objectClass.getTypeOfMethod(methodID);
+        }catch(UndeclaredVarException e){
+                res.add(new SemanticError("variable not declared riga 68 methodcall"));
+            }
+ 
         if (this.methodType == null) {
             res.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
         }
@@ -91,7 +103,7 @@ public class MethodCallNode extends CallNode {
     }
 
     @Override
-    public Node typeCheck() {
+    public Node typeCheck() throws TypeException {
         ArrowTypeNode t = (ArrowTypeNode) this.methodType;
         ArrayList<Node> p = t.getParList();
 
@@ -144,7 +156,7 @@ public class MethodCallNode extends CallNode {
 
     @Override
     public String toPrint(String indent) {
-        return indent + this.toString();
+        return indent + " methodCall: "+ this.toString();
     }
 
     

@@ -1,4 +1,5 @@
 package ast;
+import exception.TypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -49,7 +50,7 @@ public class ProgLetInNode implements Node {
       return res;
 	}
   
-  public Node typeCheck () {
+  public Node typeCheck () throws TypeException {
     for (Node dec:declist)
       dec.typeCheck();
    
