@@ -372,9 +372,20 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
             return new MethodCallNode(objectId, methodId, args);
         
         }
-        
+
+
+        @Override public Node visitFieldVal(FoolParser.FieldValContext ctx) { 
+        	
+        	String fieldId = ctx.ID(1).getText();
+        	//String objectId = ctx.THIS() != null ? PER GESTIRE IL THIS
+            //        ctx.THIS().getText()
+            //        :
+        	String objectId = ctx.ID(0).getText();
+        	return new FieldCallNode(objectId, fieldId);
+
+        }
         
 /*
-Vanno aggiunti del value il  'fieldVal' e considerare nel 'boolVal' il 'not'oppure cambiargli nome 
+Vanno aggiunti del value il  'fieldVal' 
 */	
 }
