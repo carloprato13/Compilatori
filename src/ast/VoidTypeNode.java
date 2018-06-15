@@ -16,7 +16,7 @@ public class VoidTypeNode implements Node {
   
   //non utilizzato
   public Node typeCheck() {
-    return null;
+    return this;
   }
 
   //non utilizzato

@@ -65,7 +65,7 @@ public class ClassTypeNode implements Node {
       System.out.println("incompatible value for variable "+id);
       System.exit(0);
     }     */
-    return null;
+    return this;
   }
   
   public String codeGeneration() {

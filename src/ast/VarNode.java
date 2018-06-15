@@ -58,7 +58,7 @@ public class VarNode implements Node {
         System.exit(0);
         }
     }
-    return type.typeCheck();
+    return type;
   }
   
   public String codeGeneration() {
