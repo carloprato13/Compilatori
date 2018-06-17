@@ -120,7 +120,7 @@ public class FieldCallNode implements Node{
             getAR.append("lw\n");
 
         return "lfp\n"                                  // carico il frame pointer
-                + parCode                               // carico i parametri
+                //+ parCode                               // carico i parametri
                 + "push " + objectOffset + "\n"         // carico l'offset dell'oggetto nello scope di definizione
                 + "lfp\n"                               // carico il frame pointer
                 + getAR                                 // faccio gli lw necessari fino a trovarmi sullo stack l'indirizzo in memoria del frame dove e' definito l'oggetto
