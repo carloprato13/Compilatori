@@ -47,16 +47,18 @@ public class VarNode implements Node {
 	}
   
   public String toPrint(String s) {
+      String res="";
+      if(exp!=null)
+          res=exp.toPrint(s+"  ");
 	return s+"Var:" + id +"\n"
 	  	   +type.toPrint(s+"  ")  
-           +exp.toPrint(s+"  "); 
+           +res; 
   }
 
   public Node typeCheck () throws TypeException {
     if(exp != null){
         if (! (exp.typeCheck().isSubTypeOf(type)) ){      
         System.out.println("incompatible value for variable "+id);
-        System.exit(0);
         }
     }
     return type;

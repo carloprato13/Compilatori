@@ -53,7 +53,7 @@ public class ProgClassExpNode implements Node {
             res.addAll(classNode.checkSemantics(env));
         }
 
-        p.checkSemantics(env);
+        res.addAll(p.checkSemantics(env));
 
         env.popHashMap();
 

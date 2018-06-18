@@ -63,7 +63,7 @@ public class MethodCallNode extends CallNode {
             Node objectType = objectSEntry.getNode();
             this.objectOffset = objectSEntry.getOffset();
             this.objectNestingLevel = objectSEntry.getNestinglevel();
-            env.getLatestEntryOf("this");
+            //env.getLatestEntryOf("this");
             this.nestinglevel--;
             
             // Controllo che il metodo sia stato chiamato su un oggetto
@@ -75,6 +75,7 @@ public class MethodCallNode extends CallNode {
             }
             }catch(UndeclaredVarException e){
                 res.add(new SemanticError("variable not declared riga 68 methodcall"));
+                return res;
             }
         }
         try {
@@ -88,15 +89,19 @@ public class MethodCallNode extends CallNode {
             Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
         }catch(UndeclaredVarException e){
                 res.add(new SemanticError("variable not declared riga 68 methodcall"));
+                return res;
             }
  
         if (this.methodType == null) {
             res.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
+            return res;
         }
         ArrowTypeNode t = (ArrowTypeNode) this.methodType;
+        
         ArrayList<Node> p = t.getParList();
         if (!(p.size() == getParlist().size())) {
             res.add(new SemanticError("Wrong number of parameters in the invocation of " + methodID));
+            return res;
         }
 
         return res;

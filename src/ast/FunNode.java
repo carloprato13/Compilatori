@@ -106,7 +106,6 @@ public class FunNode implements Node {
 		dec.typeCheck();
     if ( !(body.typeCheck().isSubTypeOf(type)) ){
       System.out.println("Wrong return type for function "+id);
-      System.exit(0);
     }  
     return new ArrowTypeNode(parlist, type);
   }

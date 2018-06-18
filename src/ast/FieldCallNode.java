@@ -48,6 +48,8 @@ public class FieldCallNode implements Node{
         //Da modificare, deve essere fatto simile ad Idnode
         return this;
     }   
+    
+    
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {

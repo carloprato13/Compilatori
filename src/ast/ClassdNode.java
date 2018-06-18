@@ -37,7 +37,12 @@ public class ClassdNode implements Node {
 
     @Override
     public String toPrint(String indent) {
-        return indent + classID;
+        String res = "";
+        for(Node n : attrDecList)
+            res+=n.toPrint("  ");
+        for(Node n : funDecList)
+            res+=n.toPrint("  ");
+        return indent + classID+"\n"+res;
     }
 
     public ArrayList<VarNode> getVardeclist() {

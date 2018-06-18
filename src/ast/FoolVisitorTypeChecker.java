@@ -137,28 +137,6 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		return new AsmNode(ctx.ID().getText(), idNode, expNode);
 	}
 
-	//Da modificare la parte iniziale 'id dot id'
-	/*public Node visitFieldAsm(FieldAsmContext ctx) {
-
-		//declare the result node
-		VarNode result;
-		
-		//Ci interessa che il secondo id possa essere chiamato a partire dal primo
-		//visit the type
-		Node typeNode = visit(ctx.ID()); //Prendo nome della variabile, ne costruisco il nodo ClassNode
-
-		//visit the type
-		Node typeNode = visit(ctx.ID(); //dal CLassNode estrarre VarNode del campo
-
-		//visit the exp
-		Node expNode = visit(ctx.exp()); //Estrarre il tipo della espressione
-
-		//Va modificato
-		//build the varNode //ritorno FieldNode 
-		return new VarNode(ctx.ID().getText(), typeNode, expNode);
-
-	}*/
-
 	@Override
 	public Node visitFun(FunContext ctx) {
 		
@@ -280,9 +258,9 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		}
 	}
 	
-@Override public Node visitStms(FoolParser.StmsContext ctx) { 
-    return visitChildren(ctx); 
-}
+        @Override public Node visitStms(FoolParser.StmsContext ctx) { 
+            return visitChildren(ctx); 
+        }
 
 
 	@Override
@@ -372,7 +350,20 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
             return new MethodCallNode(objectId, methodId, args);
         
         }
+        
+        public Node visitFieldAsm(FieldAsmContext ctx) {
 
+		//Ci interessa che il secondo id possa essere chiamato a partire dal primo
+		FieldCallNode field= new FieldCallNode(ctx.t.getText(), ctx.f.getText());
+
+		//visit the exp
+		Node expNode = visit(ctx.exp()); //Estrarre il tipo della espressione
+
+		//Va modificato
+		//build the varNode //ritorno FieldNode 
+		return new FieldAsmNode(field, expNode);
+
+	}
 
         @Override public Node visitFieldVal(FoolParser.FieldValContext ctx) { 
         	
@@ -385,7 +376,21 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 
         }
         
-/*
-Vanno aggiunti del value il  'fieldVal' 
-*/	
+        public Node visitClassInstantiation(FoolParser.ClassInstantiationContext ctx) {
+
+        ClassInstantiationNode res;
+        String classID;
+        ArrayList<Node> args = new ArrayList<Node>();
+
+        classID = ctx.ID().getText(); // prendo l'id
+
+        for (ExpContext exp : ctx.exp()) {
+            args.add(visit(exp)); // prendo tutti i parametri
+        }
+
+        res = new ClassInstantiationNode(classID, args, ctx);
+
+        return res;
+    }
+        	
 }
