@@ -67,11 +67,11 @@ public class InstanceTypeNode implements Node {
     }
     
     public boolean isSubTypeOf(Node type){
-        if (type instanceof InstanceTypeNode) {
-            InstanceTypeNode it2 = (InstanceTypeNode) type;
-            return classT.isSubTypeOf(it2.getClassType());
-        } else {
+        //if (type instanceof InstanceTypeNode) {
+            //InstanceTypeNode it2 = (InstanceTypeNode) type;
+            return classT.isSubTypeOf(type);
+        /*} else {
             return false;
-        }
+        }*/
     }
 }

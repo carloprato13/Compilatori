@@ -31,7 +31,7 @@ public class IntTypeNode implements Node {
 	}
   
   public boolean isSubTypeOf(Node m){
-        if(m instanceof IntNode)
+        if(m instanceof IntTypeNode || m instanceof IntNode)
             return true;
         else
             return false;

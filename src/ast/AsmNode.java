@@ -47,7 +47,7 @@ public class AsmNode implements Node {
   public Node typeCheck () throws TypeException{
     if (! (exp.typeCheck().isSubTypeOf(type)) ){      
       System.out.println("incompatible value for variable "+id);
-      System.exit(0);
+      
     }     
     return type;
   }

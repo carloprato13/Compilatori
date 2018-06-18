@@ -23,29 +23,30 @@ public class IdNode implements Node {
   }
   
   @Override
-	public ArrayList<SemanticError> checkSemantics(Environment env) {
-	  
-	  //create result list
-	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
-	  
-	  int j=env.getNestingLevel();
-	  STentry tmp=null; 
-	  while (j>=0 && tmp==null)
-		  tmp=(env.getHashMap(j--)).get(id);
-      if (tmp==null){
+    public ArrayList<SemanticError> checkSemantics(Environment env) {
+
+      //create result list
+      ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+      String f = null;
+      int j=env.getNestingLevel();
+      //System.out.println("PORCAMADONNA:"+j+""+id+f.trim());
+      STentry tmp=null; 
+      while (j>=0 && tmp==null)
+              tmp=(env.getHashMap(j--)).get(id);
+      
+        if (tmp==null){
           res.add(new SemanticError("Id "+id+" not declared"));
-      }else{
-    	  entry = tmp;
-    	  nestinglevel = env.getNestingLevel();
-      }
-	  
-	  return res;
-	}
+        }else{
+          entry = tmp;
+          nestinglevel = env.getNestingLevel();
+        }
+
+      return res;
+    }
   
   public Node typeCheck () {
-	if (entry.getNode() instanceof ArrowTypeNode) { //
+	if (!(entry.getNode() instanceof ArrowTypeNode ||entry.getNode() instanceof IntTypeNode ||entry.getNode() instanceof BoolTypeNode ||entry.getNode() instanceof ClassTypeNode )  ) { 
 	  System.out.println("Wrong usage of function identifier");
-      System.exit(0);
     }	 
     return entry.getNode();
   }
