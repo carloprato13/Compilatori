@@ -35,12 +35,11 @@ public class ArrowTypeNode implements Node {
 		return new ArrayList<SemanticError>();
 	}
   
-  //non utilizzato
   public Node typeCheck (){
     return this;
   }
 
-  //non utilizzato
+
   public String codeGeneration() {
 		return "";
   }
@@ -64,7 +63,7 @@ public class ArrowTypeNode implements Node {
             }
             return check;
         } else {
-            return false;
+            return ret.isSubTypeOf(t);
         }
   
   }

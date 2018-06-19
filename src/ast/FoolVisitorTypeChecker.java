@@ -147,7 +147,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		//we are getting a shortcut here by constructing directly the ParNode
 		//this could be done differently by visiting instead the VardecContext
 		for(VardecContext vc : ctx.vardec())
-			res.addPar( new ParNode(vc.ID().getText(), visit( vc.type() )) );
+			res.addPar( new VarNode(vc.ID().getText(), visit( vc.type() ), null) );
 		
 		//add body
 		//create a list for the nested declarations

@@ -1,6 +1,7 @@
 package ast;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 import util.Environment;
 import util.SemanticError;
@@ -27,13 +28,13 @@ public class IdNode implements Node {
 
       //create result list
       ArrayList<SemanticError> res = new ArrayList<SemanticError>();
-      String f = null;
-      int j=env.getNestingLevel();
-      //System.out.println("PORCAMADONNA:"+j+""+id+f.trim());
-      STentry tmp=null; 
-      while (j>=0 && tmp==null)
-              tmp=(env.getHashMap(j--)).get(id);
       
+      int j=env.getNestingLevel();
+     
+      STentry tmp=null; 
+      while (j>=0 && tmp==null){            
+            tmp=(env.getHashMap(j--)).get(id);
+      }
         if (tmp==null){
           res.add(new SemanticError("Id "+id+" not declared"));
         }else{

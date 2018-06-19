@@ -128,16 +128,14 @@ public class ClassdNode implements Node {
         for (FunNode fun : funDecList) { // Per ogni metodo
             ArrayList<Node> paramsType = new ArrayList<>();
             for (Node params : fun.getParams()) { // Controllo i parametri
-                ParNode param= (ParNode)params;
+                VarNode param= (VarNode)params;
                 try{
                 if (param.getType() instanceof InstanceTypeNode) { // Se si tratta di oggetti
                     InstanceTypeNode paramType = (InstanceTypeNode) param.getType();
                     String declaredClass = paramType.getClassType().getId();
                    
-                    ClassTypeNode paramClassType = (ClassTypeNode) env.getLatestEntryOf(declaredClass).getNode();
-                    
+                    ClassTypeNode paramClassType = (ClassTypeNode) env.getLatestEntryOf(declaredClass).getNode();                                       
                    
-                    
                     paramsType.add(new InstanceTypeNode(paramClassType));
                 } else { // Se si tratta di valori base
                     paramsType.add(param.getType());
@@ -195,9 +193,10 @@ public class ClassdNode implements Node {
                 for (int i = 0; i < superClassType.getFields().size(); i++) { // per ogni attributo del padre
                     VarNode localField = attrDecList.get(i);
                     VarNode superField = superClassType.getFields().get(i);
+                    //System.out.println("localField: "+localField.getType().toPrint(" ")+" superField: "+superField.getType().toPrint(" "));
                     if (!superField.getId().equals(localField.getId()) // se non hanno lo stesso nome
                             || !localField.getType().isSubTypeOf(superField.getType()) ) {  // o non hanno lo stesso tipo
-                        res.add(new SemanticError("Field '" + localField.getId() + "' of class '"+ classID+"' overrided from super class with different type"));
+                        res.add(new SemanticError("Field '" + localField.getId() + "' of class '"+ classID+"' overridden from super class with different type"));
                     }
                 }
             } else {
@@ -209,8 +208,9 @@ public class ClassdNode implements Node {
             HashMap<String, ArrowTypeNode> superClassMethods = superClassType.getMethodsMap();
             for (String localMethod : functions.keySet()) {
                 if (superClassMethods.containsKey(localMethod)) {
+                    //System.out.println("localMet: "+functions.get(localMethod).toPrint(" ")+" superMet: "+superClassMethods.get(localMethod).toPrint(" "));
                     if (!functions.get(localMethod).isSubTypeOf(superClassMethods.get(localMethod))) {
-                        res.add(new SemanticError("Method '" + localMethod + "' of class '" + classID + "' overrided with incompatible type"));
+                        res.add(new SemanticError("Method '" + localMethod + "' of class '" + classID + "' overriden with incompatible type"));
                     }
                 }
             }

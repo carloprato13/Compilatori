@@ -31,10 +31,11 @@ public class IntTypeNode implements Node {
 	}
   
   public boolean isSubTypeOf(Node m){
-        if(m instanceof IntTypeNode || m instanceof IntNode)
-            return true;
-        else
-            return false;
+      if(m instanceof ArrowTypeNode)
+          return this.isSubTypeOf(((ArrowTypeNode) m).getRet());
+      else
+        return(m instanceof IntTypeNode || m instanceof IntNode);
+        
     }      
         
 }  

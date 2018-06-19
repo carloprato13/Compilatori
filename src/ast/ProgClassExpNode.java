@@ -37,7 +37,7 @@ public class ProgClassExpNode implements Node {
                 for (FunNode method : classNode.getFunDecList()) {
                     ArrayList<Node> paramsType = new ArrayList<>();
                     for (Node parameter : method.getParams()) {
-                        ParNode param = (ParNode)parameter;
+                        VarNode param = (VarNode)parameter;
                         paramsType.add(param.getType());
                     }
                     methods.add(new FunNode(method.getId(), new ArrowTypeNode(paramsType, method.getType())));

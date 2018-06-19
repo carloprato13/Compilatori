@@ -32,7 +32,7 @@ public class IntNode implements Node {
   }
   
   public boolean isSubTypeOf(Node m){
-        return (m instanceof IntNode || m instanceof IntNode);
+        return (m instanceof IntNode || m instanceof IntTypeNode);
     }
 
 }  

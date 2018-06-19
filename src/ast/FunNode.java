@@ -40,7 +40,7 @@ public class FunNode implements Node {
         ArrayList<Node> parTypes = new ArrayList<>();
 
         for (Node param : parlist) {
-            ParNode params=(ParNode) param;
+            VarNode params=(VarNode) param;
             parTypes.add(params.getType());
         }
 
@@ -65,7 +65,7 @@ public class FunNode implements Node {
 
         //check semantics in the dec list
         if (declist.size() > 0) {
-            env.offset = -2;
+            //env.offset = -2;
             //if there are children then check semantics for every child and save the results
             for (Node n : declist)
                 res.addAll(n.checkSemantics(env));
@@ -97,13 +97,14 @@ public class FunNode implements Node {
 		   +type.toPrint(s+"  ")
 		   +parlstr
 	   	   +declstr
-           +body.toPrint(s+"  ") ; 
+          +body.toPrint(s+"  ") ; 
   }
   
   public Node typeCheck ()  throws TypeException{
 	if (declist!=null) 
 	  for (Node dec:declist)
 		dec.typeCheck();
+    System.out.println("body: "+body.typeCheck().toPrint(" ")+" type: "+type.toPrint(" "));
     if ( !(body.typeCheck().isSubTypeOf(type)) ){
       System.out.println("Wrong return type for function "+id);
     }  
