@@ -44,8 +44,9 @@ public ArrayList<SemanticError> checkSemantics(Environment env) {
   
   
   public Node typeCheck () throws TypeException{
+    System.out.println(field.typeCheck().toPrint(" ")+" gesooo "+exp.typeCheck().toPrint(" "));
     if (! (exp.typeCheck().isSubTypeOf(field.typeCheck())) ){
-      throw new TypeException("incompatible value for field "+field.toPrint("   "));
+      throw new TypeException("incompatible value for field "+field.toPrint(" "));
     }     
     return field.typeCheck();
   }

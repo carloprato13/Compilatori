@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ast;
 
 import exception.*;
@@ -38,15 +34,15 @@ public class FieldCallNode implements Node{
     }
     
     public String toString() {
-        return objectID + "." + fieldID + "()";
+        return objectID + "." + fieldID;
     }
 
     @Override
     public Node typeCheck() {
-        //ArrowTypeNode t = (ArrowTypeNode) this.fieldType;
+      if (!(fieldType instanceof ArrowTypeNode ||fieldType instanceof IntTypeNode ||fieldType instanceof BoolTypeNode ||fieldType instanceof ClassTypeNode )  )
+	  System.out.println("Wrong usage of field identifier");
         
-        //Da modificare, deve essere fatto simile ad Idnode
-        return this;
+     return fieldType;
     }   
     
     
@@ -97,11 +93,11 @@ public class FieldCallNode implements Node{
                 : env.getLatestEntryOf(classType.getId());
         ClassTypeNode objectClass = (ClassTypeNode) classEntry.getNode();
         //serve getTypeOfField in ClassTypeNode
-        this.fieldType = objectClass.getTypeOfMethod(fieldID);
+        this.fieldType = objectClass.getTypeOfField(fieldID);
         //L'offset degli attributi è diversa da quella dei metodi
-            this.fieldOffset = objectClass.getOffsetOfMethod(fieldID);
-        } catch (UndeclaredMethodException ex) {
-            Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
+        //this.fieldOffset = objectClass.getOffsetOfMethod(fieldID);
+        //} catch (UndeclaredMethodException ex) {
+        //    Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
         }catch(UndeclaredVarException e){
                 res.add(new SemanticError("variable not declared riga 104 fieldcall"));
             }

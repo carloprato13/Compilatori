@@ -24,7 +24,7 @@ public class NullNode implements Node {
     @Override
     public Node typeCheck() {
          //To change body of generated methods, choose Tools | Templates.
-         return this;
+         return new VoidTypeNode();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class NullNode implements Node {
     }
     
       public boolean isSubTypeOf(Node m){
-        return false;
+        return (m instanceof InstanceTypeNode);
         } 
     
 }

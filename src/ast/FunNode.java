@@ -104,8 +104,8 @@ public class FunNode implements Node {
 	if (declist!=null) 
 	  for (Node dec:declist)
 		dec.typeCheck();
-    System.out.println("body: "+body.typeCheck().toPrint(" ")+" type: "+type.toPrint(" "));
-    if ( !(body.typeCheck().isSubTypeOf(type)) ){
+    //System.out.println("body: "+body.typeCheck().toPrint(" ")+" type: "+type.toPrint(" "));
+    if (!(type instanceof VoidTypeNode) && !(body.typeCheck().isSubTypeOf(type)) ){
       System.out.println("Wrong return type for function "+id);
     }  
     return new ArrowTypeNode(parlist, type);

@@ -153,9 +153,9 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		ArrayList<Node> innerDec = new ArrayList<Node>();
 		
 		//check whether there are actually nested decs
-		if(ctx.let() != null){
+		if(ctx.varasm() != null){
 			//if there are visit each dec and add it to the @innerDec list
-			for(DecContext dc : ctx.let().dec())
+			for(VarasmContext dc : ctx.varasm())
 				innerDec.add(visit(dc));
 		}
 		

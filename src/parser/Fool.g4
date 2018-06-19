@@ -1,14 +1,5 @@
 grammar Fool;
 
-
-@header {
-    import java.util.ArrayList;
-}
-
-@lexer::members {
-   public ArrayList<String> errors = new ArrayList<>();
-}
-
 /*------------------------------------------------------------------
  * PARSER RULES
  *------------------------------------------------------------------*/
@@ -29,7 +20,7 @@ varasm : t=vardec ASM e=exp     #decAsm
        | t=ID DOT f=ID ASM e=exp  #fieldAsm
        ;
 
-fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? exp ;
+fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (LET (varasm SEMIC)+ IN)? exp ;
 
 dec    : varasm           #varAssignment
        | fun              #funDeclaration
@@ -136,8 +127,5 @@ WS              : (' '|'\t'|'\n'|'\r')-> skip;
 LINECOMENTS    : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
- //VERY SIMPLISTIC ERROR CHECK FOR THE LEXING PROCESS, THE OUTPUT GOES DIRECTLY TO THE TERMINAL
- //THIS IS WRONG!!!!
-ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN); 
 
 

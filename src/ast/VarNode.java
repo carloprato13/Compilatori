@@ -57,7 +57,7 @@ public class VarNode implements Node {
 
   public Node typeCheck () throws TypeException {
     if(exp != null){
-        if (! (exp.typeCheck().isSubTypeOf(type)) ){      
+        if (! (exp.typeCheck().isSubTypeOf(type)) ){
         System.out.println("incompatible value for variable "+id);
         }
     }

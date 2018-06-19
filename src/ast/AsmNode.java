@@ -45,9 +45,8 @@ public class AsmNode implements Node {
   
   
   public Node typeCheck () throws TypeException{
-    if (! (exp.typeCheck().isSubTypeOf(type)) ){      
-      System.out.println("incompatible value for variable "+id);
-      
+    if (! (exp.typeCheck().isSubTypeOf(type)) ){  
+      throw new TypeException("incompatible value for variable "+id);
     }     
     return type;
   }
@@ -57,7 +56,10 @@ public class AsmNode implements Node {
   }  
   
   public boolean isSubTypeOf(Node m){
-      return type.isSubTypeOf(m);
+      if(m instanceof ArrowTypeNode && (((ArrowTypeNode)m).getRet()) instanceof VoidTypeNode)
+           return false;
+      else
+           return type.isSubTypeOf(m);
   }
     
 }  

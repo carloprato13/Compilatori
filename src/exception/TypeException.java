@@ -7,5 +7,7 @@ public class TypeException extends Exception {
     public TypeException(String errorMessage, ParserRuleContext ctx) {
         super("Error: \"" + errorMessage + "\" at line " + ctx.start.getLine() + ", column " + ctx.start.getCharPositionInLine() + ".");
     }
-
+public TypeException(String errorMessage) {
+        super("Error: \"" + errorMessage + " .");
+    }
 }

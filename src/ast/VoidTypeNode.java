@@ -35,7 +35,7 @@ public class VoidTypeNode implements Node {
       if(m instanceof ArrowTypeNode)
           return this.isSubTypeOf(((ArrowTypeNode) m).getRet());
       else
-        if(m instanceof VoidTypeNode)
+        if(m instanceof ClassTypeNode)
             return true;
         else
             return false;

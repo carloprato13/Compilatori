@@ -65,6 +65,10 @@ public class ClassTypeNode implements Node {
         }
         return fieldsMap;
     }
+    
+     public Node getTypeOfField(String id) {
+        return this.getFieldsMap().get(id);
+    }
 
     public ArrayList<FunNode> getMethods() {
         return methods;
