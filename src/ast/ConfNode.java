@@ -48,8 +48,7 @@ public ArrayList<SemanticError> checkSemantics(Environment env) {
     Node l = left.typeCheck();
     Node r = right.typeCheck();
     if (! ( l.isSubTypeOf(r) || r.isSubTypeOf(l) ) ) {
-      System.out.println("Incompatible types in Confrontation");
-      System.exit(0);
+      throw new TypeException("Incompatible types in Confrontation");
     }
     return new BoolTypeNode();
   }  

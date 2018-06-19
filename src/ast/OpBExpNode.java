@@ -41,15 +41,14 @@ public class OpBExpNode implements Node {
  	}
   
   public String toPrint(String s) {
-    return s+"OpExp\n" + left.toPrint(s+"  ") + op 
+    return s+"OpBExp\n" + left.toPrint(s+"  ") + op 
                       + right.toPrint(s+"  ") ; 
   }
   
   public Node typeCheck() throws TypeException {
     if (! ( FOOLlib.isSubtype(left.typeCheck(),new IntTypeNode()) &&
             FOOLlib.isSubtype(right.typeCheck(),new IntTypeNode()) ) ) {
-      System.out.println("Non integers in sum");
-      System.exit(0);
+        throw new TypeException("Non integers in Boolean Operation");
     }
     return new IntTypeNode();
   }

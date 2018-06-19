@@ -90,8 +90,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
             }
        } catch (TypeException e) {
            System.out.println("Errore in visitClassExp");
-            System.out.println(e.getMessage());
-            System.exit(0);
+           throw e;
         }finally{
            return res;
         }

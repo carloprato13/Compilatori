@@ -56,8 +56,7 @@ public class OpTermNode implements Node {
     public Node typeCheck() throws TypeException {
         if (!(FOOLlib.isSubtype(left.typeCheck(), new IntTypeNode())
                 && FOOLlib.isSubtype(right.typeCheck(), new IntTypeNode()))) {
-            System.out.println("Non integers in numerical operations");
-            System.exit(0);
+            throw new TypeException("Non integers term operations");
         }
         return new IntTypeNode();
     }

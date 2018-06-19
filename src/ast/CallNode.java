@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import util.Environment;
 import util.SemanticError;
 import lib.FOOLlib;
+import org.antlr.v4.runtime.RuleContext;
 
 public class CallNode implements Node {
 
@@ -64,18 +65,15 @@ public class CallNode implements Node {
         if (entry.getNode() instanceof ArrowTypeNode) {
             t = (ArrowTypeNode) entry.getNode(); //controllo che sia un tipo freccia
         } else {
-            System.out.println("Invocation of a non-function " + id);
-            System.exit(0);
+            throw new TypeException("Invocation of a non-function " + id);
         }
         ArrayList<Node> p = t.getParList();
         if (!(p.size() == parlist.size())) {
-            System.out.println("Wrong number of parameters in the invocation of " + id);
-            System.exit(0);
+            throw new TypeException("Wrong number of parameters in the invocation of " + id);
         }
         for (int i = 0; i < parlist.size(); i++) {
             if (!(FOOLlib.isSubtype((parlist.get(i)).typeCheck(), p.get(i)))) {
-                System.out.println("Wrong type for " + (i + 1) + "-th parameter in the invocation of " + id);
-                System.exit(0);
+                throw new TypeException("Wrong type for " + (i + 1) + "-th parameter in the invocation of " + id);
             }
         }
         return t.getRet();
