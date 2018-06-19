@@ -31,7 +31,10 @@ public class BoolTypeNode implements Node {
   }
 
   public boolean isSubTypeOf(Node m){
-      return (m instanceof BoolNode || m instanceof BoolTypeNode );
+      if(m instanceof ArrowTypeNode)
+          return this.isSubTypeOf(((ArrowTypeNode) m).getRet());
+      else
+        return (m instanceof BoolNode || m instanceof BoolTypeNode );
       
   }
     

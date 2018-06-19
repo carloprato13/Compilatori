@@ -32,6 +32,9 @@ public class VoidTypeNode implements Node {
 	}
   
   public boolean isSubTypeOf(Node m){
+      if(m instanceof ArrowTypeNode)
+          return this.isSubTypeOf(((ArrowTypeNode) m).getRet());
+      else
         if(m instanceof VoidTypeNode)
             return true;
         else
