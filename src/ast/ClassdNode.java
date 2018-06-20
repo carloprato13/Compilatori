@@ -189,19 +189,11 @@ public class ClassdNode implements Node {
             }
             try {
             ClassTypeNode superClassType = (ClassTypeNode) env.getLatestEntryOf(superClassID).getNode();
-            if (attrDecList.size() >= superClassType.getFields().size()) {
-                for (int i = 0; i < superClassType.getFields().size(); i++) { // per ogni attributo del padre
-                    VarNode localField = attrDecList.get(i);
-                    VarNode superField = superClassType.getFields().get(i);
-                    //System.out.println("localField: "+localField.getType().toPrint(" ")+" superField: "+superField.getType().toPrint(" "));
-                    if (!superField.getId().equals(localField.getId()) // se non hanno lo stesso nome
-                            || !localField.getType().isSubTypeOf(superField.getType()) ) {  // o non hanno lo stesso tipo
-                        res.add(new SemanticError("Field '" + localField.getId() + "' of class '"+ classID+"' overridden from super class with different type"));
-                    }
-                }
-            } else {
-                res.add(new SemanticError("Subclass has not the superclass parameters."));
-            }
+            //HashMap<String, Node> superClassFields = superClassType.getFieldsMap();
+            for (VarNode f: attrDecList)
+                for (VarNode fSuper: superClassType.getFields())
+                    if (f.getId().equals(fSuper.getId()))
+                        res.add(new SemanticError("Field '" + f.getId() + "' of class '"+ classID+"' try to override field of super class"));
 
             STentry superClassEntry = env.getLatestEntryOf(superClassID);
             superClassType = (ClassTypeNode) superClassEntry.getNode();

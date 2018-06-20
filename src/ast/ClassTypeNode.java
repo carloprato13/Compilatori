@@ -60,6 +60,12 @@ public class ClassTypeNode implements Node {
 
     public HashMap<String, Node> getFieldsMap() {
         HashMap<String, Node> fieldsMap = new HashMap<>();
+        //HashMap<String, ArrowTypeNode> methodsMap = new HashMap<>();
+        if(superType != null) {
+            HashMap<String, Node> superFieldsMap = superType.getFieldsMap();
+            for (String m : superFieldsMap.keySet())
+                fieldsMap.put(m, superFieldsMap.get(m));
+        }
         for (VarNode f : fields) {
             fieldsMap.put(f.getId(), f.getType());
         }
