@@ -58,6 +58,12 @@ public class ClassTypeNode implements Node {
         return fields;
     }
 
+    public ClassTypeNode getSuperType() {
+        return superType;
+    }
+  
+  
+
     public HashMap<String, Node> getFieldsMap() {
         HashMap<String, Node> fieldsMap = new HashMap<>();
         //HashMap<String, ArrowTypeNode> methodsMap = new HashMap<>();
@@ -159,6 +165,4 @@ public class ClassTypeNode implements Node {
         return "class " + classId;
     }
 
-    
-  
 }  

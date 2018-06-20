@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ast;
 
 
@@ -79,7 +74,7 @@ public class ClassdNode implements Node {
         // Creo una nuova dispatch table
         ArrayList<DispatchTableEntry> dispatchTable;
         if(superClassID==null)
-            dispatchTable= new ArrayList<DispatchTableEntry>();
+            dispatchTable= new ArrayList<>();
         else
             dispatchTable= FOOLlib.getDispatchTable(superClassID);
 
@@ -215,6 +210,7 @@ public class ClassdNode implements Node {
         return res;
     }
     
+    @Override
     public boolean isSubTypeOf(Node m){
         return type.isSubTypeOf(m);
     }

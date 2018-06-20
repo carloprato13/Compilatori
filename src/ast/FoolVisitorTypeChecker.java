@@ -50,9 +50,9 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
         ProgClassExpNode res=null;
 
         try {
-            ArrayList<ClassdNode> classDeclarations = new ArrayList<ClassdNode>();
+            ArrayList<ClassdNode> classDeclarations = new ArrayList<>();
             for (FoolParser.ClassdContext dc : ctx.classd()) {
-                ArrayList<VarNode> vars = new ArrayList<VarNode>();
+                ArrayList<VarNode> vars = new ArrayList<>();
                 for (int i = 0; i < dc.vardec().size(); i++) {
                     VardecContext varctx = dc.vardec().get(i);
                     vars.add(new VarNode(varctx.ID().getText(), visit(varctx.type()).typeCheck(),null));
@@ -321,14 +321,17 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
        
         
         
+        @Override
         public Node visitNullVal(NullValContext ctx) {
             return new NullNode();
         }
         
+        @Override
         public Node visitBaseVal(BaseValContext ctx) {
             return visit(ctx.exp());
         }
         
+        @Override
         public Node visitPrint(PrintContext ctx){
             Node n=visit(ctx.exp());
             return new PrintNode(n);
@@ -350,6 +353,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
         
         }
         
+        @Override
         public Node visitFieldAsm(FieldAsmContext ctx) {
 
 		//Ci interessa che il secondo id possa essere chiamato a partire dal primo
@@ -375,11 +379,12 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 
         }
         
+        @Override
         public Node visitClassInstantiation(FoolParser.ClassInstantiationContext ctx) {
 
         ClassInstantiationNode res;
         String classID;
-        ArrayList<Node> args = new ArrayList<Node>();
+        ArrayList<Node> args = new ArrayList<>();
 
         classID = ctx.ID().getText(); // prendo l'id
 

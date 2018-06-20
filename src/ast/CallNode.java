@@ -40,7 +40,7 @@ public class CallNode implements Node {
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
         //create the result
-        ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+        ArrayList<SemanticError> res = new ArrayList<>();
 
         int j = env.getNestingLevel();
         STentry tmp = null;

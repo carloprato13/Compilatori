@@ -52,29 +52,12 @@ public class FieldCallNode implements Node{
         ArrayList<SemanticError> res = new ArrayList<>();
 
         this.nestinglevel = env.getNestingLevel();
-        ClassTypeNode classType = null;
-        if (objectID.equals("this")) {
-            try{
-            Node objectType = env.getLatestClassEntry().getNode();
-            // Se il metodo e' chiamato su this, l'offset rispetto a $fp e' sempre 0
-            this.objectOffset = 0;
-            if (objectType instanceof ClassTypeNode) {
-                classType = (ClassTypeNode) objectType;
-                // L'oggetto e' sempre al livello dei parametri di metodo, ovvero 3
-                this.objectNestingLevel = 3;
-            } else {
-                res.add(new SemanticError("Can't call this outside a class"));
-            }
-            }catch(UndeclaredVarException e){
-                res.add(new SemanticError("variable not declared riga 71 fieldcall"));
-            }
-        } else {
+        ClassTypeNode classType = null;       
             try{
             STentry objectSEntry = env.getLatestEntryOf(objectID);
             Node objectType = objectSEntry.getNode();
             this.objectOffset = objectSEntry.getOffset();
             this.objectNestingLevel = objectSEntry.getNestinglevel();
-            //env.getLatestEntryOf("this");
             this.nestinglevel--;
             // Controllo che il metodo sia stato chiamato su un oggetto
             if (objectType instanceof ClassTypeNode) {
@@ -86,11 +69,9 @@ public class FieldCallNode implements Node{
             }catch(UndeclaredVarException e){
                 res.add(new SemanticError("variable not declared riga 89 fieldcall"));
             }
-        }
+        
         try {
-        STentry classEntry = objectID.equals("this")
-                ? env.getLatestClassEntry()
-                : env.getLatestEntryOf(classType.getId());
+        STentry classEntry = env.getLatestEntryOf(classType.getId());
         ClassTypeNode objectClass = (ClassTypeNode) classEntry.getNode();
         //serve getTypeOfField in ClassTypeNode
         this.fieldType = objectClass.getTypeOfField(fieldID);
