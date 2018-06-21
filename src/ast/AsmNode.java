@@ -23,14 +23,14 @@ public class AsmNode implements Node {
   	@Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
   	//create result list
-  	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+  	  ArrayList<SemanticError> res = new ArrayList<>();
   	  
   	  //env.offset = -2;
   	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
         //STentry entry = new STentry(env.getNestingLevel(),IdNode, env.offset--); //separo introducendo "entry"
         
         STentry entry=((IdNode)IdNode).getSTentry();
-        System.out.println("QUAAA: "+entry.toString());
+        IdNode.checkSemantics(env);
         
         if(hm.put(id,entry) == null){
              res.add(new SemanticError("Var id "+id+" never declared"));
