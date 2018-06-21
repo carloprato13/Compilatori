@@ -78,7 +78,12 @@ public class MethodCallNode extends CallNode {
             return res;
         }
         System.out.println("TYPE.TOSTRING: "+ methodType.toPrint(" ") + "NomeMetodo: "+methodID);
-        ArrowTypeNode t = (ArrowTypeNode) this.methodType;
+        
+         ArrowTypeNode t;
+        if (this.methodType instanceof VoidTypeNode){
+            t = new ArrowTypeNode (this.getParlist(), new VoidTypeNode());
+        } else
+        t = (ArrowTypeNode) this.methodType;
 
         ArrayList<Node> p = t.getParList();
         if (!(p.size() == getParlist().size())) {
@@ -135,6 +140,7 @@ public class MethodCallNode extends CallNode {
                 + "js\n";                               // salto all'istruzione dove e' definito il metodo e salvo $ra
     }
 
+    @Override
     public String toString() {
         return objectID + "." + methodID + "()";
     }
