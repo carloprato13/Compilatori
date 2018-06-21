@@ -67,9 +67,9 @@ public class MethodCallNode extends CallNode {
             this.methodType = objectClass.getTypeOfMethod(methodID);
             this.methodOffset = objectClass.getOffsetOfMethod(methodID);
         } catch (UndeclaredMethodException ex) {
-            Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
+            res.add(new SemanticError("Undeclared method "+methodID+" called"));
         } catch (UndeclaredVarException e) {
-            res.add(new SemanticError("variable not declared riga 68 methodcall"));
+            res.add(new SemanticError("variable not declared riga in methodCall of"+methodID));
             return res;
         }
 
@@ -77,6 +77,7 @@ public class MethodCallNode extends CallNode {
             res.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
             return res;
         }
+        System.out.println("TYPE.TOSTRING: "+ methodType.toPrint(" ") + "NomeMetodo: "+methodID);
         ArrowTypeNode t = (ArrowTypeNode) this.methodType;
 
         ArrayList<Node> p = t.getParList();

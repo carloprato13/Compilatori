@@ -28,9 +28,8 @@ public class AsmNode implements Node {
   	  //env.offset = -2;
   	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
         //STentry entry = new STentry(env.getNestingLevel(),IdNode, env.offset--); //separo introducendo "entry"
-        
+         res.addAll(IdNode.checkSemantics(env));
         STentry entry=((IdNode)IdNode).getSTentry();
-        System.out.println("QUAAA: "+entry.toString());
         
         if(hm.put(id,entry) == null){
              res.add(new SemanticError("Var id "+id+" never declared"));

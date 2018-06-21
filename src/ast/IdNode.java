@@ -41,6 +41,7 @@ public class IdNode implements Node {
         if (tmp==null){
           res.add(new SemanticError("Id "+id+" not declared"));
         }else{
+          //System.out.println("QUAAAAAAAAAAA!!!: "+tmp.toString(" "));
           entry = tmp;
           nestinglevel = env.getNestingLevel();
         }

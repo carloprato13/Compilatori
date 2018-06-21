@@ -1,4 +1,3 @@
-
 class Numero (int x){
         void uno() x;
         int due() 1;
@@ -6,12 +5,16 @@ class Numero (int x){
 
 class Ciao extends Numero(bool y){
         bool tre() false;
+}
+
+class Ciaone extends Ciao(Numero a){
+        Numero quattro() new Numero(4);
 };
     let
         Numero num = new Numero(2);
         Ciao ciao= new Ciao(1,false);
         ciao.x= num.due();
-        Numero procodio = new Numero(1);
-        procodio = null; 
+        Numero ciaone = new Numero(1);
+        ciaone = null; 
     in
-       2+2;
+       if num.tre() then{num.uno()} else{ciaone.tre()};

@@ -19,17 +19,14 @@ push 1
 add
 lc
 js
-lfp
-push -6
-lfp
-add
-lw
-copy
-lw
-push 0
-add
-lc
-js
+push 1
+push 1
+push classNumero
+new
+nullpush 3
+push 1
+push classNumero
+new
 halt
 
 function0:

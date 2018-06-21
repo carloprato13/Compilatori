@@ -8,6 +8,7 @@ Aggiungere le boiate che mancano per far girare il codice generato
 Errori negli assegnamenti void
 Capire quando usiamo BoolNode e quando BoolTypeNode (Int anche) e InstanceTypeNode
 
-IN IDNODE abbiamo STENTRY==null 
+SE UNA FUNZIONE È VOID LE DIAMO TIPO VOIDTYPENODE E NON ARROWTYPENODE
 
 ANCORA NON RILEVIAMO GLI ERRORI SINTATTICI, HO PROVATO CON ERRORLISTENER MA NON FUNZIONA UN CAZZO
+

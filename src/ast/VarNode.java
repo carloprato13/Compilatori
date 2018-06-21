@@ -38,7 +38,7 @@ public class VarNode implements Node {
         
               
         STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
-        System.out.println("STAMPAENTRY "+entry.toString(" ")+" id " +id);
+        //System.out.println("STAMPAENTRY "+entry.toString(" ")+" id " +id);
         if ( hm.put(id,entry) != null )
           res.add(new SemanticError("Var id "+id+" already declared"));
         
