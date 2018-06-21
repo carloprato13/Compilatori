@@ -35,8 +35,10 @@ public class VarNode implements Node {
   	  
   	  //env.offset = -2;
   	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
-        STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
         
+              
+        STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
+        System.out.println("STAMPAENTRY "+entry.toString(" ")+" id " +id);
         if ( hm.put(id,entry) != null )
           res.add(new SemanticError("Var id "+id+" already declared"));
         
@@ -57,8 +59,10 @@ public class VarNode implements Node {
 
   public Node typeCheck () throws TypeException {
     if(exp != null){
-        if (! (exp.typeCheck().isSubTypeOf(type)) ){
-        System.out.println("incompatible value for variable "+id);
+        if(exp.typeCheck() instanceof VoidTypeNode )
+            throw new TypeException("incompatible value for variable "+id+" cannot assign void to a variable ");
+        if (! (exp.typeCheck().isSubTypeOf(type))){
+            throw new TypeException("incompatible value for variable "+id);
         }
     }
     return type;

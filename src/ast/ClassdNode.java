@@ -187,7 +187,7 @@ public class ClassdNode implements Node {
             //HashMap<String, Node> superClassFields = superClassType.getFieldsMap();
             for (VarNode f: attrDecList)
                 for (VarNode fSuper: superClassType.getFields())
-                    if (f.getId().equals(fSuper.getId()))
+                    if (f.getId().equals(fSuper.getId()) && !(f.getType().isSubTypeOf(fSuper.getType())))
                         res.add(new SemanticError("Field '" + f.getId() + "' of class '"+ classID+"' try to override field of super class"));
 
             STentry superClassEntry = env.getLatestEntryOf(superClassID);

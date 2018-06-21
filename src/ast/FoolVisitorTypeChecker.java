@@ -65,9 +65,22 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
                 }
 
                 ClassdNode classNode;
+                
                 if (dc.ID(1) == null) {
-                    classNode = new ClassdNode(dc.ID(0).getText(), null ,  vars, mets);
+                   
+                    String s="";
+                    
+                    classNode = new ClassdNode(dc.ID(0).getText(), null,  vars, mets);
                 } else {
+                    //System.out.println(dc.ID(0).getText()+"   "+dc.ID(1).getText());
+                    ArrayList<VarNode> temp= new ArrayList<>();
+                    for(ClassdNode c : classDeclarations)
+                        if(c.getClassID().equals(dc.ID(1).getText())){
+                            temp.addAll(c.getVardeclist());
+                            temp.addAll(vars);
+                            vars=temp;
+                            break;
+                        }        
                     classNode = new ClassdNode( dc.ID(0).getText(), dc.ID(1).getText(), vars, mets);
                 }
                 classDeclarations.add(classNode);
@@ -111,8 +124,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		VarNode result;
 		
 		//visit the type
-		Node typeNode = visit(ctx.vardec().type());
-		
+                Node typeNode = visit(ctx.vardec().type());
 		//visit the exp
 		Node expNode = visit(ctx.exp());
 		
@@ -120,7 +132,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		return new VarNode(ctx.vardec().ID().getText(), typeNode, expNode);
 	}
 
-	//Vedere se è corretto
+	
 	public Node visitAsm(AsmContext ctx) {
 
 		//declare the result node

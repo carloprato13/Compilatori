@@ -1,0 +1,11 @@
+
+trovare un modo di fare i test automaticamente
+
+aggiungere test riguardanti i nostri casi (stms,null)
+
+Migliorare le stampe in generale
+Aggiungere le boiate che mancano per far girare il codice generato
+Errori negli assegnamenti void
+Capire quando usiamo BoolNode e quando BoolTypeNode (Int anche) e InstanceTypeNode
+
+IN IDNODE abbiamo STENTRY==null 

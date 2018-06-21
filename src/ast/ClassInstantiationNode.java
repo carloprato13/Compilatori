@@ -46,11 +46,8 @@ public class ClassInstantiationNode implements Node {
             } catch (Exception e1) {
                 throw new UndeclaredClassException(classID);
             }
-            int typesFromSuper = 0;
-            if (classType.getSuperType() != null){
-                typesFromSuper = classType.getSuperType().getFields().size();
-            }
-            if (classType.getFields().size() + typesFromSuper  != args.size()) {
+            
+            if (classType.getFields().size() != args.size()) {
                 res.add(new SemanticError("Instantiation of new " + classID + " with the wrong number of parameters."));
             }
 

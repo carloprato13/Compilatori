@@ -1,12 +1,17 @@
 grammar Fool;
 
+@header {
+package parser;
+}
+
+
 /*------------------------------------------------------------------
  * PARSER RULES
  *------------------------------------------------------------------*/
   
-prog   : exp SEMIC                 #singleExp
-       | let exp SEMIC             #letInExp
-       | (classd)+ SEMIC (let)? exp SEMIC  #classExp       
+prog   : exp SEMIC EOF                #singleExp
+       | let exp SEMIC EOF             #letInExp
+       | (classd)+ SEMIC (let)? exp SEMIC EOF  #classExp       
        ;
 
 classd : CLASS ID (EXTS ID)? (LPAR ( vardec (COMMA vardec)* )? RPAR)? (CLPAR (fun SEMIC)* CRPAR)? ;
@@ -126,6 +131,3 @@ ID              : CHAR (CHAR | DIGIT)* ;
 WS              : (' '|'\t'|'\n'|'\r')-> skip;
 LINECOMENTS    : '//' (~('\n'|'\r'))* -> skip;
 BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
-
-
-

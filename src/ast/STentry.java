@@ -46,7 +46,7 @@ public class STentry {
 
     public String toString(String s) { //
         return s+"STentry: nestlev " + Integer.toString(nestingLevel) + "\n" +
-                "STentry: Node " + node + "\n" +
+                "STentry: Node " + node.toPrint(" ") + "\n" +
                 "STentry: offset " + Integer.toString(offset) + "\n";
     }
 }

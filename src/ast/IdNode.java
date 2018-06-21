@@ -16,6 +16,8 @@ public class IdNode implements Node {
     id=i;
   }
   
+  public STentry getSTentry() {return entry;}
+  
   @Override
   public String toPrint(String s) {
         if(entry==null)

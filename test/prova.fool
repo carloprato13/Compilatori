@@ -1,7 +1,17 @@
-class Numero(int x) {
-        int getX() x;
-    };
+
+class Numero (int x){
+        void uno() x;
+        int due() 1;
+    }
+
+class Ciao extends Numero(bool y){
+        bool tre() false;
+};
     let
         Numero num = new Numero(2);
+        Ciao ciao= new Ciao(1,false);
+        ciao.x= num.due();
+        Numero procodio = new Numero(1);
+        procodio = null; 
     in
-        print(num.getX());
+       2+2;
