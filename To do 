@@ -9,3 +9,5 @@ Errori negli assegnamenti void
 Capire quando usiamo BoolNode e quando BoolTypeNode (Int anche) e InstanceTypeNode
 
 IN IDNODE abbiamo STENTRY==null 
+
+ANCORA NON RILEVIAMO GLI ERRORI SINTATTICI, HO PROVATO CON ERRORLISTENER MA NON FUNZIONA UN CAZZO
