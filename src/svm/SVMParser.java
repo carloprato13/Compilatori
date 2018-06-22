@@ -97,7 +97,7 @@ public class SVMParser extends Parser {
 	    public int[] getBytecode() {
 	        int[] bytecode = new int[this.code.size()];
                 //System.out.println("DIMENSIONE ARRAYLIST "+code.size());
-               //System.out.println("ARRAYLIST "+this.code.toString()); 
+               System.out.println("ARRAYLIST "+this.code.toString()); 
 	        for (int ii = 0; ii < this.code.size(); ii++) {
                     
 	            bytecode[ii] = this.code.get(ii);

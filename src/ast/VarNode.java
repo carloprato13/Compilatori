@@ -81,7 +81,7 @@ public class VarNode implements Node {
   }
   
   public String codeGeneration() {
-		return exp.codeGeneration();
+	return exp.codeGeneration();
   }  
   
       public boolean isSubTypeOf(Node m){

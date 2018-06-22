@@ -54,32 +54,58 @@ public ArrayList<SemanticError> checkSemantics(Environment env) {
   }  
   
   public String codeGeneration() {
+      String l1 = FOOLlib.freshLabel(); 
+      String l2 = FOOLlib.freshLabel();
+      String l=left.codeGeneration();
+      String r=right.codeGeneration();
         String op2= "";
           switch(op){
               case ">=":
-                op2= "bge ";
+                op2= r+l+
+                "bleq " + l1 + "\n" +
+                "push 0\n" +
+                "b " + l2 + "\n" +
+                l1 + ":\n" +
+                "push 1\n" +
+                l2 + ":\n";
                 break;
                case ">":
-                op2="bgt ";
+                op2=r+
+                "push 1\n" +
+                "add\n" +
+                l +
+                "bleq " + l1 + "\n" +
+                "push 0\n" +
+                "b " + l2 + "\n" +
+                l1 + ":\n" +
+                "push 1\n" +
+                l2 + ":\n";
                 break;
                case "<=":
-                op2="blt ";
+                op2=l+r +
+                "bleq " + l1 + "\n" +
+                "push 0\n" +
+                "b " + l2 + "\n" +
+                l1 + ":\n" +
+                "push 1\n" +
+                l2 + ":\n";;
                 break;
                case "<":
-                op2="ble ";
+                op2=l +
+                "push 1\n" +
+                "add\n" +
+                r +
+                "bleq " + l1 + "\n" +
+                "push 0\n" +
+                "b " + l2 + "\n" +
+                l1 + ":\n" +
+                "push 1\n" +
+                l2 + ":\n";
                 break;
                      
           }
-	  String l1 = FOOLlib.freshLabel(); 
-	  String l2 = FOOLlib.freshLabel();
-	  return left.codeGeneration()+
-			   right.codeGeneration()+
-			   op2+ l1 +"\n"+
-			   "push 0\n"+
-			   "b " + l2 + "\n" +
-			   l1 + ":\n"+
-			   "push 1\n" +
-			   l2 + ":\n";
+	  
+	  return op2;
 		       
   }
  

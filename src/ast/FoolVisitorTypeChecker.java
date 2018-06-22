@@ -246,7 +246,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
         public Node visitBoolExp(FoolParser.BoolExpContext ctx){
             if(ctx.right == null){
 			if(ctx.op.getText().equals("not"))
-                                return new OpBExpNode(visit(ctx.left), null, "not");
+                                return new OpBExpNode(visit(ctx.exp()), null, "not");
                         else
                             return visit( ctx.left );
 		}else{

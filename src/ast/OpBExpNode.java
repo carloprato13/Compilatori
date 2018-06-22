@@ -55,12 +55,14 @@ public class OpBExpNode implements Node {
         throw new TypeException("Integers in Boolean Operation");
     }}else{ if(left.typeCheck() instanceof IntTypeNode ||left.typeCheck() instanceof IntNode)
            throw new TypeException("Integers in Boolean Operation"); }
-    return new IntTypeNode();
+    return new BoolTypeNode();
   }
   
   public String codeGeneration() {
       String l=left.codeGeneration();
-      String r=right.codeGeneration();
+      String r="";
+      if(right!=null)
+        right.codeGeneration();
       String operation = "";
       String l1 = FOOLlib.freshLabel();
       String l2 = FOOLlib.freshLabel();
