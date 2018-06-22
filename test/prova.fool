@@ -8,7 +8,7 @@ class Ciao extends Numero(bool y){
 }
 
 class Ciaone extends Ciao(Numero a){
-        Numero quattro() new Numero(4);
+        Numero quattro(int z) new Numero(z);
 };
     let
         Numero num = new Numero(2);
@@ -17,4 +17,4 @@ class Ciaone extends Ciao(Numero a){
         Numero ciaone = new Numero(1);
         ciaone = null; 
     in
-       if num.tre() then{num.uno()} else{ciaone.tre()};
+       if ciao.tre() then{num.uno()} else{ciao.uno()}; 

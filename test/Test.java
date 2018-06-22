@@ -7,18 +7,17 @@ import java.util.ArrayList;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-//import parser.ExecuteVM;
+import codegen.ExecuteVM;
 import parser.FoolLexer;
 import parser.FoolParser;
-//import parser.SVMLexer;
-//import parser.SVMParser;
+import svm.SVMLexer;
+import svm.SVMParser;
 import util.Environment;
 import util.SemanticError;
 import ast.FoolVisitorTypeChecker;
 import ast.Node;
 import exception.TypeException;
 import org.antlr.v4.runtime.BaseErrorListener;
-import parser.MyErrorListener;
 
 public class Test {
     
@@ -33,14 +32,7 @@ public class Test {
         
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         FoolParser parser = new FoolParser(tokens);
-        MyErrorListener m=new MyErrorListener();
-        parser.addErrorListener(m);
-        if(m.getErrors().size()>0){
-            System.out.println("Lexical errors detected!");
-            for(String s : m.getErrors())
-                System.out.println(s);
-            System.exit(0);
-            }
+        
         FoolVisitorTypeChecker visitor = new FoolVisitorTypeChecker();
 
         Node ast = visitor.visit(parser.prog()); //generazione AST 
@@ -49,7 +41,7 @@ public class Test {
         ArrayList<SemanticError> err = ast.checkSemantics(env);
 
         if(err.size()>0){
-                System.out.println("You had: " +err.size()+" errors:");
+                System.out.println("You had: " +err.size()+" semantic errors:");
                 for(SemanticError e : err)
                         System.out.println("\t" + e);
         }else{	
@@ -60,6 +52,7 @@ public class Test {
                 Node type = ast.typeCheck(); //type-checking bottom-up 
                 System.out.println(type.toPrint("Type checking ok! Type of the program is: "));
             }catch(TypeException e){
+                System.out.println("You had a type checking error!");
                 System.out.println(e.getMessage());
                 System.exit(0);
                     }
@@ -69,7 +62,7 @@ public class Test {
             out.write(code);
             out.close(); 
             System.out.println("Code generated! Assembling and running generated code.");
-            /*
+            
             FileInputStream isASM = new FileInputStream(fileName+".asm");
             ANTLRInputStream inputASM = new ANTLRInputStream(isASM);
             SVMLexer lexerASM = new SVMLexer(inputASM);
@@ -78,12 +71,12 @@ public class Test {
 
             parserASM.assembly();
 
-            System.out.println("You had: "+lexerASM.lexicalErrors+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors.");
-            if (lexerASM.lexicalErrors>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
+            System.out.println("You had: "+lexerASM.errors.size()+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors.");
+            if (lexerASM.errors.size()>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
 
             System.out.println("Starting Virtual Machine...");
-            ExecuteVM vm = new ExecuteVM(parserASM.code);
-            vm.cpu();*/
+            ExecuteVM vm = new ExecuteVM(parserASM.getBytecode(),true);
+            vm.cpu();
 	    }
     }
        

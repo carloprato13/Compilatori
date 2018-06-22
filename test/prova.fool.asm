@@ -9,7 +9,7 @@ push 2
 push classCiao
 new
 lfp
-push -6
+push -11
 lfp
 add
 lw
@@ -23,10 +23,44 @@ push 1
 push 1
 push classNumero
 new
-nullpush 3
+nulllfp
+push -12
+lfp
+add
+lw
+copy
+lw
+push 2
+add
+lc
+js
 push 1
-push classNumero
-new
+beq label0
+lfp
+push -12
+lfp
+add
+lw
+copy
+lw
+push 0
+add
+lc
+js
+b label1
+label0:
+lfp
+push -11
+lfp
+add
+lw
+copy
+lw
+push 0
+add
+lc
+js
+label1:
 halt
 
 function0:
@@ -64,6 +98,25 @@ lra
 push 0
 srv
 sra
+pop
+sfp
+lrv
+lra
+js
+
+function3:
+cfp
+lra
+push -10
+lfp
+add
+lw
+push 1
+push classNumero
+new
+srv
+sra
+pop
 pop
 sfp
 lrv
