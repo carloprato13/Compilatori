@@ -77,9 +77,9 @@ public class MethodCallNode extends CallNode {
             res.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
             return res;
         }
-        System.out.println("TYPE.TOSTRING: "+ methodType.toPrint(" ") + "NomeMetodo: "+methodID);
+        //System.out.println("TYPE.TOSTRING: "+ methodType.toPrint(" ") + "NomeMetodo: "+methodID);
         
-         ArrowTypeNode t;
+        ArrowTypeNode t;
         if (this.methodType instanceof VoidTypeNode){
             t = new ArrowTypeNode (this.getParlist(), new VoidTypeNode());
         } else

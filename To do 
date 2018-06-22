@@ -1,14 +1,17 @@
 
 trovare un modo di fare i test automaticamente
 
-aggiungere test riguardanti i nostri casi (stms,null)
+fare test riguardanti:
+    -Assegnamenti void
+    -STMS
 
 Migliorare le stampe in generale
-Aggiungere le boiate che mancano per far girare il codice generato
-Errori negli assegnamenti void
-Capire quando usiamo BoolNode e quando BoolTypeNode (Int anche) e InstanceTypeNode
 
-SE UNA FUNZIONE È VOID LE DIAMO TIPO VOIDTYPENODE E NON ARROWTYPENODE
+Capire quando usiamo BoolNode e quando BoolTypeNode (Int anche) e InstanceTypeNode 
 
-ANCORA NON RILEVIAMO GLI ERRORI SINTATTICI, HO PROVATO CON ERRORLISTENER MA NON FUNZIONA UN CAZZO
+SE UNA FUNZIONE È VOID LE DIAMO TIPO VOIDTYPENODE E NON ARROWTYPENODE, LUCA IN METHODCALLNODE RIGA 82 HA RISOLTO MA COMUNQUE COSTRUIAMO IL NODO SBAGLIATO (SI VEDE DALLA STAMPA POCO PRIMA SE LA SI SCOMMENTA)
+
+ANCORA NON RILEVIAMO GLI ERRORI SINTATTICI, HO PROVATO CON ERRORLISTENER MA NON FUNZIONA 
+
+HO AGGIUNTO LE COSE PER LA CODEGENERATION, BISOGNA GUARDARE CHE FUNZIONI QUELLA ROBA, ovviamente per ora non va nulla
 
