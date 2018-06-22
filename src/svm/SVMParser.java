@@ -90,8 +90,6 @@ public class SVMParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-
-
 	    private ArrayList<Integer> code = new ArrayList<Integer>();
 	    private HashMap<String,Integer> labelAdd = new HashMap<String,Integer>();
 	    private HashMap<Integer,String> labelRef = new HashMap<Integer,String>();
