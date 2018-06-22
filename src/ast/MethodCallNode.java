@@ -57,7 +57,7 @@ public class MethodCallNode extends CallNode {
                 return res;
             }
         } catch (UndeclaredVarException e) {
-            res.add(new SemanticError("variable not declared riga 68 methodcall"));
+            res.add(new SemanticError("variable not declared riga"));
             return res;
         }
 
@@ -77,7 +77,7 @@ public class MethodCallNode extends CallNode {
             res.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
             return res;
         }
-        System.out.println("TYPE.TOSTRING: "+ methodType.toPrint(" ") + "NomeMetodo: "+methodID);
+        //System.out.println("TYPE.TOSTRING: "+ methodType.toPrint(" ") + "NomeMetodo: "+methodID);
         
         ArrowTypeNode t;
         if (this.methodType instanceof VoidTypeNode){

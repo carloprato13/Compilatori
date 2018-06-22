@@ -27,7 +27,7 @@ public class ClassInstantiationNode implements Node {
     
     public ClassInstantiationNode(String classID, ArrayList<Node> args, ParserRuleContext c) {
         this.classID = classID;
-        this.classType = classType;
+        //this.classType = classType;
         this.args = args;
         this.ctx=c;
     }
@@ -38,12 +38,11 @@ public class ClassInstantiationNode implements Node {
         ArrayList<SemanticError> res = new ArrayList<SemanticError>();
 
         try {
-
             try {
                 //Catturo la classe all'interno dell'env poichè potrebbe usare classi non ancora dichiarate e quindi non presenti nella ST
                 //Rigenero l'errore giusto poichè se non esiste la classe, il getTypeOf genera un UndeclaredVarException e non una UndeclaredClassException
                 classType = (ClassTypeNode) env.getNodeOf(classID);
-            } catch (Exception e1) {
+            } catch (Exception e) {
                 throw new UndeclaredClassException(classID);
             }
             

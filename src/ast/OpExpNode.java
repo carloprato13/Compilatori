@@ -33,9 +33,19 @@ public class OpExpNode implements Node {
  	}
   
   public String toPrint(String s) {
-    return s+"OpExp\n" + left.toPrint(s+"  ") + op 
-                      + right.toPrint(s+"  ") ; 
+      switch (op) {
+          
+            case "+":
+                return s + "Add\n" + left.toPrint(s + "  ")
+                        + right.toPrint(s + "  ");
+
+            case "-":
+                return s + "Sub\n" + left.toPrint(s + "  ")
+                        + right.toPrint(s + "  ");    
+            default: return "Operazione sbagliata";
+     }
   }
+      
   
   public Node typeCheck() throws TypeException {
     if (! ( left.typeCheck() instanceof IntTypeNode ||left.typeCheck() instanceof IntNode) &&
@@ -46,9 +56,16 @@ public class OpExpNode implements Node {
   }
   
   public String codeGeneration() {
-		return left.codeGeneration()+
-			   right.codeGeneration()+
-			   "add\n";
+       String operation = "";
+        switch (op) {
+            case "-":
+                operation = "sub\n";
+            case "+":
+                operation = "add\n";
+        }
+        return left.codeGeneration()
+                + right.codeGeneration()
+                + operation;
   }
   
   public boolean isSubTypeOf(Node m){

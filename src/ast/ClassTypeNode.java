@@ -146,14 +146,17 @@ public class ClassTypeNode implements Node {
 
     public boolean isSubTypeOf(Node t2) {
         // Procedo solo se l'altro tipo e' una classe
+        
         if (t2 instanceof ClassTypeNode) {
+            //System.out.println("ENTRO QUA: "+this.toPrint(" ")+" "+t2.toPrint(" "));
             ClassTypeNode ct2 = (ClassTypeNode) t2;
             // Se e' della stessa classe
             if (this.classId.equals(ct2.classId)) {
                 return true;
             }
             // Procedo solo se la mia classe ha un supertipo
-            if (superType != null) {
+            if (this.superType != null) {
+                //System.out.println("SUPERTYPE: "+superType);
                 return this.superType.equals(ct2) || superType.isSubTypeOf(t2);
             }
         }

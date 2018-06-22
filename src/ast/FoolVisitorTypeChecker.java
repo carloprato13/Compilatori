@@ -66,10 +66,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 
                 ClassdNode classNode;
                 
-                if (dc.ID(1) == null) {
-                   
-                    String s="";
-                    
+                if (dc.ID(1) == null) {                                     
                     classNode = new ClassdNode(dc.ID(0).getText(), null,  vars, mets);
                 } else {
                     //System.out.println(dc.ID(0).getText()+"   "+dc.ID(1).getText());
@@ -190,7 +187,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 			return new BoolTypeNode();
 		else if (ctx.getText().equals("void"))
 			return new VoidTypeNode();
-		else return new ClassTypeNode(ctx.getText());//Vedere comer implementare ClassTypeNode
+		else return new ClassTypeNode(ctx.getText());
 		//this will never happen thanks to the parser
 		//return null;
 	}

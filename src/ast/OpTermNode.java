@@ -34,14 +34,6 @@ public class OpTermNode implements Node {
     public String toPrint(String s) {
         switch (op) {
 
-            case "+":
-                return s + "Add\n" + left.toPrint(s + "  ")
-                        + right.toPrint(s + "  ");
-
-            case "-":
-                return s + "Sub\n" + left.toPrint(s + "  ")
-                        + right.toPrint(s + "  ");
-
             case "/":
                 return s + "Div\n" + left.toPrint(s + "  ")
                         + right.toPrint(s + "  ");
@@ -49,7 +41,8 @@ public class OpTermNode implements Node {
             case "*":
                 return s + "Mult\n" + left.toPrint(s + "  ")
                         + right.toPrint(s + "  ");
-            default: return null;
+                
+            default: return "Operazione sbagliata";
         }
     }
 
@@ -63,9 +56,16 @@ public class OpTermNode implements Node {
 
     @Override
     public String codeGeneration() {
+        String operation = "";
+        switch (op) {
+            case "/":
+                operation = "div\n";
+            case "*":
+                operation = "mult\n";
+        }
         return left.codeGeneration()
                 + right.codeGeneration()
-                + "mult\n";
+                + operation;
     }
 
     @Override

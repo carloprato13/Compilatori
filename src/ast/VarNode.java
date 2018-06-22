@@ -3,7 +3,7 @@ package ast;
 import exception.TypeException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import exception.*;
 import util.Environment;
 import util.SemanticError;
 import lib.FOOLlib;
@@ -36,9 +36,16 @@ public class VarNode implements Node {
   	  //env.offset = -2;
   	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
         
-              
+          try{
+          if(type instanceof ClassTypeNode){
+             type = (ClassTypeNode) env.getNodeOf(((ClassTypeNode)type).getId());
+          }   
+          }catch(UndeclaredVarException e){
+              res.add(new SemanticError(e.getMessage()));
+          }
+          
         STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
-        //System.out.println("STAMPAENTRY "+entry.toString(" ")+" id " +id);
+        
         if ( hm.put(id,entry) != null )
           res.add(new SemanticError("Var id "+id+" already declared"));
         
@@ -61,8 +68,12 @@ public class VarNode implements Node {
     if(exp != null){
         if(exp.typeCheck() instanceof VoidTypeNode )
             throw new TypeException("incompatible value for variable "+id+" cannot assign void to a variable ");
-        if (! (exp.typeCheck().isSubTypeOf(type))){
-            System.out.println("PORCODIO "+exp.typeCheck().toPrint(" type ")+type.toPrint(" "));
+
+        if(exp.typeCheck() instanceof InstanceTypeNode ){
+           if (!(exp.typeCheck().typeCheck().isSubTypeOf(type)) && !(type.isSubTypeOf(exp.typeCheck().typeCheck())) )
+               throw new TypeException("incompatible value for variable "+id+" not subclass of");
+           }
+           else if (! (exp.typeCheck().isSubTypeOf(type))){
             throw new TypeException("incompatible value for variable "+id);
         }
     }

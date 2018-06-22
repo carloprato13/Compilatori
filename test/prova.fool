@@ -1,1 +1,11 @@
-2+2;
+class Ciao(int x){
+    int a() 2;
+}
+
+class Ciaone extends Ciao(){
+    bool b() false;
+};
+let
+Ciaone c= new Ciao(1);
+in 
+if true then {c.a()} else {3};

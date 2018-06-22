@@ -9,3 +9,6 @@ sistemare codegeneration in ast.*
 
 sistemare fool.g4 con i ; dove serve (ad es. stm) 
 
+CASO NOT DA NULLPOINTEREXCEPTION
+
+

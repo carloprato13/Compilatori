@@ -35,32 +35,82 @@ public class OpBExpNode implements Node {
 	  //check semantics in the left and in the right exp
 	  
 	  res.addAll(left.checkSemantics(env));
-	  res.addAll(right.checkSemantics(env));
+          if(right!=null)
+            res.addAll(right.checkSemantics(env));
 	  
  	  return res;
  	}
   
   public String toPrint(String s) {
+      String ss="";
+      if(right!=null){ss=right.toPrint(s+"  "); }
     return s+"OpBExp\n" + left.toPrint(s+"  ") + op 
-                      + right.toPrint(s+"  ") ; 
+                      + ss; 
   }
   
   public Node typeCheck() throws TypeException {
-    if (! ( left.typeCheck() instanceof IntTypeNode ||left.typeCheck() instanceof IntNode) &&
+    if(right!=null){
+    if ( ( left.typeCheck() instanceof IntTypeNode ||left.typeCheck() instanceof IntNode) &&
             ( right.typeCheck() instanceof IntTypeNode ||right.typeCheck() instanceof IntNode)) {
-        throw new TypeException("Non integers in Boolean Operation");
-    }
+        throw new TypeException("Integers in Boolean Operation");
+    }}else{ if(left.typeCheck() instanceof IntTypeNode ||left.typeCheck() instanceof IntNode)
+           throw new TypeException("Integers in Boolean Operation"); }
     return new IntTypeNode();
   }
   
   public String codeGeneration() {
-		return left.codeGeneration()+
-			   right.codeGeneration()+
-			   "add\n";
+      String l=left.codeGeneration();
+      String r=right.codeGeneration();
+      String operation = "";
+      String l1 = FOOLlib.freshLabel();
+      String l2 = FOOLlib.freshLabel();
+      switch(this.op){
+      case "&&":
+          String l3 = FOOLlib.freshLabel();
+          operation= ""
+                + "beq " + l1 + "\n"
+                + "push 0\n"
+                + "b " + l2 + "\n"
+                + l1 + ":\n"
+                + l
+                + "push 1\n"
+                + "beq " + l3 + "\n"
+                + "push 0\n"
+                + "b " + l2 + "\n"
+                + l3 + ":\n"
+                + "push 1\n"
+                + l2 + ":\n";
+            break;
+      case "||":
+            operation=l+
+                "push 1\n" +
+                "beq " + l1 + "\n" +
+                r +
+                "push 1\n" +
+                "beq " + l1 + "\n" +
+                "push 0\n" +
+                "b " + l2 + "\n" +
+                l1 + ":\n" +
+                "push 1\n" +
+                l2 + ":\n";
+            break;
+      case "not":
+          operation=
+             l + "push 1\n" +
+                "beq " + l1 + "\n" +
+                "push 1\n" +
+                "b " + l2 + "\n" +
+                l1 + ":\n" +
+                "push 0\n" + l2 +":\n";  
+        }
+      return operation;
   }
     
   public boolean isSubTypeOf(Node m){
+      if(right!=null)
           return left.isSubTypeOf(m) && right.isSubTypeOf(m);
+      else
+          return left.isSubTypeOf(m);
     }
   
 }
