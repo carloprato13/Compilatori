@@ -31,11 +31,11 @@ grammar SVM;
  *------------------------------------------------------------------*/
 assembly: 
     ( PUSH n=NUMBER                 {   code.add(PUSH);
-			                            code.add(Integer.parseInt($n.text));     }
+			                code.add(Integer.parseInt($n.text));     }
 
 	  | PUSH l=LABEL                {   code.add(PUSH);
-	    		                        labelRef.put(code.size(), $l.text);
-	    		                        code.add(0);                             }
+                                            labelRef.put(code.size(), $l.text);
+                                            code.add(0);                             }
 
 	  | POP		                    {   code.add(POP);  }
 	  | ADD		                    {   code.add(ADD);  }

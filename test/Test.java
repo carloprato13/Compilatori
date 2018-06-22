@@ -75,7 +75,7 @@ public class Test {
             if (lexerASM.errors.size()>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
 
             System.out.println("Starting Virtual Machine...");
-            ExecuteVM vm = new ExecuteVM(parserASM.getBytecode(),true);
+            ExecuteVM vm = new ExecuteVM(parserASM.getBytecode(), false);
             vm.cpu();
 	    }
     }

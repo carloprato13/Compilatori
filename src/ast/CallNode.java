@@ -72,7 +72,7 @@ public class CallNode implements Node {
             throw new TypeException("Wrong number of parameters in the invocation of " + id);
         }
         for (int i = 0; i < parlist.size(); i++) {
-            if (!(FOOLlib.isSubtype((parlist.get(i)).typeCheck(), p.get(i)))) {
+            if (!(parlist.get(i)).typeCheck().isSubTypeOf(p.get(i))) {
                 throw new TypeException("Wrong type for " + (i + 1) + "-th parameter in the invocation of " + id);
             }
         }

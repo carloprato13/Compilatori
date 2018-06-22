@@ -45,16 +45,12 @@ public class IfNodeStm implements Node {
   
   
   public Node typeCheck() throws TypeException {
-    if (!(FOOLlib.isSubtype(cond.typeCheck(),new BoolTypeNode()))) {
+      if (! ( cond.typeCheck()  instanceof BoolTypeNode )){
       throw new TypeException("Non boolean condition in if");
     }
     Node t = th.typeCheck();
     Node e = el.typeCheck();
-    if (FOOLlib.isSubtype(t,e)) 
-      return e;
-    if (FOOLlib.isSubtype(e,t))
-      return t;
-    throw new TypeException("Incompatible types in then else branches");
+    return new VoidTypeNode();
     }
   
   public String codeGeneration() {
@@ -72,10 +68,11 @@ public class IfNodeStm implements Node {
   
   //teoricamente tipando void dovrebbe restituire sempre true...
   public boolean isSubTypeOf(Node m){
-    if (cond instanceof BoolTypeNode == false) return false;
-    if(th.isSubTypeOf(m) && el.isSubTypeOf(m))
+    if (! (cond instanceof BoolTypeNode )) return false;
+    /*if(th.isSubTypeOf(m) && el.isSubTypeOf(m))
         return true;
     else
-        return false;
+        return false;*/
+    else return true;
     }
 }

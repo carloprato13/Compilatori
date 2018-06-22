@@ -38,8 +38,8 @@ public class OpExpNode implements Node {
   }
   
   public Node typeCheck() throws TypeException {
-    if (! ( FOOLlib.isSubtype(left.typeCheck(),new IntTypeNode()) &&
-            FOOLlib.isSubtype(right.typeCheck(),new IntTypeNode()) ) ) {
+    if (! ( left.typeCheck() instanceof IntTypeNode ||left.typeCheck() instanceof IntNode) &&
+            ( right.typeCheck() instanceof IntTypeNode ||right.typeCheck() instanceof IntNode)) {
       throw new TypeException("Non integers in integer Operation");
     }
     return new IntTypeNode();

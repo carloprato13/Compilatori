@@ -39,7 +39,7 @@ public class EqualNode implements Node{
   public Node typeCheck() throws TypeException {
     Node l = left.typeCheck();
     Node r = right.typeCheck();
-    if (! ( FOOLlib.isSubtype(l,r) || FOOLlib.isSubtype(r,l) ) ) {
+    if (! ( l.isSubTypeOf(r) || r.isSubTypeOf(l)) ) {
       throw new TypeException("Incompatible types in equal");
     }
     return new BoolTypeNode();

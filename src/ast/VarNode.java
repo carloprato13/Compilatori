@@ -62,6 +62,7 @@ public class VarNode implements Node {
         if(exp.typeCheck() instanceof VoidTypeNode )
             throw new TypeException("incompatible value for variable "+id+" cannot assign void to a variable ");
         if (! (exp.typeCheck().isSubTypeOf(type))){
+            System.out.println("PORCODIO "+exp.typeCheck().toPrint(" type ")+type.toPrint(" "));
             throw new TypeException("incompatible value for variable "+id);
         }
     }

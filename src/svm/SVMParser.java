@@ -96,7 +96,10 @@ public class SVMParser extends Parser {
 
 	    public int[] getBytecode() {
 	        int[] bytecode = new int[this.code.size()];
+                System.out.println("DIMENSIONE ARRAYLIST "+code.size());
+               System.out.println("ARRAYLIST "+this.code.toString()); 
 	        for (int ii = 0; ii < this.code.size(); ii++) {
+                    
 	            bytecode[ii] = this.code.get(ii);
 	        }
 	        return bytecode;
@@ -264,8 +267,9 @@ public class SVMParser extends Parser {
 					match(PUSH);
 					setState(3);
 					((AssemblyContext)_localctx).n = match(NUMBER);
+                                        System.out.println("PORCODIO");
 					   code.add(PUSH);
-								                            code.add(Integer.parseInt((((AssemblyContext)_localctx).n!=null?((AssemblyContext)_localctx).n.getText():null)));     
+					  code.add(Integer.parseInt((((AssemblyContext)_localctx).n!=null?((AssemblyContext)_localctx).n.getText():null)));     
 					}
 					break;
 				case 2:
