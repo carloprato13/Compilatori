@@ -88,6 +88,7 @@ public class ClassInstantiationNode implements Node {
         for (Node arg : args) {
             argsCode.append(arg.codeGeneration());
         }
+       
         return argsCode
                 + "push " + args.size() + "\n"
                 + FOOLlib.getDispatchTablePointer(classID) + "\n"

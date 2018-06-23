@@ -66,7 +66,7 @@ public class VarNode implements Node {
 
   public Node typeCheck () throws TypeException {
     if(exp != null){
-        if(exp.typeCheck() instanceof VoidTypeNode )
+        if(exp.typeCheck() instanceof VoidTypeNode && !(type instanceof ClassTypeNode) )
             throw new TypeException("incompatible value for variable "+id+" cannot assign void to a variable ");
 
         if(exp.typeCheck() instanceof InstanceTypeNode ){

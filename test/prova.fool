@@ -1,11 +1,21 @@
-class Ciao(int x){
-    int a() 2;
+
+class Numero (int x){
+        void uno() x;
+        int due() 1;
+    }
+
+class Ciao extends Numero(bool y){
+        bool tre() false;
 }
 
-class Ciaone extends Ciao(){
-    bool b() false;
+class Ciaone extends Ciao(Numero a){
+        Numero quattro() new Numero(4);
 };
-let
-Ciaone c= new Ciao(1);
-in 
-if 3>2 then {int x=c.a() int z=0 } else {int k=3};
+    let
+        Numero num = new Numero(2);
+        Ciao ciao= new Ciao(1,false);
+        ciao.x= num.due();
+        Ciao ciaone = new Ciao(1,true);
+        ciaone = null; 
+    in
+if ciaone.tre() then{7} else{6};

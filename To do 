@@ -6,8 +6,8 @@ Migliorare le stampe in generale
 ANCORA NON RILEVIAMO GLI ERRORI SINTATTICI, HO PROVATO CON ERRORLISTENER MA NON FUNZIONA 
 
 sistemare codegeneration in ast.*
+    - ESECUZIONE DELLA SVM DA SEGMENTATION FAULT EXCEPTION
 
-sistemare fool.g4 con i ; dove serve (ad es. stm) 
 
 
 
