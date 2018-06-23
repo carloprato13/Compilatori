@@ -12,10 +12,6 @@ class Ciaone extends Ciao(Numero a){
         Numero quattro() new Numero(4);
 };
     let
-        Numero num = new Numero(2);
-        Ciao ciao= new Ciao(1,false);
-        ciao.x= num.due();
-        Ciao ciaone = new Ciao(1,true);
-        ciaone = null; 
+        Ciao num = new Ciao(2, true);
     in
-if ciaone.tre() then{7} else{6};
+if num.y then{7} else{6};

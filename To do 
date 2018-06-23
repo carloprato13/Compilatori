@@ -6,8 +6,29 @@ Migliorare le stampe in generale
 ANCORA NON RILEVIAMO GLI ERRORI SINTATTICI, HO PROVATO CON ERRORLISTENER MA NON FUNZIONA 
 
 sistemare codegeneration in ast.*
-    - ESECUZIONE DELLA SVM DA SEGMENTATION FAULT EXCEPTION
+
+CAPIRE QUANDO ESECUZIONE DELLA SVM DA SEGMENTATION FAULT EXCEPTION, PER IL MOMENTO I PROBLEMI RILEVATI STANNO NEI CASI SEGUENTI:
+    -- CHIAMATA A METODI DI UNA CLASSE
+    -- CHIAMATA A CAMPI DI UNA CLASSE
+MA NON ABBIAMO FATTO TEST ESAUSTIVI (farli)
+    
+CASI CHE DANNO ERRORE:
+
+NULL POINTER EXCEPTION -- DOVREBBE FUNZIONARE
+let
+int x;
+in
+if true then{
+if true then {x = 4} else {x = 5}
+if true then {x = 3} else {x = 2}
+} else{x = 6}
+;
 
 
-
+NULL POINTER EXCEPTION -- DOVREBBE DIRE X NON DICHIARATA
+if true then{
+if true then {x = 4} else {x = 5}
+if true then {x = 3} else {x = 2}
+} else{x = 6}
+;
 

@@ -1,10 +1,6 @@
 push 0
 push 2
 push 1
-push classNumero
-new
-push 1
-push 0
 push 2
 push classCiao
 new
@@ -15,23 +11,7 @@ add
 lw
 copy
 lw
-push 1
-add
-lc
-js
-push 1
-push 1
-push 2
-push classCiao
-new
-lfp
-push -12
-lfp
-add
-lw
-copy
-lw
-push 2
+push -1
 add
 lc
 js
