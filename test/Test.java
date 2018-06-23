@@ -78,7 +78,6 @@ public class Test extends BaseErrorListener{
                     maxMemsizeWithoutRecursion++;
                     break;
                 default:   // reached for labels and blank lines
-                    System.out.println("ERROR! Unknown SVM instruction '" + instruction +"' found in computing VM memory.");
                     break;
             }
         }
@@ -144,7 +143,6 @@ public class Test extends BaseErrorListener{
             //System.out.println("CODICE\n "+code+"FINE CODICE");
             code += FOOLlib.generateDispatchTablesCode();
             computeMemoryCapacity(code);
-
             //System.out.println("CODICE DOPO \n "+code+"FINE CODICE DOPO");
             BufferedWriter out = new BufferedWriter(new FileWriter(fileName+".asm")); 
             out.write(code);
@@ -158,16 +156,21 @@ public class Test extends BaseErrorListener{
             parserASM.assembly();
             System.out.println("Code assembled!\nYou had: "+lexerASM.errors.size()+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors in assembled code.");
             if (lexerASM.errors.size()>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
-
+            
+            System.out.println("BYTECODE PRINTING");
+            for(int t : parserASM.getBytecode())
+                System.out.println(t);
+            System.out.println("BYTECODE PRINTING END");
+            
             System.out.println("Starting VM (allocated dimensions: bytecode length " + code.length() + ", occupied memory " + maxMemsizeWithoutRecursion + ")");
-            ExecuteVM vm = new ExecuteVM(parserASM.getBytecode(), false);
+            ExecuteVM vm = new ExecuteVM(parserASM.getBytecode(), true);
             ArrayList<String> result= vm.cpu();
             boolean res=true;
             if(result.size() >0)
                 for(String s: result){
                     System.out.println("CODE OUTPUT:\n"+s);
                     if(s.contains("Error:"))
-                        res=true;
+                        res=false;
                 }
             return res;
         }catch(IOException e){
