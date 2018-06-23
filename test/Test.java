@@ -2,10 +2,14 @@
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.util.ArrayList;
+import java.util.*;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.BaseErrorListener;
+import org.antlr.v4.runtime.Recognizer;
+import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.RecognitionException;
 
 import codegen.ExecuteVM;
 import parser.FoolLexer;
@@ -18,10 +22,25 @@ import ast.FoolVisitorTypeChecker;
 import ast.Node;
 import exception.TypeException;
 import lib.FOOLlib;
-import org.antlr.v4.runtime.BaseErrorListener;
 
-public class Test {
-     private static int maxMemsizeWithoutRecursion;
+
+
+public class Test extends BaseErrorListener{
+   
+    public void syntaxError(Recognizer<?, ?> recognizer,
+        Object offendingSymbol,
+        int line, int charPositionInLine,
+        String msg,
+        RecognitionException e)
+    {
+        List<String> stack = ((Parser)recognizer).getRuleInvocationStack();
+        Collections.reverse(stack);
+        System.err.println("rule stack: "+stack);
+        System.err.println("line "+line+":"+charPositionInLine+" at "+
+        offendingSymbol+": "+msg);
+    }
+
+    private static int maxMemsizeWithoutRecursion;
      //    version with memory counter incrementing by push()
     private static void computeMemoryCapacity(String SVMcode) {
         String[] instructions = SVMcode.split("\n");
@@ -77,6 +96,8 @@ public class Test {
         
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         FoolParser parser = new FoolParser(tokens);
+        parser.removeErrorListeners(); // remove ConsoleErrorListener
+        parser.addErrorListener(new Test()); // add ours
         
         FoolVisitorTypeChecker visitor = new FoolVisitorTypeChecker();
 

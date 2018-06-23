@@ -50,7 +50,7 @@ term   : left=factor (op=TIMES right=term)?
        | left=factor (op=FRACT right=term)?
        ;
 
-stms   : ( stm )+;
+stms   : ( stm SEMIC)+;
 
 stm    : varasm #stmAsm
        | IF e=exp THEN CLPAR b1=stms CRPAR ELSE CLPAR b2=stms CRPAR #BranchStm
