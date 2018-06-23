@@ -21,9 +21,8 @@ import util.SemanticError;
 import ast.FoolVisitorTypeChecker;
 import ast.Node;
 import exception.TypeException;
+import java.io.IOException;
 import lib.FOOLlib;
-
-
 
 public class Test extends BaseErrorListener{
    
@@ -85,20 +84,30 @@ public class Test extends BaseErrorListener{
         }
     }
     
-    public static void main(String[] args) throws Exception {
-        
-        //String fileName = "/home/francesco/Documenti/JavaApplication1/test/prova.fool";
-        String fileName = "/home/carlo/NetBeansProjects/Compilatori/test/prova.fool";
-      
+    public static Node lexerParser(String fileName){
+        try{
         FileInputStream is = new FileInputStream(fileName);
         ANTLRInputStream input = new ANTLRInputStream(is);
-        FoolLexer lexer = new FoolLexer(input);
         
+        FoolLexer lexer = new FoolLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         FoolParser parser = new FoolParser(tokens);
         parser.removeErrorListeners(); // remove ConsoleErrorListener
-        parser.addErrorListener(new Test()); // add ours
-        
+        parser.addErrorListener(new Test());
+        if(parser.getNumberOfSyntaxErrors()>0){
+            System.out.println("Syntax error found! Exiting process..");
+            return null;
+        }
+        System.out.println("Lexing and parsing process ok.\n Start semantic check..");
+        return typeChecking(parser);
+        }catch(IOException e){
+            System.out.println("File not found!");
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    public static Node typeChecking(FoolParser parser){
         FoolVisitorTypeChecker visitor = new FoolVisitorTypeChecker();
 
         Node ast = visitor.visit(parser.prog()); //generazione AST 
@@ -110,45 +119,81 @@ public class Test extends BaseErrorListener{
                 System.out.println("You had: " +err.size()+" semantic errors:");
                 for(SemanticError e : err)
                         System.out.println("\t" + e);
+                ast=null;
         }else{	
-            System.out.println("Visualizing AST...");
+            System.out.println("Semantic check ok!\n Visualizing AST...");
             System.out.println(ast.toPrint(""));
-
+            System.out.println("Start type checking..");
             try{
+                
                 Node type = ast.typeCheck(); //type-checking bottom-up 
                 System.out.println(type.toPrint("Type checking ok! Type of the program is: "));
             }catch(TypeException e){
                 System.out.println("You had a type checking error!");
                 System.out.println(e.getMessage());
-                System.exit(0);
-                    }
-            // CODE GENERATION  prova.fool.asm
+                ast=null;
+                }
+        }
+     return ast;
+    }
+    
+    public static boolean codeGenRun(Node ast, String fileName) {
+        try{
+            System.out.println("Start code generation and writing in "+fileName+".asm...");
             String code=ast.codeGeneration();
+            //System.out.println("CODICE\n "+code+"FINE CODICE");
             code += FOOLlib.generateDispatchTablesCode();
+            computeMemoryCapacity(code);
+
+            //System.out.println("CODICE DOPO \n "+code+"FINE CODICE DOPO");
             BufferedWriter out = new BufferedWriter(new FileWriter(fileName+".asm")); 
             out.write(code);
             out.close(); 
-            System.out.println("Code generated! Assembling and running generated code.");
-            
+            System.out.println("Code generated! Assembling and running generated code...");
             FileInputStream isASM = new FileInputStream(fileName+".asm");
             ANTLRInputStream inputASM = new ANTLRInputStream(isASM);
             SVMLexer lexerASM = new SVMLexer(inputASM);
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
             SVMParser parserASM = new SVMParser(tokensASM);
-
             parserASM.assembly();
-
-            System.out.println("You had: "+lexerASM.errors.size()+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors.");
+            System.out.println("Code assembled!\nYou had: "+lexerASM.errors.size()+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors in assembled code.");
             if (lexerASM.errors.size()>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
-            FOOLlib.reset();
-            System.out.println("Starting VM (allocated dimensions: bytecode " + code.length() + ", memory " + maxMemsizeWithoutRecursion + ")");
+
+            System.out.println("Starting VM (allocated dimensions: bytecode length " + code.length() + ", occupied memory " + maxMemsizeWithoutRecursion + ")");
             ExecuteVM vm = new ExecuteVM(parserASM.getBytecode(), false);
             ArrayList<String> result= vm.cpu();
+            boolean res=true;
             if(result.size() >0)
-                for(String s: result)
-                    System.out.println("RESULT: "+s);
-            System.out.println("EXITING PROCESS, ALL DONE");
-	    }
+                for(String s: result){
+                    System.out.println("CODE OUTPUT:\n"+s);
+                    if(s.contains("Error:"))
+                        res=true;
+                }
+            return res;
+        }catch(IOException e){
+            System.out.println("IOException occurred!\n"+e.getMessage());
+            return false;
+        }
     }
+
+    public static void main(String[] args){
+
+        //String fileName = "/home/francesco/Documenti/JavaApplication1/test/prova.fool";
+        String fileName = "/home/carlo/NetBeansProjects/Compilatori/test/prova.fool";
+
+        System.out.println("Lexing and parsing of input code...");
+        FOOLlib.reset();
+        Node ast=lexerParser(fileName);
+        if(ast==null)
+            System.exit(0);
+        else{
+            if(codeGenRun(ast, fileName))
+                System.out.println("EXITING PROCESS, ALL DONE CORRECTLY");
+            else
+                System.out.println("EXITING PROCESS WITH ERRORS");
+            }
+        
+        }
+    
        
 }
