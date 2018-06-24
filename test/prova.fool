@@ -1,8 +1,8 @@
 class Ciao(bool y,bool z){
-        bool tre() false;
+        bool tre() true;
 };
 
     let
        Ciao c=new Ciao(true, true);
     in
-if c.z then{print(7)} else{print(6)};
+if c.tre() then{print(7)} else{print(6)};

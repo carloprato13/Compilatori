@@ -104,7 +104,8 @@ public class FieldCallNode implements Node{
                 + "add\n"                               // faccio $fp + offset per ottenere l'indirizzo in memoria dell'oggetto
                 + "lw\n"                                // carico l'indirizzo della dispatch table sullo stack
                 + "push " + fieldOffset + "\n"   // carico l'offset del campo rispetto all'inizio della dispatch table
-                + "add" + "\nlw\n"                          // carico sullo stack dispatch_table_start + offset;                               // salto all'istruzione dove e' definito il metodo e salvo $ra
+                + "add\n"                   //sommo i due per ottenere l'inidirizzo del campo
+                + "lw\n"                          // carico sullo stack  offset oggetto + offset campo;                               // salto all'istruzione dove e' definito il metodo e salvo $ra
                ;
     }
 

@@ -4,13 +4,17 @@ push 1
 push 2
 push classCiao
 new
+lfp
 push -2
 lfp
 add
 lw
-push 2
-add
+copy
 lw
+push 1
+add
+lc
+js
 push 1
 beq label0
 push 6
@@ -25,7 +29,7 @@ halt
 function0:
 cfp
 lra
-push 0
+push 1
 srv
 sra
 pop

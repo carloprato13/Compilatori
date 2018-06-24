@@ -157,10 +157,10 @@ public class Test extends BaseErrorListener{
             System.out.println("Code assembled!\nYou had: "+lexerASM.errors.size()+" lexical errors and "+parserASM.getNumberOfSyntaxErrors()+" syntax errors in assembled code.");
             if (lexerASM.errors.size()>0 || parserASM.getNumberOfSyntaxErrors()>0) System.exit(1);
             
-            System.out.println("BYTECODE PRINTING");
+            /*System.out.println("BYTECODE PRINTING");
             for(int t : parserASM.getBytecode())
                 System.out.println(t);
-            System.out.println("BYTECODE PRINTING END");
+            System.out.println("BYTECODE PRINTING END");*/
             
             System.out.println("Starting VM (allocated dimensions: bytecode length " + code.length() + ", occupied memory " + maxMemsizeWithoutRecursion + ")");
             ExecuteVM vm = new ExecuteVM(parserASM.getBytecode(), true);
