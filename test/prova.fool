@@ -1,17 +1,10 @@
 
-class Numero (int x){
-        void uno() x;
-        int due() 1;
-    }
 
-class Ciao extends Numero(bool y){
+class Ciao(bool y,bool z){
         bool tre() false;
-}
-
-class Ciaone extends Ciao(Numero a){
-        Numero quattro() new Numero(4);
 };
+
     let
-        Ciao num = new Ciao(2, true);
+       Ciao c=new Ciao(true, true);
     in
-if num.y then{7} else{6};
+if c.y then{print(7)} else{print(6)};

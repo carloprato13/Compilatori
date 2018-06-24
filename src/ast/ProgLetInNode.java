@@ -35,7 +35,7 @@ public class ProgLetInNode implements Node {
         //check semantics in the exp body
         //check semantics in the dec list
         if (declist.size() > 0) {
-            //env.offset = -2;
+            env.offset = -2;
             //if there are children then check semantics for every child and save the results
             for (Node n : declist)
                 res.addAll(n.checkSemantics(env));

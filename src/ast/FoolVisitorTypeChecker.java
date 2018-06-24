@@ -55,7 +55,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
                 ArrayList<VarNode> vars = new ArrayList<>();
                 for (int i = 0; i < dc.vardec().size(); i++) {
                     VardecContext varctx = dc.vardec().get(i);
-                    vars.add(new VarNode(varctx.ID().getText(), visit(varctx.type()).typeCheck(),null));
+                    vars.add(new VarNode(varctx.ID().getText(), visit(varctx.type()).typeCheck(),null,true));
                 }
                 ArrayList<FunNode> mets = new ArrayList<FunNode>();
                 for (FunContext functx : dc.fun()) {

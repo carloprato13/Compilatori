@@ -21,8 +21,13 @@ public class ProgNode implements Node {
   
   @Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
-		
-		return exp.checkSemantics(env);
+		 ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+
+                env.pushHashMap();
+		res.addAll(exp.checkSemantics(env));
+                env.popHashMap();
+                
+                return res;
 	}
   
   public Node typeCheck() throws TypeException {

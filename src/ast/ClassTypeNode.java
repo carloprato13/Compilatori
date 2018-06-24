@@ -1,6 +1,7 @@
 package ast;
 
 import exception.UndeclaredMethodException;
+import exception.UndeclaredVarException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -111,6 +112,16 @@ public class ClassTypeNode implements Node {
             throw new UndeclaredMethodException(methodID);
         }
     }
+    
+    public int getOffsetOfField(String fieldID) throws UndeclaredVarException {
+        HashMap<String, Integer> fieldsMap = fieldsMapFromSuper();
+        Integer offset = fieldsMap.get(fieldID);
+        if (offset != null) {
+            return offset + 1;
+        } else {
+            throw new UndeclaredVarException(fieldID);
+        }
+    }
 
     public HashMap<String, Integer> methodsMapFromSuper() {
         if (superType == null) {
@@ -124,6 +135,24 @@ public class ClassTypeNode implements Node {
             for (FunNode method : methods) {
                 if (!superMethodsMap.containsKey(method.getId())) {
                     superMethodsMap.put(method.getId(), superMethodsMap.size());
+                }
+            }
+            return superMethodsMap;
+        }
+    }
+    
+    public HashMap<String, Integer> fieldsMapFromSuper() {
+        if (superType == null) {
+            HashMap<String, Integer> fieldMap = new HashMap<>();
+            for (VarNode field : fields) {
+                fieldMap.put(field.getId(), fieldMap.size());
+            }
+            return fieldMap;
+        } else {
+            HashMap<String, Integer> superMethodsMap = superType.fieldsMapFromSuper();
+            for (VarNode field : fields) {
+                if (!superMethodsMap.containsKey(field.getId())) {
+                    superMethodsMap.put(field.getId(), superMethodsMap.size());
                 }
             }
             return superMethodsMap;

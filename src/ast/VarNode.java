@@ -13,12 +13,21 @@ public class VarNode implements Node {
   private String id;
   private Node type;
   private Node exp;
+  private boolean inClass=false;
   
   public VarNode (String i, Node t, Node v) {
     id=i;
     type=t;
     exp=v;
   }
+  
+  public VarNode (String i, Node t, Node v, boolean n) {
+    id=i;
+    type=t;
+    exp=v;
+    inClass=n;
+  }
+         
 
     public String getId() {
         return id;
@@ -31,9 +40,10 @@ public class VarNode implements Node {
   	@Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
   	//create result list
-  	  ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+  	 /* ArrayList<SemanticError> res = new ArrayList<SemanticError>();
   	  
   	  //env.offset = -2;
+          System.out.println("PORCAMADONNA!: "+env.getNestingLevel());
   	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
         
           try{
@@ -52,6 +62,26 @@ public class VarNode implements Node {
         if(exp != null)
             res.addAll(exp.checkSemantics(env));
         
+        return res;*/
+          //create result list
+        ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+
+        //Se sto istanziando un nuovo oggetto, aggiorno bene le informazioni di ClassType :=D
+        if (type instanceof InstanceTypeNode) {
+            InstanceTypeNode decType = (InstanceTypeNode) type;
+            res.addAll(decType.updateClassType(env));
+        }
+        
+        if(exp!=null)
+         res.addAll(exp.checkSemantics(env));
+
+        //env.offset = -2;
+        try {
+            env.addEntry(id, this.type, env.offset--, inClass);
+        } catch (RedeclaredVarException e) {
+            res.add(new SemanticError(e.getMessage()));
+        }
+
         return res;
 	}
   

@@ -76,7 +76,7 @@ public class FieldCallNode implements Node{
         //serve getTypeOfField in ClassTypeNode
         this.fieldType = objectClass.getTypeOfField(fieldID);
         //L'offset degli attributi è diversa da quella dei metodi
-        //this.fieldOffset = objectClass.getOffsetOfMethod(fieldID);
+        this.fieldOffset = objectClass.getOffsetOfField(fieldID);
         //} catch (UndeclaredMethodException ex) {
         //    Logger.getLogger(MethodCallNode.class.getName()).log(Level.SEVERE, null, ex);
         }catch(UndeclaredVarException e){
@@ -97,21 +97,17 @@ public class FieldCallNode implements Node{
 
         for (int i = 0; i < nestinglevel - objectNestingLevel; i++)
             getAR.append("lw\n");
-
-        return "lfp\n"                                  // carico il frame pointer
-                //+ parCode                               // carico i parametri
-                + "push " + objectOffset + "\n"         // carico l'offset dell'oggetto nello scope di definizione
+        //objectOffset=666;
+        return "push "  +objectOffset + "\n"         // carico l'offset dell'oggetto nello scope di definizione
                 + "lfp\n"                               // carico il frame pointer
                 + getAR                                 // faccio gli lw necessari fino a trovarmi sullo stack l'indirizzo in memoria del frame dove e' definito l'oggetto
                 + "add\n"                               // faccio $fp + offset per ottenere l'indirizzo in memoria dell'oggetto
                 + "lw\n"                                // carico il valore dell'oggetto sullo stack
                 + "copy\n"                              // copio il valore sopra (l'indirizzo di memoria nel quale si trova l'indirizzo della dispatch table)
                 + "lw\n"                                // carico l'indirizzo della dispatch table sullo stack
-                + "push " + (fieldOffset - 1) + "\n"   // carico l'offset del metodo rispetto all'inizio della dispatch table
-                + "add" + "\n"                          // carico sullo stack dispatch_table_start + offset
-                + "lc\n"                                // trovo l'indirizzo del metodo
-                + "js\n";                               // salto all'istruzione dove e' definito il metodo e salvo $ra
-    
+                + "push " + (fieldOffset - 1) + "\n"   // carico l'offset del campo rispetto all'inizio della dispatch table
+                + "add" + "\n"                          // carico sullo stack dispatch_table_start + offset;                               // salto all'istruzione dove e' definito il metodo e salvo $ra
+               ;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ast;
 
+import exception.UndeclaredVarException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
@@ -11,6 +12,8 @@ public class IdNode implements Node {
   private String id;
   private STentry entry;
   private int nestinglevel;
+  private int thisNestLevel;
+  private int thisOffset;
   
   public IdNode (String i) {
     id=i;
@@ -47,6 +50,28 @@ public class IdNode implements Node {
         }
 
       return res;
+      
+      /*ArrayList<SemanticError> res = new ArrayList<>();
+
+        try {
+            this.entry = env.getLatestEntryOfNotFun(this.id);
+            if(this.entry.isAttribute()) {
+                STentry thisPointer = env.getLatestEntryOfNotFun("this");
+                this.thisNestLevel = thisPointer.getNestinglevel();
+                this.thisOffset = thisPointer.getOffset();
+            }
+            this.nestinglevel = env.getNestingLevel();
+
+            if (this.entry.getNode() instanceof InstanceTypeNode) {
+                InstanceTypeNode decType = (InstanceTypeNode) this.entry.getNode();
+                res.addAll(decType.updateClassType(env));
+            }
+
+        } catch (UndeclaredVarException e) {
+            res.add(new SemanticError("undeclared variable " + id));
+        }
+
+        return res;*/
     }
   
   @Override
@@ -59,14 +84,27 @@ public class IdNode implements Node {
   
   @Override
   public String codeGeneration() {
-      String getAR="";
+      StringBuilder getARs = new StringBuilder();
+        if(this.entry.isAttribute()) {
+            for (int i = 0; i < nestinglevel - thisNestLevel; i++)
+                getARs.append("lw\n");
+            return  "push " + entry.getOffset() + "\n" + // metto l'offset (logico) sullo stack
+                    "push " + thisOffset + "\n" +
+                    "lfp\n" + getARs +
+                    "add\n" +
+                    "lw\n" +
+                    "hoff\n" +  // converto l'offset
+                    "add\n" +
+                    "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
+        } else {
+            String getAR="";
 	  for (int i=0; i<nestinglevel-entry.getNestinglevel(); i++) 
 	    	 getAR+="lw\n";
 	    return "push "+entry.getOffset()+"\n"+ //metto offset sullo stack
 		       "lfp\n"+getAR+ //risalgo la catena statica
 			   "add\n"+ 
                "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
-
+        }
   }
   
   @Override

@@ -10,8 +10,8 @@ import java.util.HashSet;
 
 public class ExecuteVM {
 
-    public static final int MEMORY_START_ADDRESS = 777;
-    private static final int MEMSIZE = 1000;
+    public static final int MEMORY_START_ADDRESS = 70;
+    private static final int MEMSIZE = 100;
     private static final int GARBAGE_THRESHOLD = Math.max((MEMSIZE / 100) * 5, 10);
 
     private ArrayList<String> outputBuffer = new ArrayList<>();
@@ -25,7 +25,7 @@ public class ExecuteVM {
     private int fp = MEMORY_START_ADDRESS + MEMSIZE;
     private int ra;
     private int rv;
-
+    private int cp=0;
     private boolean debug;
     private HeapMemory heap = new HeapMemory(MEMSIZE);
     private HashSet<HeapMemoryCell> heapMemoryInUse = new HashSet<>();
@@ -38,6 +38,7 @@ public class ExecuteVM {
     private int getMemory(int address) throws SegmentationFaultException {
         int location = address - MEMORY_START_ADDRESS;
         if (location < 0 || location >= MEMSIZE) {
+            System.out.println("get LOCATION: "+location+" ADDRESS: "+address);
             throw new SegmentationFaultException();
         }
         return memory[location];
@@ -46,8 +47,10 @@ public class ExecuteVM {
     private void setMemory(int address, int value) throws SegmentationFaultException {
         int location = address - MEMORY_START_ADDRESS;
         if (location < 0 || location >= MEMSIZE) {
-            throw new SegmentationFaultException();
+            System.out.println("set LOCATION: "+location+" ADDRESS: "+address);
+            throw new SegmentationFaultException();             
         }
+            
         memory[location] = value;
     }
 
@@ -87,7 +90,8 @@ public class ExecuteVM {
         for (int mem : memory)
             System.out.print(mem + " ");
         System.out.println();
-        System.out.println("sp: " + sp + "  fp: " + fp + "  ra: " + ra + "  rv: " + rv + "  hp: " + hp);
+        cp++;
+        System.out.println("CP: "+cp+" sp: " + sp + "  fp: " + fp + "  ra: " + ra + "  rv: " + rv + "  hp: " + hp);
         System.out.println();
     }
 
