@@ -8,4 +8,24 @@ Migliorare le stampe in generale
 
 ANCORA NON FERMIAMO L'ESECUZIONE IN TEST SE ABBIAMO ERRORI DAL PARSER O DAL LEXER
 
-TESTARE BENE SU CAMPI E METODI
+CASI DI ERRORE
+class Numero (int x){
+        void uno() x;
+        int due() 1;
+    }
+
+class Ciao extends Numero(bool y){
+        bool tre() false;
+}
+
+class Ciaone extends Ciao(Numero a){
+        Numero quattro() new Numero(4);
+};
+    let
+        Numero num = new Numero(2);
+        Ciao ciao= new Ciao(1,false);
+        ciao.x= num.due();
+        Numero ciaone = new Numero(1);
+        ciaone = null; 
+    in
+if ciao.tre() then{num.uno()} else{ciaone.tre()};
