@@ -43,22 +43,22 @@ public class IdNode implements Node {
       }
         if (tmp==null){
           res.add(new SemanticError("Id "+id+" not declared"));
+          return res;
         }else{
-          //System.out.println("QUAAAAAAAAAAA!!!: "+tmp.toString(" "));
           entry = tmp;
           nestinglevel = env.getNestingLevel();
         }
 
-      return res;
+      //return res;
       
-      /*ArrayList<SemanticError> res = new ArrayList<>();
+      //ArrayList<SemanticError> res = new ArrayList<>();
 
         try {
-            this.entry = env.getLatestEntryOfNotFun(this.id);
-            if(this.entry.isAttribute()) {
+            if(entry.isAttribute()) {
+                entry = env.getLatestEntryOfNotFun(this.id);
                 STentry thisPointer = env.getLatestEntryOfNotFun("this");
-                this.thisNestLevel = thisPointer.getNestinglevel();
-                this.thisOffset = thisPointer.getOffset();
+                thisNestLevel = thisPointer.getNestinglevel();
+                thisOffset = thisPointer.getOffset();
             }
             this.nestinglevel = env.getNestingLevel();
 
@@ -71,7 +71,7 @@ public class IdNode implements Node {
             res.add(new SemanticError("undeclared variable " + id));
         }
 
-        return res;*/
+        return res;
     }
   
   @Override

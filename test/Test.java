@@ -182,7 +182,7 @@ public class Test extends BaseErrorListener{
     public static void main(String[] args){
 
         //String fileName = "/home/francesco/Documenti/JavaApplication1/test/prova.fool";
-        String fileName = "/home/carlo/NetBeansProjects/Compilatori/test/prova.fool";
+        String fileName = "test/prova.fool";
 
         System.out.println("Lexing and parsing of input code...");
         FOOLlib.reset();

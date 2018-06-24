@@ -97,16 +97,14 @@ public class FieldCallNode implements Node{
 
         for (int i = 0; i < nestinglevel - objectNestingLevel; i++)
             getAR.append("lw\n");
-        //objectOffset=666;
+        
         return "push "  +objectOffset + "\n"         // carico l'offset dell'oggetto nello scope di definizione
                 + "lfp\n"                               // carico il frame pointer
                 + getAR                                 // faccio gli lw necessari fino a trovarmi sullo stack l'indirizzo in memoria del frame dove e' definito l'oggetto
                 + "add\n"                               // faccio $fp + offset per ottenere l'indirizzo in memoria dell'oggetto
-                + "lw\n"                                // carico il valore dell'oggetto sullo stack
-                + "copy\n"                              // copio il valore sopra (l'indirizzo di memoria nel quale si trova l'indirizzo della dispatch table)
                 + "lw\n"                                // carico l'indirizzo della dispatch table sullo stack
-                + "push " + (fieldOffset - 1) + "\n"   // carico l'offset del campo rispetto all'inizio della dispatch table
-                + "add" + "\n"                          // carico sullo stack dispatch_table_start + offset;                               // salto all'istruzione dove e' definito il metodo e salvo $ra
+                + "push " + fieldOffset + "\n"   // carico l'offset del campo rispetto all'inizio della dispatch table
+                + "add" + "\nlw\n"                          // carico sullo stack dispatch_table_start + offset;                               // salto all'istruzione dove e' definito il metodo e salvo $ra
                ;
     }
 

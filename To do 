@@ -2,35 +2,15 @@
 trovare un modo di fare i test automaticamente
 
 Migliorare le stampe in generale 
+	-ALBERO SINTATTICO
+	-TOGLIERE STAMPA BYTECODE
+	-MIGLIORARE STAMPA ESECUZIONE (printare solo gli estremi con 10 posizioni in più) ExecuteVM.toPrint()
 
-ANCORA NON RILEVIAMO GLI ERRORI SINTATTICI, HO PROVATO CON ERRORLISTENER MA NON FUNZIONA 
+ANCORA NON FERMIAMO L'ESECUZIONE IN TEST SE ABBIAMO ERRORI DAL PARSER O DAL LEXER
+IN CHECKSEMANTIC DI IDNODE CI SONO DUE VERSIONI
 
-sistemare codegeneration in ast.*
+ERRORE NEL VALUTARE una FUNZIONE (STACK OVERFLOW: CICLA)
 
-IN CHECKSEMANTIC DI VARDEC CI SONO DUE VERSIONI
+TESTARE BENE SUI CAMPI
 
-CAPIRE QUANDO ESECUZIONE DELLA SVM DA SEGMENTATION FAULT EXCEPTION, PER IL MOMENTO I PROBLEMI RILEVATI STANNO NEI CASI SEGUENTI:
-    -- CHIAMATA A METODI DI UNA CLASSE
-    -- CHIAMATA A CAMPI DI UNA CLASSE
-MA NON ABBIAMO FATTO TEST ESAUSTIVI (farli)
-    
-CASI CHE DANNO ERRORE:
-
-NULL POINTER EXCEPTION -- NON FUNZIONA PER IL G4
-let
-int x;
-in
-if true then{
-if true then {x = 4} else {x = 5}
-if true then {x = 3} else {x = 2}
-} else{x = 6}
-;
-
-
-NULL POINTER EXCEPTION -- DOVREBBE DIRE X NON DICHIARATA - lo dice se in vardec si tiene il primo checkSemantics
-if true then{
-if true then {x = 4} else {x = 5}
-if true then {x = 3} else {x = 2}
-} else{x = 6}
-;
 

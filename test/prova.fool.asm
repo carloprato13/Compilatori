@@ -8,10 +8,9 @@ push -2
 lfp
 add
 lw
-copy
-lw
-push 0
+push 2
 add
+lw
 push 1
 beq label0
 push 6

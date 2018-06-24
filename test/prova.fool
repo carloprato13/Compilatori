@@ -1,5 +1,3 @@
-
-
 class Ciao(bool y,bool z){
         bool tre() false;
 };
@@ -7,4 +5,4 @@ class Ciao(bool y,bool z){
     let
        Ciao c=new Ciao(true, true);
     in
-if c.y then{print(7)} else{print(6)};
+if c.z then{print(7)} else{print(6)};
