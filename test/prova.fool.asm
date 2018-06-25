@@ -19,7 +19,7 @@ add
 lw
 copy
 lw
-push 2
+push 1
 add
 lc
 js

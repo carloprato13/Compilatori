@@ -4,6 +4,7 @@ import exception.UndeclaredMethodException;
 import exception.UndeclaredVarException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import lib.DispatchTableEntry;
 
 import util.Environment;
 import util.SemanticError;
@@ -52,7 +53,8 @@ public class ClassTypeNode implements Node {
   }
   
   public String codeGeneration() {
-		return "";
+      
+        return "";
   }  
     
   public ArrayList<VarNode> getFields() {
@@ -107,8 +109,7 @@ public class ClassTypeNode implements Node {
         HashMap<String, Integer> methodsMap = methodsMapFromSuper();
         Integer offset = methodsMap.get(methodID);
         if (offset != null) {
-            System.out.println("OFFSET OF "+methodID+" IS "+offset+fields.size()+1);
-            return offset+fields.size();
+            return offset+1;
         } else {
             throw new UndeclaredMethodException(methodID);
         }
