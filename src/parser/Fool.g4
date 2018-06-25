@@ -18,10 +18,10 @@ classd : CLASS ID (EXTS ID)? (LPAR ( vardec (COMMA vardec)* )? RPAR)? (CLPAR (fu
 
 let    : LET (dec SEMIC)+ IN ;
 
-vardec : t=type name=ID ;
+vardec : type ID ;
 
-varasm : t=vardec ASM e=exp     #decAsm 
-       | t=ID ASM e=exp       #Asm
+varasm : vardec ASM exp     #decAsm 
+       | ID ASM exp       #Asm
        | t=ID DOT f=ID ASM e=exp  #fieldAsm
        ;
 
@@ -68,7 +68,7 @@ value  : (MINUS)? INTEGER          #intVal
        | ( TRUE | FALSE ) #boolVal
        | LPAR exp RPAR                      #baseVal
        | ID               #varVal
-       | name=ID ( LPAR (elem+=exp (COMMA elem+=exp)* )? RPAR )? #funcall
+       | ID ( LPAR (elem+=exp (COMMA elem+=exp)* )? RPAR )? #funcall
        | NULL #nullVal 
        | ID DOT ID #fieldVal
        | ID DOT ID LPAR ( elem+=exp (COMMA elem+=exp)* )? RPAR #methodCall

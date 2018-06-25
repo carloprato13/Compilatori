@@ -471,8 +471,6 @@ public class FoolParser extends Parser {
 	}
 
 	public static class VardecContext extends ParserRuleContext {
-		public TypeContext t;
-		public Token name;
 		public TypeContext type() {
 			return getRuleContext(TypeContext.class,0);
 		}
@@ -495,9 +493,9 @@ public class FoolParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(94);
-			((VardecContext)_localctx).t = type();
+			type();
 			setState(95);
-			((VardecContext)_localctx).name = match(ID);
+			match(ID);
 			}
 		}
 		catch (RecognitionException re) {
@@ -543,12 +541,10 @@ public class FoolParser extends Parser {
 		}
 	}
 	public static class DecAsmContext extends VarasmContext {
-		public VardecContext t;
-		public ExpContext e;
-		public TerminalNode ASM() { return getToken(FoolParser.ASM, 0); }
 		public VardecContext vardec() {
 			return getRuleContext(VardecContext.class,0);
 		}
+		public TerminalNode ASM() { return getToken(FoolParser.ASM, 0); }
 		public ExpContext exp() {
 			return getRuleContext(ExpContext.class,0);
 		}
@@ -560,10 +556,8 @@ public class FoolParser extends Parser {
 		}
 	}
 	public static class AsmContext extends VarasmContext {
-		public Token t;
-		public ExpContext e;
-		public TerminalNode ASM() { return getToken(FoolParser.ASM, 0); }
 		public TerminalNode ID() { return getToken(FoolParser.ID, 0); }
+		public TerminalNode ASM() { return getToken(FoolParser.ASM, 0); }
 		public ExpContext exp() {
 			return getRuleContext(ExpContext.class,0);
 		}
@@ -587,11 +581,11 @@ public class FoolParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(97);
-				((DecAsmContext)_localctx).t = vardec();
+				vardec();
 				setState(98);
 				match(ASM);
 				setState(99);
-				((DecAsmContext)_localctx).e = exp();
+				exp();
 				}
 				break;
 			case 2:
@@ -599,11 +593,11 @@ public class FoolParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(101);
-				((AsmContext)_localctx).t = match(ID);
+				match(ID);
 				setState(102);
 				match(ASM);
 				setState(103);
-				((AsmContext)_localctx).e = exp();
+				exp();
 				}
 				break;
 			case 3:
@@ -1536,7 +1530,6 @@ public class FoolParser extends Parser {
 		}
 	}
 	public static class FuncallContext extends ValueContext {
-		public Token name;
 		public ExpContext exp;
 		public List<ExpContext> elem = new ArrayList<ExpContext>();
 		public TerminalNode ID() { return getToken(FoolParser.ID, 0); }
@@ -1744,7 +1737,7 @@ public class FoolParser extends Parser {
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(245);
-				((FuncallContext)_localctx).name = match(ID);
+				match(ID);
 				setState(258);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
