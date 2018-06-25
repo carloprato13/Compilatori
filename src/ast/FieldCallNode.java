@@ -113,5 +113,17 @@ public class FieldCallNode implements Node{
     public boolean isSubTypeOf(Node m) {
         return fieldType.isSubTypeOf (m);
     }
+
+    public int getObjectOffset() {
+        return objectOffset;
+    }
+
+    public int getFieldOffset() {
+        return fieldOffset;
+    }
+
+    public int getNestinglevel() {return nestinglevel;}
+
+    public int getObjectNestingLevel() {return objectNestingLevel;}
     
 }

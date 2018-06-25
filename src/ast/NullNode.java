@@ -29,7 +29,7 @@ public class NullNode implements Node {
 
     @Override
     public String codeGeneration() {
-         return "";
+         return "push 9999\n";
     }
 
     @Override
