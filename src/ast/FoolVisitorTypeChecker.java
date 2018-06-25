@@ -69,7 +69,6 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
                 if (dc.ID(1) == null) {                                     
                     classNode = new ClassdNode(dc.ID(0).getText(), null,  vars, mets);
                 } else {
-                    //System.out.println(dc.ID(0).getText()+"   "+dc.ID(1).getText());
                     ArrayList<VarNode> temp= new ArrayList<>();
                     for(ClassdNode c : classDeclarations)
                         if(c.getClassID().equals(dc.ID(1).getText())){

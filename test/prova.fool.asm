@@ -8,7 +8,6 @@ push 0
 push 2
 push classCiao
 new
-push 0
 push 1
 push 1
 push classNumero
@@ -26,11 +25,11 @@ lc
 js
 push 1
 beq label0
-push 9
+push 7
 print
 b label1
 label0:
-push 6
+push 8
 print
 label1:
 halt
@@ -59,7 +58,7 @@ js
 function1:
 cfp
 lra
-push 0
+push 1
 srv
 sra
 pop
@@ -71,7 +70,7 @@ js
 function2:
 cfp
 lra
-push 1
+push 0
 srv
 sra
 pop

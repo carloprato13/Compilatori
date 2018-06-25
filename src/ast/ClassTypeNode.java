@@ -92,11 +92,11 @@ public class ClassTypeNode implements Node {
      */
     public HashMap<String, ArrowTypeNode> getMethodsMap() {
         HashMap<String, ArrowTypeNode> methodsMap = new HashMap<>();
-        /*if(superType != null) {
+        if(superType != null) {
             HashMap<String, ArrowTypeNode> superMethodsMap = superType.getMethodsMap();
             for (String m : superMethodsMap.keySet())
                 methodsMap.put(m, superMethodsMap.get(m));
-        }*/
+        }
         for (FunNode m : methods) {
             methodsMap.put(m.getId(), (ArrowTypeNode) m.getType());
         }
@@ -107,7 +107,8 @@ public class ClassTypeNode implements Node {
         HashMap<String, Integer> methodsMap = methodsMapFromSuper();
         Integer offset = methodsMap.get(methodID);
         if (offset != null) {
-            return offset + 1;
+            System.out.println("OFFSET OF "+methodID+" IS "+offset+fields.size()+1);
+            return offset+fields.size();
         } else {
             throw new UndeclaredMethodException(methodID);
         }

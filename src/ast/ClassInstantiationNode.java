@@ -66,7 +66,7 @@ public class ClassInstantiationNode implements Node {
 
     @Override
     public String toPrint(String s) {
-        return s + "instantiation of " + classType.toPrint(s + "  ");
+        return s + "instantiation of " + classID;
     }
 
     @Override

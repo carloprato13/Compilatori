@@ -136,7 +136,7 @@ public class ClassdNode implements Node {
                     paramsType.add(param.getType());
                 }
                 }catch(UndeclaredVarException e){
-                        res.add(new SemanticError("variable " + superClassID + " not defined riga 145"));
+                        res.add(new SemanticError("variable " + superClassID + " not defined"));
                     }
             }
             methodsList.add(new FunNode(fun.getId(), new ArrowTypeNode(paramsType, fun.getType())));

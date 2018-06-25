@@ -1,10 +1,10 @@
 class Numero (int x){
         void uno() x;
-        bool due() false;
+        bool due() true;
     }
 
 class Ciao extends Numero(bool y){
-        bool tre() true;
+        bool tre() false;
 }
 
 class Ciaone extends Ciao(Numero a){
@@ -13,8 +13,7 @@ class Ciaone extends Ciao(Numero a){
     let
         Numero num = new Numero(2);
         Ciao ciao= new Ciao(12,false);
-        ciao.y= false;
         Numero ciaone = new Numero(1);
         ciaone = null; 
     in
-if ciao.due() then{print(6)} else{print(9)};
+if ciao.due() then{print(8)} else{print(7)};
