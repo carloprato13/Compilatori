@@ -29,3 +29,9 @@ class Ciaone extends Ciao(Numero a){
         ciaone = null; 
     in
 if ciao.tre() then{num.uno()} else{ciaone.tre()};
+
+Stack overflow nel chiamare un metodo di una superclasse;
+
+Non modifichiamo i campi della classe.
+
+Gestire l'assegnamento a null.
