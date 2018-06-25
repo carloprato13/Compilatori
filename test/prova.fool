@@ -1,8 +1,20 @@
-class Ciao(bool y,bool z){
-        bool tre() true;
-};
+class Numero (int x){
+        void uno() x;
+        bool due() false;
+    }
 
+class Ciao extends Numero(bool y){
+        bool tre() true;
+}
+
+class Ciaone extends Ciao(Numero a){
+        Numero quattro() new Numero(4);
+};
     let
-       Ciao c=new Ciao(true, true);
+        Numero num = new Numero(2);
+        Ciao ciao= new Ciao(12,false);
+        ciao.y= false;
+        Numero ciaone = new Numero(1);
+        ciaone = null; 
     in
-if c.tre() then{print(7)} else{print(6)};
+if ciao.due() then{print(6)} else{print(9)};

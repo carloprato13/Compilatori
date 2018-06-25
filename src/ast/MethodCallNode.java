@@ -124,7 +124,7 @@ public class MethodCallNode extends CallNode {
         for (int i = 0; i < nestinglevel - objectNestingLevel; i++) {
             getAR.append("lw\n");
         }
-
+        System.out.println("MetId "+methodID+" MetOffset: "+methodOffset);
         return "lfp\n" // carico il frame pointer
                 + parCode // carico i parametri
                 + "push " + objectOffset + "\n" // carico l'offset dell'oggetto nello scope di definizione

@@ -92,11 +92,11 @@ public class ClassTypeNode implements Node {
      */
     public HashMap<String, ArrowTypeNode> getMethodsMap() {
         HashMap<String, ArrowTypeNode> methodsMap = new HashMap<>();
-        if(superType != null) {
+        /*if(superType != null) {
             HashMap<String, ArrowTypeNode> superMethodsMap = superType.getMethodsMap();
             for (String m : superMethodsMap.keySet())
                 methodsMap.put(m, superMethodsMap.get(m));
-        }
+        }*/
         for (FunNode m : methods) {
             methodsMap.put(m.getId(), (ArrowTypeNode) m.getType());
         }

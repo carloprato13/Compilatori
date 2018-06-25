@@ -49,14 +49,10 @@ public class IdNode implements Node {
           nestinglevel = env.getNestingLevel();
         }
 
-      //return res;
-      
-      //ArrayList<SemanticError> res = new ArrayList<>();
-
-        try {
+       try {
             if(entry.isAttribute()) {
-                entry = env.getLatestEntryOfNotFun(this.id);
-                STentry thisPointer = env.getLatestEntryOfNotFun("this");
+                //entry = env.getLatestEntryOfNotFun(this.id);
+                STentry thisPointer = env.getLatestEntryOfNotFun(id);
                 thisNestLevel = thisPointer.getNestinglevel();
                 thisOffset = thisPointer.getOffset();
             }
@@ -68,7 +64,7 @@ public class IdNode implements Node {
             }
 
         } catch (UndeclaredVarException e) {
-            res.add(new SemanticError("undeclared variable " + id));
+            res.add(new SemanticError("undeclared variable  " + id+" e:"+e.getMessage()));
         }
 
         return res;
