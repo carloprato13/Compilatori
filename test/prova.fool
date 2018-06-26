@@ -5,13 +5,8 @@ class Numero (int x){
 
 class Ciao extends Numero(bool y){
         bool tre() false;
-}
-
-class Ciaone extends Ciao(Numero a){
-        Numero quattro() new Numero(4);
 };
-    let
-        Numero num = new Numero(2);
-        Ciao ciao= new Ciao(1,false);
+ let
+        Ciao ciao= new Ciao(16,false);
     in
-if ciao.tre() then{num.due()} else{ciao.tre()};
+print(ciao.uno());
