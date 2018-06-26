@@ -141,7 +141,8 @@ public class FunNode implements Node {
 	    		"lra\n"+"js\n" // salta a $ra
 	    		);
 	    
-		return "push "+ funl +"\n";
+		if(classID==null) return "push "+ funl +"\n";
+                else return funl +"\n";
   }
 
     public ArrayList<Node> getParams() {

@@ -1,14 +1,17 @@
 class Numero (int x){
         void uno() x;
-        bool due() false;
+        bool due() true;
     }
 
 class Ciao extends Numero(bool y){
         bool tre() false;
+}
+
+class Ciaone extends Ciao(Numero a){
+        Numero quattro() new Numero(4);
 };
     let
-        Ciao ciao= new Ciao(12,true);
-        ciao.x=12;
-        ciao=null;
+        Numero num = new Numero(2);
+        Ciao ciao= new Ciao(1,false);
     in
-print(ciao.x);
+if ciao.tre() then{num.due()} else{ciao.tre()};

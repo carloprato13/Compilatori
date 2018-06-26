@@ -55,7 +55,10 @@ public class AsmNode implements Node {
   }
   
   public String codeGeneration() {
-        return exp.codeGeneration();
+        String expCode= exp.codeGeneration();
+        String IdCode= IdNode.codeGeneration();
+        IdCode=IdCode.substring(0,IdCode.lastIndexOf("lw\n"));
+        return expCode + IdCode + "sw\n";
   }  
   
   public boolean isSubTypeOf(Node m){

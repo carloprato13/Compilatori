@@ -8,10 +8,11 @@ Migliorare le stampe in generale
 
 ANCORA NON FERMIAMO L'ESECUZIONE IN TEST SE ABBIAMO ERRORI DAL PARSER O DAL LEXER
 
-CASI DI ERRORE
+CASI DI ERRORE-1: Errore nel chiamare un metodo di una classe
+
 class Numero (int x){
         void uno() x;
-        int due() 1;
+        bool due() true;
     }
 
 class Ciao extends Numero(bool y){
@@ -24,12 +25,5 @@ class Ciaone extends Ciao(Numero a){
     let
         Numero num = new Numero(2);
         Ciao ciao= new Ciao(1,false);
-        ciao.x= num.due();
-        Numero ciaone = new Numero(1);
-        ciaone = null; 
     in
-if ciao.tre() then{num.uno()} else{ciaone.tre()};
-
-Stack overflow nel chiamare un metodo di una superclasse;
-
-Gestire l'assegnamento a null.
+if ciao.tre() then{num.due()} else{ciao.tre()};
