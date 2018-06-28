@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ast;
 
 import exception.TypeException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import util.Environment;
 import util.SemanticError;
 
@@ -28,7 +22,7 @@ public class FieldAsmNode implements Node {
 @Override
 public ArrayList<SemanticError> checkSemantics(Environment env) {
     //create result list
-    ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+    ArrayList<SemanticError> res = new ArrayList<>();
 
     res.addAll(field.checkSemantics(env));
     
@@ -37,12 +31,14 @@ public ArrayList<SemanticError> checkSemantics(Environment env) {
     return res;
 }
   
+  @Override
   public String toPrint(String s) {
-	return s+"FieldAsm:" + field.toPrint(s+"  ") +"\n"  
+	return s+"Field assignment:" + field.toPrint(s+"  ") +"\n"  
            +exp.toPrint(s+"  "); 
   }
   
   
+  @Override
   public Node typeCheck () throws TypeException{
     //System.out.println(field.typeCheck().toPrint(" ")+" gesooo "+exp.typeCheck().toPrint(" "));
     if (! (exp.typeCheck().isSubTypeOf(field.typeCheck())) ){
@@ -51,6 +47,7 @@ public ArrayList<SemanticError> checkSemantics(Environment env) {
     return field.typeCheck();
   }
   
+  @Override
   public String codeGeneration() {
         StringBuilder getAR = new StringBuilder();
         
@@ -69,6 +66,7 @@ public ArrayList<SemanticError> checkSemantics(Environment env) {
                ;
   }  
   
+  @Override
   public boolean isSubTypeOf(Node m){
       return field.isSubTypeOf(m);
   }

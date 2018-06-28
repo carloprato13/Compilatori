@@ -2,11 +2,8 @@ package ast;
 
 import exception.TypeException;
 import java.util.ArrayList;
-
 import util.Environment;
 import util.SemanticError;
-import lib.FOOLlib;
-
 public class OpTermNode implements Node {
 
     private Node left;
@@ -31,21 +28,23 @@ public class OpTermNode implements Node {
         return res;
     }
 
+    @Override
     public String toPrint(String s) {
         switch (op) {
 
             case "/":
-                return s + "Div\n" + left.toPrint(s + "  ")
+                return s + "Division of: \n" + left.toPrint(s + "  ")
                         + right.toPrint(s + "  ");
 
             case "*":
-                return s + "Mult\n" + left.toPrint(s + "  ")
+                return s + "Multiplication of: \n" + left.toPrint(s + "  ")
                         + right.toPrint(s + "  ");
                 
             default: return "Operazione sbagliata";
         }
     }
 
+    @Override
     public Node typeCheck() throws TypeException {
         if (! ( left.typeCheck() instanceof IntTypeNode ||left.typeCheck() instanceof IntNode) &&
             ( right.typeCheck() instanceof IntTypeNode ||right.typeCheck() instanceof IntNode)) {

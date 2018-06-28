@@ -37,7 +37,7 @@ public class ClassdNode implements Node {
             res+=n.toPrint("  ");
         for(Node n : funDecList)
             res+=n.toPrint("  ");
-        return indent + classID+"\n"+res;
+        return indent + "\nClass declaration of: " + classID+ (superClassID!= null ? " extends " + superClassID : "" ) + "\n"+res;
     }
 
     public ArrayList<VarNode> getVardeclist() {

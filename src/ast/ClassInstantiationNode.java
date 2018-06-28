@@ -5,6 +5,8 @@ import lib.FOOLlib;
 import util.Environment;
 import util.SemanticError;
 import exception.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 /**
@@ -35,31 +37,26 @@ public class ClassInstantiationNode implements Node {
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
         //create the result
-        ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+        ArrayList<SemanticError> res = new ArrayList<>();
 
         try {
+            //Catturo la classe all'interno dell'env poichè potrebbe usare classi non ancora dichiarate e quindi non presenti nella ST
+            //Rigenero l'errore giusto poichè se non esiste la classe, il getTypeOf genera un UndeclaredVarException e non una UndeclaredClassException
+            classType = (ClassTypeNode) env.getNodeOf(classID);
+        } catch (Exception e) {
             try {
-                //Catturo la classe all'interno dell'env poichè potrebbe usare classi non ancora dichiarate e quindi non presenti nella ST
-                //Rigenero l'errore giusto poichè se non esiste la classe, il getTypeOf genera un UndeclaredVarException e non una UndeclaredClassException
-                classType = (ClassTypeNode) env.getNodeOf(classID);
-            } catch (Exception e) {
                 throw new UndeclaredClassException(classID);
+            } catch (UndeclaredClassException ex) {
+                Logger.getLogger(ClassInstantiationNode.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            if (classType.getFields().size() != args.size()) {
-                res.add(new SemanticError("Instantiation of new " + classID + " with the wrong number of parameters."));
+        }
+        if (classType.getFields().size() != args.size()) {
+            res.add(new SemanticError("Instantiation of new " + classID + " with the wrong number of parameters."));
+        }
+        if (args.size() > 0) {
+            for (Node n : args) {
+                res.addAll(n.checkSemantics(env));
             }
-
-            //if there are children then check semantics for every child and save the results
-            if (args.size() > 0) {
-                for (Node n : args) {
-                    res.addAll(n.checkSemantics(env));
-                }
-            }
-
-            env.getLatestEntryOf(this.classID);
-        } catch (UndeclaredClassException | UndeclaredVarException e) {
-            res.add(new SemanticError(e.getMessage()));
         }
         return res;
     }

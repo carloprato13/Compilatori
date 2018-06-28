@@ -19,8 +19,9 @@ public class IfNode implements Node {
     el=e;
   }
   
+  @Override
   public String toPrint(String s) {
-    return s+"If\n" + cond.toPrint(s+"  ") 
+    return s  +"If\n" + cond.toPrint(s+"  ") 
                     + th.toPrint(s+"  ")   
                     + el.toPrint(s+"  "); 
   }

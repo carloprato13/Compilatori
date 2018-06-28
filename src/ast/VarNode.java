@@ -2,11 +2,9 @@ package ast;
 
 import exception.TypeException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import exception.*;
 import util.Environment;
 import util.SemanticError;
-import lib.FOOLlib;
 
 public class VarNode implements Node {
 
@@ -39,34 +37,10 @@ public class VarNode implements Node {
   
   	@Override
 	public ArrayList<SemanticError> checkSemantics(Environment env) {
-  	//create result list
-  	 /* ArrayList<SemanticError> res = new ArrayList<SemanticError>();
-  	  
-  	  //env.offset = -2;
-          System.out.println("PORCAMADONNA!: "+env.getNestingLevel());
-  	  HashMap<String,STentry> hm = env.getHashMap(env.getNestingLevel());
-        
-          try{
-          if(type instanceof ClassTypeNode){
-             type = (ClassTypeNode) env.getNodeOf(((ClassTypeNode)type).getId());
-          }   
-          }catch(UndeclaredVarException e){
-              res.add(new SemanticError(e.getMessage()));
-          }
-          
-        STentry entry = new STentry(env.getNestingLevel(),type, env.offset--); //separo introducendo "entry"
-        
-        if ( hm.put(id,entry) != null )
-          res.add(new SemanticError("Var id "+id+" already declared"));
-        
-        if(exp != null)
-            res.addAll(exp.checkSemantics(env));
-        
-        return res;*/
-          //create result list
-        ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+ 
+        ArrayList<SemanticError> res = new ArrayList<>();
 
-        //Se sto istanziando un nuovo oggetto, aggiorno bene le informazioni di ClassType :=D
+        //Se sto istanziando un nuovo oggetto, aggiorno bene le informazioni di ClassType 
         if (type instanceof InstanceTypeNode) {
             InstanceTypeNode decType = (InstanceTypeNode) type;
             res.addAll(decType.updateClassType(env));
@@ -74,8 +48,6 @@ public class VarNode implements Node {
         
         if(exp!=null)
          res.addAll(exp.checkSemantics(env));
-
-        //env.offset = -2;
         try {
             env.addEntry(id, this.type, env.offset--, inClass);
         } catch (RedeclaredVarException e) {
@@ -85,15 +57,17 @@ public class VarNode implements Node {
         return res;
 	}
   
+  @Override
   public String toPrint(String s) {
       String res="";
       if(exp!=null)
           res=exp.toPrint(s+"  ");
-	return s+"Var:" + id +"\n"
+	return s+"Var: " + id +" of type: \n"
 	  	   +type.toPrint(s+"  ")  
            +res; 
   }
 
+  @Override
   public Node typeCheck () throws TypeException {
     if(exp != null){
         if(exp.typeCheck() instanceof VoidTypeNode && !(type instanceof ClassTypeNode) )
@@ -110,10 +84,12 @@ public class VarNode implements Node {
     return type;
   }
   
+  @Override
   public String codeGeneration() {
 	return exp.codeGeneration();
   }  
   
+  @Override
       public boolean isSubTypeOf(Node m){
        return type.isSubTypeOf(m);
     }

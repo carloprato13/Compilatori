@@ -24,10 +24,10 @@ public class IdNode implements Node {
   
   @Override
   public String toPrint(String s) {
-        if(entry==null)
-            return s+"Id:" + id + " at nestlev " + nestinglevel +"\n" ;
-        else
-            return s+"Id:" + id + " at nestlev " + nestinglevel +"\n" + entry.toString(s+"  ") ;
+     //   if(entry==null)
+            return s+"Id:" + id + "\n";//+ " at nestlev " + nestinglevel +"\n" ;
+      //  else
+   //         return s+"Id:" + id;// + " at nestlev " + nestinglevel +"\n" ;//+ entry.toString(s) ;
   }
   
   @Override
