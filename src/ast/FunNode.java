@@ -1,6 +1,7 @@
 package ast;
 import exception.RedeclaredVarException;
 import exception.TypeException;
+import exception.UndeclaredVarException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -57,6 +58,14 @@ public class FunNode implements Node {
             res.add(new SemanticError("function " + id + " already declared"));
         }
         env.pushHashMap();
+        
+        if(classID!=null){
+         try {
+            STentry classEntry = env.getLatestEntryOfNotFun(classID);
+            env.addEntry("this", new InstanceTypeNode((ClassTypeNode) classEntry.getNode()), 0 );
+        } catch (RedeclaredVarException | UndeclaredVarException e) {
+            e.printStackTrace();
+        }}
 
         //check args
         for (Node param : parlist) {

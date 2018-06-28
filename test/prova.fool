@@ -3,10 +3,12 @@ class Numero (int x){
         bool due() true;
     }
 
-class Ciao extends Numero(bool y){
+class Ciao(bool y){
+        void quattro() y;
         bool tre() false;
 };
  let
-        Ciao ciao= new Ciao(16,false);
+        Numero ciao= new Numero(16);
+        Ciao ciao2=new Ciao(true);
     in
 print(ciao.uno());

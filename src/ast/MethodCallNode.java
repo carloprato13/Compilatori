@@ -49,8 +49,13 @@ public class MethodCallNode extends CallNode {
             Node objectType = objectSEntry.getNode();
             this.objectOffset = objectSEntry.getOffset()-1;
             this.objectNestingLevel = objectSEntry.getNestinglevel();
-            //this.nestinglevel--;
-
+            
+             try {
+                    env.getLatestEntryOf("this");
+                    // Se ha trovato il this (aka sono dentro un metodo), decremento il nesting level
+                    this.nestinglevel--;
+                } catch (UndeclaredVarException e) {
+                }
             // Controllo che il metodo sia stato chiamato su un oggetto
             if (objectType instanceof ClassTypeNode) {
                 classType = (ClassTypeNode) objectType;//((ClassTypeNode) objectType).getClassType();

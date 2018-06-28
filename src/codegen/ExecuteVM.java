@@ -238,7 +238,7 @@ public class ExecuteVM {
                         for (int i = 0; i < objOffset; i++) {
                             list = list.next;
                         }
-                        int fieldAddress = list.getIndex();
+                        int fieldAddress = list.getIndex(); 
                         int realOffset = fieldAddress - objAddress;
                         push(realOffset);
                         push(objAddress);

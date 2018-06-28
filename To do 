@@ -8,7 +8,7 @@ Migliorare le stampe in generale
 
 ANCORA NON FERMIAMO L'ESECUZIONE IN TEST SE ABBIAMO ERRORI DAL PARSER O DAL LEXER
 
-CASI DI ERRORE-1: Errore nel chiamare un metodo che chiama un campo di una classe
+CASI DI ERRORE-1: Errore nel chiamare un metodo che chiama un campo di una classe (chiama sempre il campo dell'istanza sbagliata)
 
 class Numero (int x){
         void uno() x;

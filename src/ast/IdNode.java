@@ -14,6 +14,7 @@ public class IdNode implements Node {
   private int nestinglevel;
   private int thisNestLevel;
   private int thisOffset;
+  private int fieldOffset;
   
   public IdNode (String i) {
     id=i;
@@ -52,9 +53,10 @@ public class IdNode implements Node {
        try {
             if(entry.isAttribute()) {
                 //entry = env.getLatestEntryOfNotFun(this.id);
-                STentry thisPointer = env.getLatestEntryOfNotFun(id);
+                STentry thisPointer = env.getLatestEntryOfNotFun("this");
                 thisNestLevel = thisPointer.getNestinglevel();
                 thisOffset = thisPointer.getOffset();
+                fieldOffset = ((InstanceTypeNode)thisPointer.getNode()).getClassType().getOffsetOfField(id);
             }
             this.nestinglevel = env.getNestingLevel();
 
@@ -84,8 +86,8 @@ public class IdNode implements Node {
         if(this.entry.isAttribute()) {
             for (int i = 0; i < nestinglevel - thisNestLevel; i++)
                 getARs.append("lw\n");
-            return  "push " + entry.getOffset() + "\n" + // metto l'offset (logico) sullo stack
-                    "push " + thisOffset + "\n" +
+            return  "push " + (fieldOffset) + "\n" + // metto l'offset (logico) sullo stack
+                    "push " + (thisOffset+1) + "\n" +
                     "lfp\n" + getARs +
                     "add\n" +
                     "lw\n" +
