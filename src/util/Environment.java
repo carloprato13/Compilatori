@@ -60,6 +60,8 @@ public class Environment {
     }
 
     public Environment addEntry(String id, Node Node, int offset, boolean isInsideClass) throws RedeclaredVarException {
+      // if (!isInsideClass)
+      //  System.out.println ("eeeeeeee " + id);
         STentry newEntry = new STentry(getNestingLevel(), Node, offset, isInsideClass);
         STentry oldEntry = this.symbolTable
                 .get(this.symbolTable.size() - 1)
