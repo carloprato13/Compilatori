@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import util.Environment;
 import util.SemanticError;
-import lib.FOOLlib;
+import util.FOOLlib;
 
 public class AsmNode implements Node {
 

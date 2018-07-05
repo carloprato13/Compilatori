@@ -1,7 +1,7 @@
 package ast;
 
 import java.util.ArrayList;
-import lib.FOOLlib;
+import util.FOOLlib;
 import util.Environment;
 import util.SemanticError;
 import exception.*;

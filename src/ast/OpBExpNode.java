@@ -2,7 +2,7 @@ package ast;
 
 import exception.TypeException;
 import java.util.ArrayList;
-import lib.FOOLlib;
+import util.FOOLlib;
 import util.Environment;
 import util.SemanticError;
 

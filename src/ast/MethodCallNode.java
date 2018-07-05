@@ -2,10 +2,9 @@ package ast;
 
 import exception.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lib.FOOLlib;
+import util.FOOLlib;
 import util.Environment;
 import util.SemanticError;
 

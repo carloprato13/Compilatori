@@ -4,11 +4,11 @@ import exception.UndeclaredMethodException;
 import exception.UndeclaredVarException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import lib.DispatchTableEntry;
+import util.DispatchTableEntry;
 
 import util.Environment;
 import util.SemanticError;
-import lib.FOOLlib;
+import util.FOOLlib;
 
 public class ClassTypeNode implements Node {
   

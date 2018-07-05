@@ -6,7 +6,7 @@ import util.Environment;
 import util.SemanticError;
 import java.util.ArrayList;
 import java.util.HashMap;
-import lib.*;
+import util.*;
 /**
  *
  * @author carlo
