@@ -53,38 +53,6 @@ public class ExecuteVM {
         memory[location] = value;
     }
 
-    // Mark and sweep
-    private void garbageCollection() throws SegmentationFaultException {
-        // address => isUsed
-        HashMap<Integer, Boolean> table = new HashMap<>();
-        // Inizializzo a false tutti gli oggetti
-        for (HeapMemoryCell m : heapMemoryInUse) {
-            table.put(m.getIndex(), false);
-        }
-        // Se viene trovato sullo stack l'indirizzo di un oggetto, setto la table a true
-        for (int i = MEMSIZE + MEMORY_START_ADDRESS - 1; i >= sp; i--) {
-            if (table.containsKey(getMemory(i))) {
-                table.put(getMemory(i), true);
-            }
-        }
-        if (table.containsKey(rv)) {
-            table.put(rv, true);
-        }
-        for (HeapMemoryCell heapMemoryCell : heapMemoryInUse) {
-            if (!table.get(heapMemoryCell.getIndex())) {
-                HeapMemoryCell curr = heapMemoryCell;
-                if (debug) {
-                    while (curr != null) {
-                        setMemory(curr.getIndex(), 0);
-                        curr = curr.next;
-                    }
-                }
-                heap.deallocate(heapMemoryCell);
-            }
-        }
-        heapMemoryInUse.removeIf(m -> !table.get(m.getIndex()));
-    }
-
     private void printMemory() {
         for (int mem : memory)
             System.out.print(mem + " ");
