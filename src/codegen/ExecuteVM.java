@@ -5,14 +5,12 @@ import exception.VMOutOfMemoryException;
 import svm.SVMParser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class ExecuteVM {
 
     public static final int MEMORY_START_ADDRESS = 70;
     private static final int MEMSIZE = 100;
-
     private ArrayList<String> outputBuffer = new ArrayList<>();
 
     private int[] memory = new int[MEMSIZE];
@@ -163,7 +161,7 @@ public class ExecuteVM {
                         // Alloco memoria per i nargs argomenti + 1 per l'indirizzo alla dispatch table
                         HeapMemoryCell allocatedMemory;
                         allocatedMemory = heap.allocate(nargs + 1);
-                        // Salvo il blocco di memoria ottenuto per controllarlo
+                        // Salvo il blocco di memoria ottenuto per controllarlo in garbage collection
                         heapMemoryInUse.add(allocatedMemory);
                         int heapMemoryStart = allocatedMemory.getIndex();
                         // Inserisco l'indirizzo della dispatch table ed avanzo nella memoria ottenuta
@@ -179,9 +177,6 @@ public class ExecuteVM {
                         // A questo punto dovrei aver usato tutta la memoria allocata
                         assert allocatedMemory == null;
                         hp = heap.getNextFreeAddress() > hp ? heap.getNextFreeAddress() : hp;
-                        if (hp == -1) {
-                            hp = heap.getNextFreeAddress() > hp ? heap.getNextFreeAddress() : hp;
-                        }
                         break;
                     case SVMParser.LC:
                         int codeAddress = pop();
@@ -189,21 +184,6 @@ public class ExecuteVM {
                         break;
                     case SVMParser.COPY:
                         push(getMemory(sp));
-                        break;
-                    case SVMParser.HOFF:
-                        int objAddress = pop(); // indirizzo di this
-                        int objOffset = pop();  // offset dell'oggetto rispetto all'inizio del suo spazio nello heap
-                        HeapMemoryCell list = heapMemoryInUse
-                                .stream()
-                                .filter(cell -> cell.getIndex() == objAddress)
-                                .reduce(new HeapMemoryCell(0, null), (prev, curr) -> curr);
-                        for (int i = 0; i < objOffset; i++) {
-                            list = list.next;
-                        }
-                        int fieldAddress = list.getIndex(); 
-                        int realOffset = fieldAddress - objAddress;
-                        push(realOffset);
-                        push(objAddress);
                         break;
                     case SVMParser.HALT:
                         return outputBuffer;
