@@ -4,6 +4,7 @@ public class ParserException extends Throwable {
 
     public ParserException(String error) {
         super(error);
+        System.exit(0);
     }
 
 }

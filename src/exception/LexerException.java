@@ -8,6 +8,7 @@ public class LexerException extends Throwable {
 
     public LexerException(ArrayList<String> errors) {
         super(errors.stream().reduce("", (prev, curr) -> prev + "\n" + curr));
+        System.exit(0);
     }
 
 }
