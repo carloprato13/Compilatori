@@ -19,7 +19,7 @@ public class OpTermNode implements Node {
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
         //create the result
-        ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+        ArrayList<SemanticError> res = new ArrayList<>();
 
         //check semantics in the left and in the right exp
         res.addAll(left.checkSemantics(env));

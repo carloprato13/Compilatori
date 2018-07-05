@@ -65,7 +65,7 @@ public class IdNode implements Node {
 
     @Override
     public Node typeCheck() {
-        if (!(entry.getNode() instanceof ArrowTypeNode || entry.getNode() instanceof IntTypeNode || entry.getNode() instanceof BoolTypeNode || entry.getNode() instanceof ClassTypeNode)) {
+        if (!(entry.getNode() instanceof ArrowTypeNode || entry.getNode() instanceof BoolTypeNode || entry.getNode() instanceof ClassTypeNode)) {
             System.out.println("Wrong usage of function identifier");
         }
         return entry.getNode();
@@ -84,7 +84,6 @@ public class IdNode implements Node {
                     + "lfp\n" + getARs
                     + "add\n"
                     + "lw\n"
-                    + "hoff\n" // converto l'offset
                     + "add\n"
                     + "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
         } else {
@@ -107,3 +106,4 @@ public class IdNode implements Node {
     }
 
 }
+
