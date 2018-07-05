@@ -1,7 +1,7 @@
+
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
-import java.util.*;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -22,21 +22,35 @@ import ast.Node;
 import exception.ParserException;
 import exception.TypeException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import lib.FOOLlib;
+import org.antlr.v4.runtime.DefaultErrorStrategy;
+import org.antlr.v4.runtime.InputMismatchException;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 public class Test extends BaseErrorListener {
 
+    //public static final Test INSTANCE = new Test();
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer,
             Object offendingSymbol,
             int line, int charPositionInLine,
             String msg,
             RecognitionException e) {
-        List<String> stack = ((Parser) recognizer).getRuleInvocationStack();
-        Collections.reverse(stack);
-        System.err.println("rule stack: " + stack);
-        System.err.println("line " + line + ":" + charPositionInLine + " at "
-                + offendingSymbol + ": " + msg);
+        try {
+            List<String> stack = ((Parser) recognizer).getRuleInvocationStack();
+            Collections.reverse(stack);
+            System.err.println("rule stack: " + stack);
+            System.err.println("line " + line + ":" + charPositionInLine + " at "
+                    + offendingSymbol + ": " + msg);
+        } catch (ClassCastException c) {
+            throw new ParseCancellationException("line " + line + ":" + charPositionInLine + " " + msg);
+        }
+
     }
 
     private static int maxMemsizeWithoutRecursion;
@@ -87,6 +101,8 @@ public class Test extends BaseErrorListener {
             FileInputStream is = new FileInputStream(fileName);
             ANTLRInputStream input = new ANTLRInputStream(is);
             FoolLexer lexer = new FoolLexer(input);
+            lexer.removeErrorListeners();
+            lexer.addErrorListener(new Test());
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             FoolParser parser = new FoolParser(tokens);
             parser.removeErrorListeners();
@@ -96,7 +112,12 @@ public class Test extends BaseErrorListener {
             System.out.println("File not found!");
             System.out.println(e.getMessage());
             return null;
+        } catch (ParseCancellationException p) {
+            System.out.println("Lexer error");
+            System.out.println(p.getMessage());
+            return null;
         }
+
     }
 
     public static Node typeChecking(FoolParser parser) throws ParserException {
@@ -113,9 +134,8 @@ public class Test extends BaseErrorListener {
             }
             ast = null;
         } else {
-           // if (lexerASM.errors.size() > 0) throw new LexerException("");
-            if (parser.getNumberOfSyntaxErrors() > 0) {throw new
-                ParserException("There are " + parser.getNumberOfSyntaxErrors() + " errors");
+            if (parser.getNumberOfSyntaxErrors() > 0) {
+                throw new ParserException("There are " + parser.getNumberOfSyntaxErrors() + " errors");
             }
             System.out.println("Lexing and parsing process ok.\n Start semantic check..");
             System.out.println("Semantic check ok!\n Visualizing AST... ");
