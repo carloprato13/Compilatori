@@ -12,7 +12,6 @@ public class ExecuteVM {
 
     public static final int MEMORY_START_ADDRESS = 70;
     private static final int MEMSIZE = 100;
-    private static final int GARBAGE_THRESHOLD = Math.max((MEMSIZE / 100) * 5, 10);
 
     private ArrayList<String> outputBuffer = new ArrayList<>();
 
@@ -193,14 +192,10 @@ public class ExecuteVM {
                         for (int i = nargs - 1; i >= 0; i--) {
                             args[i] = pop();
                         }
-                        // Se la differenza tra sp e hp supera quella della soglia massima, viene eseguito il garbage collector
-                        if (Math.abs(sp - hp) <= GARBAGE_THRESHOLD) {
-                            garbageCollection();
-                        }
                         // Alloco memoria per i nargs argomenti + 1 per l'indirizzo alla dispatch table
                         HeapMemoryCell allocatedMemory;
                         allocatedMemory = heap.allocate(nargs + 1);
-                        // Salvo il blocco di memoria ottenuto per controllarlo in garbage collection
+                        // Salvo il blocco di memoria ottenuto per controllarlo
                         heapMemoryInUse.add(allocatedMemory);
                         int heapMemoryStart = allocatedMemory.getIndex();
                         // Inserisco l'indirizzo della dispatch table ed avanzo nella memoria ottenuta
@@ -217,7 +212,6 @@ public class ExecuteVM {
                         assert allocatedMemory == null;
                         hp = heap.getNextFreeAddress() > hp ? heap.getNextFreeAddress() : hp;
                         if (hp == -1) {
-                            garbageCollection();
                             hp = heap.getNextFreeAddress() > hp ? heap.getNextFreeAddress() : hp;
                         }
                         break;
