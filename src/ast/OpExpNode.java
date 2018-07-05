@@ -61,7 +61,7 @@ public class OpExpNode implements Node {
                 operation = "add\n";
         }
         return left.codeGeneration()
-                + operation + right.codeGeneration();
+               + right.codeGeneration()  + operation ;
     }
 
     @Override
