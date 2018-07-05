@@ -92,7 +92,7 @@ public class SVMParser extends Parser {
 
 	    private ArrayList<Integer> code = new ArrayList<Integer>();
 	    private HashMap<String,Integer> labelAdd = new HashMap<String,Integer>();
-	    private HashMap<Integer,String> labelRef = new HashMap<Integer,String>();
+	    private HashMap<Integer,String> labelRef = new HashMap<>();
 
 	    public int[] getBytecode() {
 	        int[] bytecode = new int[this.code.size()];
