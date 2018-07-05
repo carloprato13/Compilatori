@@ -17,11 +17,11 @@ import svm.SVMLexer;
 import svm.SVMParser;
 import util.Environment;
 import util.SemanticError;
-import ast.FoolVisitorTypeChecker;
+import parser.FoolTreeVisitor;
 import ast.Node;
 import exception.ParserException;
 import exception.TypeException;
-import lib.FOOLlib;
+import util.FOOLlib;
 
 
 public class Test extends BaseErrorListener {
@@ -113,7 +113,7 @@ public class Test extends BaseErrorListener {
     }
 
     public static Node typeChecking(FoolParser parser) throws ParserException {
-        FoolVisitorTypeChecker visitor = new FoolVisitorTypeChecker();
+        FoolTreeVisitor visitor = new FoolTreeVisitor();
         Node ast = visitor.visit(parser.prog()); //generazione AST 
 
         Environment env = new Environment();
