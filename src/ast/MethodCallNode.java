@@ -2,12 +2,12 @@ package ast;
 
 import exception.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lib.FOOLlib;
 import util.Environment;
 import util.SemanticError;
-import parser.FoolParser.*;
 
 /**
  *
@@ -19,11 +19,12 @@ public class MethodCallNode extends CallNode {
     private int objectNestingLevel;
     private int methodOffset;
     private int nestinglevel;
-    
+
     private String classId;
     private String objectID;
     private String methodID;
     private Node methodType;
+    private static int caller;
 
     public MethodCallNode(String callId, STentry entry, String objectID, String methodID, ArrayList<Node> args, int nestingLevel) {
         super(callId, entry, args, nestingLevel);
@@ -35,31 +36,35 @@ public class MethodCallNode extends CallNode {
         super(met, args);
         this.objectID = obj;
         this.methodID = met;
-
     }
 
+    public static int getCaller() {
+        return caller;
+    }
+
+    
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
+        caller = VarNode.getNumDec() - VarNode.getMap().get(this.objectID);
         ArrayList<SemanticError> res = new ArrayList<>();
-
         this.nestinglevel = env.getNestingLevel();
         ClassTypeNode classType = null;
         try {
             STentry objectSEntry = env.getLatestEntryOf(objectID);
             Node objectType = objectSEntry.getNode();
-            this.objectOffset = objectSEntry.getOffset()-1;
+            this.objectOffset = objectSEntry.getOffset() - 1;
             this.objectNestingLevel = objectSEntry.getNestinglevel();
-            
-             try {
-                    env.getLatestEntryOf("this");
-                    // Se ha trovato il this (aka sono dentro un metodo), decremento il nesting level
-                    this.nestinglevel--;
-                } catch (UndeclaredVarException e) {
-                }
+
+            try {
+                env.getLatestEntryOf("this");
+                // Se ha trovato il this (aka sono dentro un metodo), decremento il nesting level
+                this.nestinglevel--;
+            } catch (UndeclaredVarException e) {
+            }
             // Controllo che il metodo sia stato chiamato su un oggetto
             if (objectType instanceof ClassTypeNode) {
                 classType = (ClassTypeNode) objectType;//((ClassTypeNode) objectType).getClassType();
-                classId=classType.getId();
+                classId = classType.getId();
             } else {
                 res.add(new SemanticError("Method " + methodID + " called on a non-object type"));
                 return res;
@@ -70,14 +75,14 @@ public class MethodCallNode extends CallNode {
         }
 
         try {
-            STentry classEntry =  env.getLatestEntryOf(classType.getId());
+            STentry classEntry = env.getLatestEntryOf(classType.getId());
             ClassTypeNode objectClass = (ClassTypeNode) classEntry.getNode();
             this.methodType = objectClass.getTypeOfMethod(methodID);
             this.methodOffset = objectClass.getOffsetOfMethod(methodID);
         } catch (UndeclaredMethodException ex) {
-            res.add(new SemanticError("Undeclared method "+methodID+" called"));
+            res.add(new SemanticError("Undeclared method " + methodID + " called"));
         } catch (UndeclaredVarException e) {
-            res.add(new SemanticError("variable not declared riga in methodCall of"+methodID));
+            res.add(new SemanticError("variable not declared riga in methodCall of" + methodID));
             return res;
         }
 
@@ -86,12 +91,13 @@ public class MethodCallNode extends CallNode {
             return res;
         }
         //System.out.println("TYPE.TOSTRING: "+ methodType.toPrint(" ") + "NomeMetodo: "+methodID);
-        
+
         ArrowTypeNode t;
-        if (this.methodType instanceof VoidTypeNode){
-            t = new ArrowTypeNode (this.getParlist(), new VoidTypeNode());
-        } else
-        t = (ArrowTypeNode) this.methodType;
+        if (this.methodType instanceof VoidTypeNode) {
+            t = new ArrowTypeNode(this.getParlist(), new VoidTypeNode());
+        } else {
+            t = (ArrowTypeNode) this.methodType;
+        }
 
         ArrayList<Node> p = t.getParList();
         if (!(p.size() == getParlist().size())) {
@@ -122,21 +128,22 @@ public class MethodCallNode extends CallNode {
 
     @Override
     public String codeGeneration() {
-         StringBuilder parCode = new StringBuilder();
-        for (int i = getParlist().size() - 1; i >= 0; i--)
+        StringBuilder parCode = new StringBuilder();
+        for (int i = getParlist().size() - 1; i >= 0; i--) {
             parCode.append(getParlist().get(i).codeGeneration());
+        }
 
         StringBuilder getAR = new StringBuilder();
 
-        for (int i = 0; i < nestinglevel - objectNestingLevel; i++)
+        for (int i = 0; i < nestinglevel - objectNestingLevel; i++) {
             getAR.append("lw\n");
-        
-        return "lfp\n"                                  // carico il frame pointer
-                + parCode                               // carico i parametri
+        }
+        return "lfp\n" // carico il frame pointer
+                + parCode // carico i parametri
                 + FOOLlib.getDispatchTablePointer(classId) + "\n"
-                + "push " + (methodOffset - 1) + "\n"   // carico l'offset del metodo rispetto all'inizio della dispatch table
-                + "add" + "\n"                          // carico sullo stack dispatch_table_start + offset
-                + "lc\n"                                // trovo l'indirizzo del metodo
+                + "push " + (methodOffset - 1) + "\n" // carico l'offset del metodo rispetto all'inizio della dispatch table
+                + "add" + "\n" // carico sullo stack dispatch_table_start + offset
+                + "lc\n" // trovo l'indirizzo del metodo
                 + "js\n";                               // salto all'istruzione dove e' definito il metodo e salvo $ra
     }
 

@@ -46,6 +46,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
 		return res;
 	}
 	
+        @Override
         public Node visitClassExp(FoolParser.ClassExpContext ctx) {
         ProgClassExpNode res=null;
 
@@ -57,7 +58,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
                     VardecContext varctx = dc.vardec().get(i);
                     vars.add(new VarNode(varctx.ID().getText(), visit(varctx.type()).typeCheck(),null,true));
                 }
-                ArrayList<FunNode> mets = new ArrayList<FunNode>();
+                ArrayList<FunNode> mets = new ArrayList<>();
                 for (FunContext functx : dc.fun()) {
                     FunNode method = (FunNode) visit(functx);
                     method.setClassID(dc.ID(0).getText());
@@ -234,6 +235,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
             return visitChildren(ctx);
         }
         
+        @Override
         public IfNodeStm visitBranchStm(FoolParser.BranchStmContext ctx) { 
             Node bool = visit(ctx.e);
             Node b1 = visit(ctx.b1);
@@ -242,6 +244,7 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
             return res;
         }
         
+        @Override
         public Node visitBoolExp(FoolParser.BoolExpContext ctx){
             if(ctx.right == null){
 			if(ctx.op.getText().equals("not"))
@@ -353,9 +356,6 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
             }
 
             String methodId = ctx.ID(1).getText();
-            //String objectId = ctx.THIS() != null ? PER GESTIRE IL THIS
-            //        ctx.THIS().getText()
-            //        :
             String objectId = ctx.ID(0).getText();
             return new MethodCallNode(objectId, methodId, args);
         
@@ -363,15 +363,8 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
         
         @Override
         public Node visitFieldAsm(FieldAsmContext ctx) {
-
-		//Ci interessa che il secondo id possa essere chiamato a partire dal primo
 		FieldCallNode field= new FieldCallNode(ctx.t.getText(), ctx.f.getText());
-
-		//visit the exp
 		Node expNode = visit(ctx.exp()); //Estrarre il tipo della espressione
-
-		//Va modificato
-		//build the varNode //ritorno FieldNode 
 		return new FieldAsmNode(field, expNode);
 
 	}
@@ -379,9 +372,6 @@ public class FoolVisitorTypeChecker extends FoolBaseVisitor<Node> {
         @Override public Node visitFieldVal(FoolParser.FieldValContext ctx) { 
         	
         	String fieldId = ctx.ID(1).getText();
-        	//String objectId = ctx.THIS() != null ? PER GESTIRE IL THIS
-            //        ctx.THIS().getText()
-            //        :
         	String objectId = ctx.ID(0).getText();
         	return new FieldCallNode(objectId, fieldId);
 

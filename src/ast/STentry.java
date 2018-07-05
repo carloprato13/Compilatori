@@ -45,8 +45,6 @@ public class STentry {
     public boolean isAttribute() { return isAttribute; }
 
     public String toString(String s) { //
-       /* return s+"STentry: nestlev " + Integer.toString(nestingLevel) + "\n" +
-                "STentry: Node " + node.toPrint(" ") + "\n" +
-                "STentry: offset " + Integer.toString(offset) + "\n"; */ return s;
+ return s;
     }
 }

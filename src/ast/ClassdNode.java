@@ -108,7 +108,6 @@ public class ClassdNode implements Node {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
-     
         ArrayList<SemanticError> res = new ArrayList<>();
 
         // Usati per creare la entry della classe nella symbol table

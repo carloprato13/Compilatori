@@ -24,7 +24,6 @@ public class IntNode implements Node {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
-
         return new ArrayList<>();
     }
 

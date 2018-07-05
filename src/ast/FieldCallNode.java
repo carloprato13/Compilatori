@@ -1,13 +1,9 @@
-
 package ast;
 
 import exception.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import util.Environment;
 import util.SemanticError;
-import parser.FoolParser.*;
 /**
  *
  * @author francesco
@@ -33,6 +29,7 @@ public class FieldCallNode implements Node{
         return indent + this.toString();
     }
     
+    @Override
     public String toString() {
         return objectID + "." + fieldID;
     }

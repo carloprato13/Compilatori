@@ -28,6 +28,7 @@ public class IntTypeNode implements Node {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
+                   System.out.println ("____________________ " + "");
         return new ArrayList<>();
     }
 

@@ -64,7 +64,6 @@ public class FunNode implements Node {
                 STentry classEntry = env.getLatestEntryOfNotFun(classID);
                 env.addEntry("this", new InstanceTypeNode((ClassTypeNode) classEntry.getNode()), 0);
             } catch (RedeclaredVarException | UndeclaredVarException e) {
-                e.printStackTrace();
             }
         }
 

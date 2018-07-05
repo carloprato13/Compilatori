@@ -21,7 +21,7 @@ public class ProgClassExpNode implements Node {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
-        ArrayList<SemanticError> res = new ArrayList<SemanticError>();
+        ArrayList<SemanticError> res = new ArrayList<>();
 
         env.pushHashMap();
 
@@ -69,10 +69,11 @@ public class ProgClassExpNode implements Node {
     }
 
     
+    @Override
     public String codeGeneration() {
         String declaration = "";
-        ArrayList<ClassdNode> orderClassDeclarations = new ArrayList<ClassdNode>();
-        HashMap<String, ClassdNode> classesAddedMap = new HashMap<String, ClassdNode>();
+        ArrayList<ClassdNode> orderClassDeclarations = new ArrayList<>();
+        HashMap<String, ClassdNode> classesAddedMap = new HashMap<>();
 
         // this two loops are for order class declaration in top-down order to generate correct code and dispatch tables
         ListIterator iterator = classDeclarations.listIterator();
@@ -85,7 +86,7 @@ public class ProgClassExpNode implements Node {
             }
         }
 
-        while (classDeclarations.size() != 0) {
+        while (!classDeclarations.isEmpty()) {
             iterator = classDeclarations.listIterator();
             while(iterator.hasNext()){
                 ClassdNode childClassDec = (ClassdNode) iterator.next();
@@ -114,6 +115,7 @@ public class ProgClassExpNode implements Node {
         return childs;
     }
 
+    @Override
     public String toPrint(String s) {
         String ss="";
         for(Node n : classDeclarations)
@@ -121,6 +123,7 @@ public class ProgClassExpNode implements Node {
         return  s + "\n" + ss;
     }
     
+    @Override
       public boolean isSubTypeOf(Node m){
         return p.isSubTypeOf(m);
     } 
