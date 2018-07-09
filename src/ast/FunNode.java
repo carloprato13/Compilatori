@@ -160,8 +160,8 @@ public class FunNode implements Node {
                 + //pop del return value
                 popDecl
                 + "sra\n"
-                + // pop del return address
-                "pop\n"
+              //  + // pop del return address
+                //"pop\n"
                 + // pop di AL
                 popParl
                 + "sfp\n"
